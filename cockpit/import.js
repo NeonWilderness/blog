@@ -4,10 +4,17 @@
  * 
  */
 const { argv } = require('yargs');
+const cockpitApi = require('cockpit-sdk').default;
 const fs = require('fs');
 const path = require('path');
 
 const { deleteCategories, importCategories } = require('./import/categories');
+
+require('dotenv-safe').load();
+const cockpit = new cockpitApi({
+  host: process.env.APIURL,
+  accessToken: process.env.APIKEY
+});
 
 const readFrontmatter = (chunk) => {
   let fm = chunk.split('\n').reduce((all, line, index) => {
@@ -78,6 +85,6 @@ let stories = fs.readFileSync(file)
     return all;
   }, []);
 
-  deleteCategories()
-  .then(() => importCategories(stories))
+deleteCategories(cockpit)
+  .then(() => importCategories(cockpit, stories))
   .then(result => console.log(`${result.length} entries added to "categories".`));

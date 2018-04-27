@@ -4,7 +4,7 @@
  * @param {string} collectionName Collection Name, e.g. posts | categories
  */
 const truncateCollection = (cockpit, collectionName) => {
-  return new Promise( (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     cockpit.collection(collectionName).get((data) => {
       let total = data.total;
       Promise.all(
@@ -15,7 +15,10 @@ const truncateCollection = (cockpit, collectionName) => {
       ).then(() => {
         cockpit.collection(collectionName).get((data) => {
           if (data.total === 0) {
-            console.info(`Collection "${collectionName}" truncated. ${total} entries successfully deleted.`);
+            if (total === 0)
+              console.info(`Collection "${collectionName}" already empty. Nothing to delete!`);
+            else
+              console.info(`Collection "${collectionName}" truncated. ${total} entries successfully deleted.`);
             resolve();
           } else {
             console.error(`${data.total} of ${total} entries NOT deleted in collection "${collectionName}".`);
@@ -23,10 +26,10 @@ const truncateCollection = (cockpit, collectionName) => {
           }
         });
       })
-      .catch((err) => {
-        console.log(`Truncating collection "${collectionName}" failed with error: {err}.`);
-        reject();
-      });
+        .catch((err) => {
+          console.log(`Truncating collection "${collectionName}" failed with error: {err}.`);
+          reject();
+        });
     });
   });
 

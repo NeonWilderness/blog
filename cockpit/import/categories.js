@@ -1,17 +1,13 @@
-const cockpitApi = require('cockpit-sdk').default;
+/**
+ * Manages deletion and import of blog post categories
+ */
 const { truncateCollection } = require('./shared');
-require('dotenv-safe').load();
 
-const cockpit = new cockpitApi({
-  host: process.env.APIURL,
-  accessToken: process.env.APIKEY
-});
-
-const deleteCategories = () => {
+const deleteCategories = (cockpit) => {
   return truncateCollection(cockpit, 'categories');
 };
 
-const importCategories = (stories) => {
+const importCategories = (cockpit, stories) => {
 
   let categories = stories.reduce((all, story, index) => {
     if (story.fm.category in all)
@@ -24,7 +20,7 @@ const importCategories = (stories) => {
   let entries = Object.keys(categories)
     .sort()
     .reduce((all, category, index) => {
-      all.push(cockpit.collectionSave("categories", { category, count: categories[category] }));
+      all.push(cockpit.collectionSave('categories', { category, count: categories[category] }));
       return all;
     }, []);
 
