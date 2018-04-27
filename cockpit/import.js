@@ -3,11 +3,11 @@
  * ================================================
  * 
  */
-const argv = require('yargs').argv;
+const { argv } = require('yargs');
 const fs = require('fs');
 const path = require('path');
 
-const importCategories = require('./import/categories');
+const { deleteCategories, importCategories } = require('./import/categories');
 
 const readFrontmatter = (chunk) => {
   let fm = chunk.split('\n').reduce((all, line, index) => {
@@ -78,5 +78,6 @@ let stories = fs.readFileSync(file)
     return all;
   }, []);
 
-importCategories(stories)
-  .then(result => console.log(result));
+  deleteCategories()
+  .then(() => importCategories(stories))
+  .then(result => console.log(`${result.length} entries added to "categories".`));

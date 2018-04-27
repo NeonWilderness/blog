@@ -1,4 +1,5 @@
 const cockpitApi = require('cockpit-sdk').default;
+const { truncateCollection } = require('./shared');
 require('dotenv-safe').load();
 
 const cockpit = new cockpitApi({
@@ -6,23 +7,32 @@ const cockpit = new cockpitApi({
   accessToken: process.env.APIKEY
 });
 
-module.exports = (stories) => {
+const deleteCategories = () => {
+  return truncateCollection(cockpit, 'categories');
+};
 
-  let categories = stories.reduce( (all, story, index) => {
-    if (story.fm.category in all) 
+const importCategories = (stories) => {
+
+  let categories = stories.reduce((all, story, index) => {
+    if (story.fm.category in all)
       all[story.fm.category]++;
     else
       all[story.fm.category] = 1;
-    return all;    
+    return all;
   }, {});
 
   let entries = Object.keys(categories)
     .sort()
-    .reduce( (all, category, index) => {
+    .reduce((all, category, index) => {
       all.push(cockpit.collectionSave("categories", { category, count: categories[category] }));
       return all;
     }, []);
 
   return Promise.all(entries);
 
+};
+
+module.exports = {
+  deleteCategories,
+  importCategories
 };
