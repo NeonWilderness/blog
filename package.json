@@ -1,0 +1,31 @@
+{
+  "name": "blog",
+  "version": "0.0.1",
+  "description": "NeonWilderness Blog",
+  "main": "app.js",
+  "scripts": {
+    "build": "gulp4 --production",
+    "dev": "gulp4",
+    "hint": "gulp4 hint",
+    "import": "node ./cockpit/import"
+  },
+  "author": "NeonWilderness",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
+    "cockpit-sdk": "^0.9.4",
+    "dotenv-safe": "^5.0.1",
+    "gulp-bump": "^3.1.0",
+    "gulp-jshint": "^2.1.0",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-replace": "^0.6.1",
+    "gulp-util": "^3.0.8",
+    "gulp4": "^4.0.3",
+    "jshint": "^2.9.5",
+    "jshint-stylish": "^2.2.1",
+    "yargs": "^11.1.0"
+  },
+  "dependencies": {}
+}
