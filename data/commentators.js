@@ -3,14 +3,14 @@
   $.getJSON('https://rawgit.com/NeonWilderness/blog/master/data/commentators.json', function (json) {
     $(function () {
       let ViewModel = function () {
-        this.first20 = function() {
-          return json.map( function(rank, index){
-            console.log(index, 'rank:', rank);
+        this.topheroes = function() {
+          var top20 = json.map( function(rank, index){
             if (rank.author !== 'NeonWilderness' && index < 21) return rank;
           });
+          console.log('top20:', top20);
+          return top20;
         };
       };
-      console.log(json);
       let vm = new ViewModel();
       ko.applyBindings(vm, document.getElementById('tag-29-commentator-awards'));
     });
