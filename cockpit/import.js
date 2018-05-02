@@ -4,14 +4,17 @@
  * 
  */
 const { argv } = require('yargs');
-const cockpitApi = require('cockpit-sdk').default;
+const CockpitApi = require('cockpit-sdk').default;
 const fs = require('fs');
 const path = require('path');
 
+const { analyzeStories } = require('./import/analyze');
 const { deleteCategories, importCategories } = require('./import/categories');
+const { deletePosts, importPosts } = require('./import/posts');
+const { deleteComments, importComments } = require('./import/comments');
 
 require('dotenv-safe').load();
-const cockpit = new cockpitApi({
+const Cockpit = new CockpitApi({
   host: process.env.APIURL,
   accessToken: process.env.APIKEY
 });
@@ -20,20 +23,20 @@ const readFrontmatter = (chunk) => {
   let fm = chunk.split('\n').reduce((all, line, index) => {
     let parts = line.split(': ');
     let key = parts[0].toLowerCase().replace(/\s/g, '');
-    if (key.length) all[key] = parts.slice(1).join('');
+    if (key.length) all[key] = parts.slice(1).join(': ');
     return all;
   }, {});
-  let i = fm.basename.lastIndexOf('-');
-  if (i >= 0) {
-    fm.slug = fm.basename.substr(0, i);
-    fm.id = fm.basename.substr(i + 1);
-  }
   console.log(`Read basename: ${fm.basename}.`);
   return fm;
 };
 
 const readBody = (chunk) => {
-  return chunk.substr(6); // 'BODY:\n'.length
+  let m = chunk.match(/\[#(\d+)]$/), reads = 0;
+  if (m) {
+    reads = parseInt(m[1]);
+    chunk = chunk.substr(0, chunk.length - m[0].length);
+  }
+  return { content: chunk.substr(6), reads }; // 'BODY:\n'.length
 };
 
 const readComments = (chunks) => {
@@ -85,6 +88,35 @@ let stories = fs.readFileSync(file)
     return all;
   }, []);
 
-deleteCategories(cockpit)
-  .then(() => importCategories(cockpit, stories))
-  .then(result => console.log(`${result.length} entries added to "categories".`));
+if (argv.analyze) {
+  analyzeStories(stories);
+  process.exit();
+}
+
+let lookupCategories = {};
+let lookupPosts = {};
+let limit = argv.limit || Number.MAX_SAFE_INTEGER;
+
+deleteCategories(Cockpit)
+  .then(() => importCategories(Cockpit, stories))
+  .then(result => {
+    console.log(`${result.length} entries added to "categories".`);
+    result.reduce( (all, entry, index) => {
+      all[entry.category] = entry._id;
+      return all;
+    }, lookupCategories);
+    return deletePosts(Cockpit);
+  })
+  .then(() => importPosts(Cockpit, stories, lookupCategories, limit))
+  .then((result) => {
+    console.log(`${result.length} articles added to "posts".`);
+    result.reduce( (all, entry, index) => {
+      all[entry.basename] = entry._id;
+      return all;
+    }, lookupPosts);
+    return deleteComments(Cockpit);
+  })
+  .then(() => {
+    importComments(Cockpit, stories, lookupPosts, limit);
+    console.log(`Comments and replies added to collection "comments".`);
+  });

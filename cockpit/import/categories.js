@@ -3,11 +3,11 @@
  */
 const { truncateCollection } = require('./shared');
 
-const deleteCategories = (cockpit) => {
-  return truncateCollection(cockpit, 'categories');
+const deleteCategories = (Cockpit) => {
+  return truncateCollection(Cockpit, 'categories');
 };
 
-const importCategories = (cockpit, stories) => {
+const importCategories = (Cockpit, stories) => {
 
   let categories = stories.reduce((all, story, index) => {
     if (story.fm.category in all)
@@ -20,7 +20,7 @@ const importCategories = (cockpit, stories) => {
   let entries = Object.keys(categories)
     .sort()
     .reduce((all, category, index) => {
-      all.push(cockpit.collectionSave('categories', { category, count: categories[category] }));
+      all.push(Cockpit.collectionSave('categories', { category, count: categories[category] }));
       return all;
     }, []);
 

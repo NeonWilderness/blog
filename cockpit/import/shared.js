@@ -1,19 +1,27 @@
 /**
+ * Assures a timeout before the next promise http call
+ * @param {number} delay ms to wait
+ */
+const delayNextPromise = (delay => {
+  return new Promise(resolve => setTimeout(resolve, delay));
+});
+
+/**
  * Truncates (=deletes all entries) of a cockpit collection
- * @param {object} cockpit Cockpit Instance
+ * @param {object} Cockpit Cockpit Instance
  * @param {string} collectionName Collection Name, e.g. posts | categories
  */
-const truncateCollection = (cockpit, collectionName) => {
+const truncateCollection = (Cockpit, collectionName) => {
   return new Promise((resolve, reject) => {
-    cockpit.collection(collectionName).get((data) => {
+    Cockpit.collection(collectionName).get((data) => {
       let total = data.total;
       Promise.all(
         data.entries.reduce((all, entry, index) => {
-          all.push(cockpit.collectionRemove(collectionName, { _id: entry._id }));
+          all.push(Cockpit.collectionRemove(collectionName, { _id: entry._id }));
           return all;
         }, [])
       ).then(() => {
-        cockpit.collection(collectionName).get((data) => {
+        Cockpit.collection(collectionName).get((data) => {
           if (data.total === 0) {
             if (total === 0)
               console.info(`Collection "${collectionName}" already empty. Nothing to delete!`);
@@ -36,5 +44,6 @@ const truncateCollection = (cockpit, collectionName) => {
 };
 
 module.exports = {
+  delayNextPromise,
   truncateCollection
 };
