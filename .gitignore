@@ -3,6 +3,6 @@
 .vscode
 *.log
 *.php
-data
+data/*.txt
 node_modules
 todo.md
