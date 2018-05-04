@@ -23,6 +23,7 @@ const analyzeStories = (stories) => {
   let usedDataCommands = {};
   let usedScripts = {};
   let commentators = {};
+  let mostread = [];
   stories.forEach((story, index) => {
 
     console.log(`Analyzing "${story.fm.basename}"`);
@@ -71,19 +72,32 @@ const analyzeStories = (stories) => {
         commentators[comment.author] = 1;
     });
 
+    // consolidate mostread stories
+    mostread.push({ id: story.fm.id, title: story.fm.title, reads: story.body.reads });
+
   });
-/*
-  dumpStats(usedClasses, 'usedClasses');
-  dumpStats(usedDataCommands, 'usedDataCommands');
-  dumpStats(usedScripts, 'usedScripts');
-*/
-  let rankedCommentators = Object.keys(commentators).reduce((all, author, index) => {
-    all.push({ author, count: commentators[author] });
-    return all;
-  }, []).sort((a, b) => { return b.count - a.count; });
+  /*
+    dumpStats(usedClasses, 'usedClasses');
+    dumpStats(usedDataCommands, 'usedDataCommands');
+    dumpStats(usedScripts, 'usedScripts');
+  
+    let rankedCommentators = Object.keys(commentators).reduce((all, author, index) => {
+      all.push({ author, count: commentators[author] });
+      return all;
+    }, []).sort((a, b) => { return b.count - a.count; });
+    fs.writeFileSync(
+      path.resolve(process.cwd(), 'data', 'commentators.json'), 
+      JSON.stringify(rankedCommentators)
+    );
+    
+  */
+
+  let topReads = mostread
+    .sort((a, b) => { return b.reads - a.reads; })
+    .slice(0, 20);
   fs.writeFileSync(
-    path.resolve(process.cwd(), 'data', 'commentators.json'), 
-    JSON.stringify(rankedCommentators)
+    path.resolve(process.cwd(), 'data', 'mostreads.json'),
+    JSON.stringify(topReads)
   );
 
 };

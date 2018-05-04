@@ -26,6 +26,7 @@ const readFrontmatter = (chunk) => {
     if (key.length) all[key] = parts.slice(1).join(': ');
     return all;
   }, {});
+  fm.id = fm.basename.split('-').pop();
   console.log(`Read basename: ${fm.basename}.`);
   return fm;
 };
