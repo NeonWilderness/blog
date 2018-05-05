@@ -23,6 +23,7 @@ const analyzeStories = (stories) => {
   let usedDataCommands = {};
   let usedScripts = {};
   let commentators = {};
+  let distribution = {};
   let mostread = [];
   stories.forEach((story, index) => {
 
@@ -72,6 +73,13 @@ const analyzeStories = (stories) => {
         commentators[comment.author] = 1;
     });
 
+    // consolidate monthly distribution
+    let month = story.fm.date.substr(0, 7); // jjjj-mm
+    if (month in distribution)
+      distribution[month]++;
+    else
+      distribution[month] = 1;
+
     // consolidate mostread stories
     mostread.push({ id: story.fm.id, title: story.fm.title, reads: story.body.reads });
 
@@ -89,8 +97,6 @@ const analyzeStories = (stories) => {
       path.resolve(process.cwd(), 'data', 'commentators.json'), 
       JSON.stringify(rankedCommentators)
     );
-    
-  */
 
   let topReads = mostread
     .sort((a, b) => { return b.reads - a.reads; })
@@ -98,6 +104,21 @@ const analyzeStories = (stories) => {
   fs.writeFileSync(
     path.resolve(process.cwd(), 'data', 'mostreads.json'),
     JSON.stringify(topReads)
+  );
+    
+  */
+
+  let storiesPerMonth = Object.keys(distribution).reduce((all, month, index) => {
+    all.push({ month, count: distribution[month] });
+    return all;
+  }, []).sort((a, b) => {
+    let ma = parseInt(a.month.replace('-', ''));
+    let mb = parseInt(b.month.replace('-', ''));
+    return ma - mb; 
+  });
+  fs.writeFileSync(
+    path.resolve(process.cwd(), 'data', 'storiespermonth.json'),
+    JSON.stringify(storiesPerMonth)
   );
 
 };
