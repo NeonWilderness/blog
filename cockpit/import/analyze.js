@@ -88,15 +88,17 @@ const analyzeStories = (stories) => {
     dumpStats(usedClasses, 'usedClasses');
     dumpStats(usedDataCommands, 'usedDataCommands');
     dumpStats(usedScripts, 'usedScripts');
-  
-    let rankedCommentators = Object.keys(commentators).reduce((all, author, index) => {
-      all.push({ author, count: commentators[author] });
-      return all;
-    }, []).sort((a, b) => { return b.count - a.count; });
-    fs.writeFileSync(
-      path.resolve(process.cwd(), 'data', 'commentators.json'), 
-      JSON.stringify(rankedCommentators)
-    );
+    
+  */
+
+  let rankedCommentators = Object.keys(commentators).reduce((all, author, index) => {
+    all.push({ author, count: commentators[author] });
+    return all;
+  }, []).sort((a, b) => { return b.count - a.count; });
+  fs.writeFileSync(
+    path.resolve(process.cwd(), 'data', 'commentators.json'),
+    JSON.stringify(rankedCommentators)
+  );
 
   let topReads = mostread
     .sort((a, b) => { return b.reads - a.reads; })
@@ -105,8 +107,6 @@ const analyzeStories = (stories) => {
     path.resolve(process.cwd(), 'data', 'mostreads.json'),
     JSON.stringify(topReads)
   );
-    
-  */
 
   let storiesPerMonth = Object.keys(distribution).reduce((all, month, index) => {
     all.push({ month, count: distribution[month] });
@@ -114,7 +114,7 @@ const analyzeStories = (stories) => {
   }, []).sort((a, b) => {
     let ma = parseInt(a.month.replace('-', ''));
     let mb = parseInt(b.month.replace('-', ''));
-    return ma - mb; 
+    return ma - mb;
   });
   fs.writeFileSync(
     path.resolve(process.cwd(), 'data', 'storiespermonth.json'),

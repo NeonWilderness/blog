@@ -3,6 +3,7 @@
 .vscode
 *.log
 *.php
+cert
 data/*.txt
 node_modules
 todo.md

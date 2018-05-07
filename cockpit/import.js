@@ -59,7 +59,7 @@ const readComments = (chunks) => {
   }, []);
 };
 
-var blog = (argv.blog || 'neonwilderness').toLowerCase();
+//var blog = (argv.blog || 'neonwilderness').toLowerCase();
 var dir = path.resolve(process.cwd(), 'data');
 
 let file;
