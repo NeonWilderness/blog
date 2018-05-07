@@ -6,14 +6,19 @@
         var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
         return `rgba(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}, ${opacity.toString()})`;
       };
+      var months = [], stories = [];
+      $.each( function(index, el) {
+        months.push(el.month);
+        stories.push(el.count);
+      });
       var barchart = {
         type: 'bar',
         data: {
-          labels: ['Beiträge je Monat'],
+          labels: months,
           datasets: [
             {
               label: 'NeonWilderness Performance',
-              data: json,
+              data: stories,
               fill: false,
               backgroundColor: getRgba('#ec407a', 0.6),
               borderColor: getRgba('#ec407a', 1),
@@ -27,7 +32,7 @@
           },
           title: {
             display: true,
-            text: 'Blogbeiträge je Monat: 10/2006 &mdash; 05/2018'
+            text: 'Blogbeiträge je Monat: 10/2006 bis 05/2018'
           }
         }
       };
