@@ -11,6 +11,7 @@
         months.push(el.month);
         stories.push(el.count);
       });
+      debugger;
       var barchart = {
         type: 'bar',
         data: {
