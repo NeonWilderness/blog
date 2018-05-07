@@ -11,14 +11,13 @@
         months.push(el.month);
         stories.push(el.count);
       });
-      debugger;
       var barchart = {
         type: 'bar',
         data: {
           labels: months,
           datasets: [
             {
-              label: 'NeonWilderness Performance',
+              label: 'Anzahl Beiträge',
               data: stories,
               fill: false,
               backgroundColor: getRgba('#ec407a', 0.6),
@@ -33,7 +32,7 @@
           },
           title: {
             display: true,
-            text: 'Blogbeiträge je Monat: 10/2006 bis 05/2018'
+            text: 'Blogbeiträge je Monat im Zeitraum: 10/2006 bis 05/2018'
           }
         }
       };
