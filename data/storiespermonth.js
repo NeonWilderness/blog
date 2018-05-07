@@ -7,7 +7,7 @@
         return `rgba(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}, ${opacity.toString()})`;
       };
       var months = [], stories = [];
-      $.each( function(index, el) {
+      $.each(json, function(index, el) {
         months.push(el.month);
         stories.push(el.count);
       });
