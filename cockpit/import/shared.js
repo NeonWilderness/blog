@@ -15,7 +15,7 @@ const truncateCollection = (Cockpit, collectionName) => {
   return new Promise((resolve, reject) => {
     Cockpit.collection(collectionName).get((data) => {
       let total = data.total;
-      Promise.all(
+      return Promise.all(
         data.entries.reduce((all, entry, index) => {
           all.push(Cockpit.collectionRemove(collectionName, { _id: entry._id }));
           return all;
@@ -35,7 +35,7 @@ const truncateCollection = (Cockpit, collectionName) => {
         });
       })
         .catch((err) => {
-          console.log(`Truncating collection "${collectionName}" failed with error: {err}.`);
+          console.log(`Truncating collection "${collectionName}" failed with error: ${err}.`);
           reject();
         });
     });

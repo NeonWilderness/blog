@@ -9,11 +9,13 @@ const fs = require('fs');
 const path = require('path');
 
 const { analyzeStories } = require('./import/analyze');
+const { convertStories } = require('./import/convert');
 const { deleteCategories, importCategories } = require('./import/categories');
 const { deletePosts, importPosts } = require('./import/posts');
 const { deleteComments, importComments } = require('./import/comments');
 
 require('dotenv-safe').load();
+
 const Cockpit = new CockpitApi({
   host: process.env.APIURL,
   accessToken: process.env.APIKEY
@@ -50,7 +52,7 @@ const readComments = (chunks) => {
       switch (parts[0]) {
         case 'COMMENT:':
         case 'REPLY:': comment.type = parts[0].charAt(0); break;
-        default: comment[parts[0].toLowerCase()] = parts.slice(1).join('');
+        default: comment[parts[0].toLowerCase()] = parts.slice(1).join(': ');
       }
     }
     comment.body = lines.slice(4).join('\n');
@@ -59,9 +61,7 @@ const readComments = (chunks) => {
   }, []);
 };
 
-//var blog = (argv.blog || 'neonwilderness').toLowerCase();
-var dir = path.resolve(process.cwd(), 'data');
-
+let dir = path.resolve(process.cwd(), 'data');
 let file;
 if (argv.file)
   file = `${dir}/${argv.file}.txt`;
@@ -89,10 +89,11 @@ let stories = fs.readFileSync(file)
     return all;
   }, []);
 
-if (argv.analyze) {
-  analyzeStories(stories);
-  process.exit();
-}
+if (argv.convert) convertStories(stories);
+  
+if (argv.analyze) analyzeStories(stories);
+  
+if (argv.stop) process.exit();
 
 let lookupCategories = {};
 let lookupPosts = {};

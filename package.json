@@ -1,37 +1,27 @@
 {
   "name": "blog",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "NeonWilderness Blog",
   "main": "app.js",
   "scripts": {
-    "build": "gulp4 --production",
-    "dev": "gulp4",
-    "hint": "gulp4 hint",
-    "analyze": "node ./cockpit/import --analyze",
+    "analyze": "node ./cockpit/import --analyze --convert --stop",
+    "convert": "node ./cockpit/import --convert --stop",
     "import": "node ./cockpit/import --limit=3",
-    "types": "tscheck"
+    "initialize": "node ./cockpit/initialize"
   },
   "author": "NeonWilderness",
   "license": "MIT",
+  "dependencies": {},
   "devDependencies": {
+    "@types/node": "^10.5.2",
     "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.6.1",
+    "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
     "cheerio": "^1.0.0-rc.2",
     "cockpit-sdk": "^0.9.4",
-    "dotenv-safe": "^5.0.1",
-    "gulp-bump": "^3.1.0",
-    "gulp-jshint": "^2.1.0",
-    "gulp-load-plugins": "^1.5.0",
-    "gulp-replace": "^0.6.1",
-    "gulp-util": "^3.0.8",
-    "gulp4": "^4.0.3",
+    "dotenv-safe": "^6.0.0",
     "jshint": "^2.9.5",
     "jshint-stylish": "^2.2.1",
-    "yargs": "^11.1.0"
-  },
-  "dependencies": {
-    "@types/node": "^10.0.0",
-    "types-checker": "0.0.9"
+    "yargs": "^12.0.1"
   }
 }

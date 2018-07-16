@@ -17,6 +17,8 @@ class Comment {
     this.postdate = comment.date;
     this.author = comment.author;
     this.authorurl = comment.url;
+    this.email = '';
+    this.reviewed = true;
     this.approved = true;
     this.content = comment.body;
     this.parentid = parentid;
