@@ -1,5 +1,5 @@
 /**
- * Analyzes blog post content from movable type export file
+ * Analyzes blog post content from Twoday's movable type export file
  * 1. list used class names
  * 2. list used data-commands (knockout/foundation)
  * 3. list used story scripts

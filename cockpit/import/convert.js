@@ -1,5 +1,5 @@
 /**
- * Convert blog post content Twoday-style to true HTML5
+ * Convert blog post content from Twoday's non-HTML5-style to true HTML5
  */
 const cheerio = require('cheerio');
 
@@ -9,7 +9,7 @@ const convertStories = (stories) => {
 
     let $ = cheerio.load(`<div>${story.body.content}</div>`, { decodeEntities: false });
 
-    // change some align classes to foundation standard
+    // fix/change some classes to either foundation5 standard or font awesome icon defs
     let classFixes = [
       { from: 'aligncenter', to: 'text-center' },
       { from: 'alignright', to: 'text-right' },
@@ -32,7 +32,7 @@ const convertStories = (stories) => {
       });
     }
 
-    // change data-commands
+    // change data-commands, previously hidden in the title text to now be a valid data-attribute
     $('[title^="data-"]').each((i, el) => {
       let $el = $(el);
       let oldTitle = $el.attr('title');
@@ -68,7 +68,7 @@ const convertStories = (stories) => {
 
     story.body.content = $('div').html();
 
-    // append style defs for .neonhand class
+    // append style defs for .neonhand class (handwriting text style)
     if ($('.neonhand').length > 0) {
       story.body.content += `
     <style>
