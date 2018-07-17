@@ -43,7 +43,7 @@ const deletePosts = (Cockpit) => {
 const importPosts = (Cockpit, stories, lookupCategories, limit) => {
 
   let posts = stories.reduce((all, story, index) => {
-    if (index < limit) {
+    if (index < limit && story.fm.status !== 'skip') {
       let post = new Post(story);
       post.setCategoryId(lookupCategories);
       all.push(Cockpit.collectionSave('posts', post));

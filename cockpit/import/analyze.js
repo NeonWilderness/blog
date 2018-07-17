@@ -20,11 +20,15 @@ const analyzeStories = (stories) => {
   let usedClasses = {};
   let usedDataCommands = {};
   let usedScripts = {};
+  let skippedStories = [];
 
   stories.forEach((story) => {
 
     console.log(`Analyzing "${story.fm.basename}"`);
-    let $ = cheerio.load(`<div>${story.body.content}</div>`);
+    let $ = cheerio.load(`<div>${story.body.content}</div>`, { decodeEntities: false });
+
+    // remember skipped stories
+    if (story.fm.status === 'skip') skippedStories.push(story.fm.basename);
 
     // consolidate all used class names
     $('*').each((index, el) => {
@@ -66,6 +70,7 @@ const analyzeStories = (stories) => {
   dumpStats(usedClasses, 'usedClasses');
   dumpStats(usedDataCommands, 'usedDataCommands');
   dumpStats(usedScripts, 'usedScripts');
+  console.log('!! Skipped Stories:', skippedStories.join(', '));
 
 };
 
