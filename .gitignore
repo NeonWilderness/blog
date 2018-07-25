@@ -1,9 +1,11 @@
 .env
 .idea
+.nuxt
 .vscode
 *.log
 *.php
 cert
+dist
 data/*.txt
 node_modules
 todo.md

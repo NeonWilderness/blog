@@ -4,22 +4,42 @@
   "description": "NeonWilderness Blog",
   "main": "app.js",
   "scripts": {
-    "analyze": "node ./cockpit/import --analyze --convert --stop",
-    "convert": "node ./cockpit/import --convert --stop",
-    "import": "node ./cockpit/import --limit=3",
-    "initialize": "node ./cockpit/initialize"
+    "cp:analyze": "node ./cockpit/import --convert --analyze --stop",
+    "cp:convert": "node ./cockpit/import --convert --stop",
+    "cp:import": "node ./cockpit/import --limit=3",
+    "cp:initialize": "node ./cockpit/initialize",
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "deploy": "npm run generate && npm run sync",
+    "sync": "node ./cockpit/sync",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "precommit": "npm run lint"
   },
   "author": "NeonWilderness",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "@nuxtjs/axios": "^5.3.1",
+    "@nuxtjs/font-awesome": "^1.0.3",
+    "@nuxtjs/vuetify": "^0.4.2",
+    "nuxt": "^1.0.0"
+  },
   "devDependencies": {
     "@types/node": "^10.5.2",
     "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.1",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
     "cheerio": "^1.0.0-rc.2",
     "cockpit-sdk": "^0.9.4",
     "dotenv-safe": "^6.0.0",
+    "eslint": "^4.15.0",
+    "eslint-friendly-formatter": "^3.0.0",
+    "eslint-loader": "^1.7.1",
+    "eslint-plugin-vue": "^4.7.1",
+    "less": "^3.8.0",
+    "less-loader": "^4.1.0",
     "yargs": "^12.0.1"
   }
 }
