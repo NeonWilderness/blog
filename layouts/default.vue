@@ -9,8 +9,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   data: function() {
     return {
@@ -18,22 +16,29 @@ export default {
     };
   },
   mounted: function() {
-    axios.get('/img/backgrounds.json').then(res => {
-      let bgImages = res.data;
+    const useRandomImage = 0;
 
-      if (Array.isArray(bgImages) && bgImages.length) {
+    this.$axios.get('/img/backgrounds.json').then(res => {
 
-        this.$store.commit('setBackgroundImages', bgImages);
-        let randomIdx = Math.floor(Math.random() * bgImages.length);
-        this.$store.commit('setCurrentBackgroundImage', randomIdx);
+      this.$store.commit('setBackgroundImages', res.data);
 
-        let img = new Image();
-        img.src = this.$store.getters.getCurrentBackgroundImage;
-        img.onload = () => {
-          this.bgImage = img.src;
-          this.isImgLoading = false;
-        };
+      let preferences = localStorage.getItem(this.$store.getters.getPreferencesKey);
+      if (preferences) { // found preferences in localStorage
+        preferences = JSON.parse(preferences);
+        this.$store.commit('setCurrentBackgroundImage', preferences.bgImage);
+        this.$store.commit('setStoryLayout', preferences.storyLayout);
+      } else { // no preferences, then use defaults
+        this.$store.commit('setCurrentBackgroundImage', useRandomImage);
+        this.$store.commit('setStoryLayout', 'single');
       }
+
+      let img = new Image();
+      img.src = this.$store.getters.getCurrentBackgroundImage;
+      img.onload = () => {
+        this.bgImage = img.src;
+        this.isImgLoading = false;
+      };
+
     });
   }
 };

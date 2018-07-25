@@ -18,7 +18,10 @@ let prodScripts = [
  * Create JSON file of all available background images in folder static/img/bg/
  */
 const fs = require('fs');
-fs.writeFileSync('./static/img/backgrounds.json', JSON.stringify(fs.readdirSync('./static/img/bg/')));
+fs.writeFileSync(
+  './static/img/backgrounds.json', 
+  JSON.stringify(fs.readdirSync('./static/img/bg/thumbs/').sort())
+);
 
 module.exports = {
   css: [
@@ -38,6 +41,7 @@ module.exports = {
   },
   loading: { color: '#3B8070' },
   modules: [
+    '@nuxtjs/axios',
     '@nuxtjs/font-awesome',
     '@nuxtjs/vuetify'
   ],

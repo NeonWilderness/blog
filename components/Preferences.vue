@@ -19,7 +19,7 @@
 
     <v-subheader class="blue--text text--lighten-3">Layout Blogbeiträge</v-subheader>
     <div class="mx-3">
-      <v-radio-group v-model="storyLayout" mandatory class="mt-0">
+      <v-radio-group v-model="$store.state.storyLayout" mandatory class="mt-0">
         <v-radio
           v-for="layout in storyLayoutOptions"
           :class="layout.icon"
@@ -36,10 +36,10 @@
         <v-flex 
           xs6 
           :key="index" 
-          v-for="(image, index) in $store.getters.getBackgroundImages">
+          v-for="(image, index) in $store.getters.getThumbsImages">
           <div class="bgWrap">
             <div class="bgImage"
-              :class="{'selected': $store.getters.isCurrentBackgroundImage(image)}" 
+              :class="{'selected': isImageSelected(image, index)}" 
               :style="{backgroundImage: `url(${image})`}" 
               @click="setCurrentBackgroundImage(index)">
             </div>
@@ -62,7 +62,6 @@ export default {
   data: function() {
     return {
       showMessage: false,
-      storyLayout: null,
       storyLayoutOptions: [
         { val: 'single', text: 'volle Breite', icon: 'icon stop' },
         { val: 'double', text: '2-spaltig', icon: 'icon pause' },
@@ -71,27 +70,33 @@ export default {
     };
   },
   methods: {
+    isImageSelected(image, index) {
+      let bgIndex = this.$store.getters.getBgIndex;
+      if (bgIndex < 0) { // no image has been clicked yet (image is a default or based on preferences)
+        return this.$store.getters.isCurrentBackgroundImage(image);
+      } else { // an image was selected
+        return bgIndex === index;
+      }
+    },
     savePreferences() {
       if (process.browser) {
-        localStorage.setItem('neonStoryLayout', this.storyLayout);
-        localStorage.setItem('neonBackgroundImage', this.$store.getters.getCurrentBackgroundImage);
+        localStorage.setItem(this.$store.getters.getPreferencesKey, JSON.stringify({
+          bgImage: (this.$store.getters.getBgIndex === 0 ? 0 : this.$store.getters.getCurrentBackgroundImage),
+          storyLayout: this.$store.getters.getStoryLayout
+        }));
         this.showMessage = true;
         setTimeout(() => {
           this.showMessage = false;
           this.toggleDrawer();
-        }, 2000);
+        }, 1800);
       }
     },
     setCurrentBackgroundImage(index) {
+      this.bgIndex = index;
       this.$store.commit('setCurrentBackgroundImage', index);
     },
     toggleDrawer() {
       this.$store.commit('toggleDrawer');
-    }
-  },
-  created: function() {
-    if (process.browser) {
-      this.storyLayout = localStorage.getItem('neonStoryLayout') || this.storyLayoutOptions[0].val;
     }
   }
 }
@@ -148,6 +153,5 @@ export default {
     }
   }
 }
-
 </style>
 
