@@ -1,3 +1,4 @@
+require('dotenv-safe').load();
 /**
  * Define script config differences bewteen dev/prod mode
  */
@@ -46,6 +47,7 @@ module.exports = {
     '@nuxtjs/vuetify'
   ],
   axios: {
+    baseURL: (process.env.npm_lifecycle_event !== 'dev' ? process.env.BASEURL : 'http://localhost:3000')
   },
   vuetify: { 
     //  theme: {}
