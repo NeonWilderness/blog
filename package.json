@@ -6,7 +6,7 @@
   "scripts": {
     "cp:analyze": "node ./cockpit/import --convert --analyze --stop",
     "cp:convert": "node ./cockpit/import --convert --stop",
-    "cp:import": "node ./cockpit/import --limit=3",
+    "cp:import": "node ./cockpit/import --limit=40 --oldest",
     "cp:initialize": "node ./cockpit/initialize",
     "dev": "nuxt",
     "build": "nuxt build",
@@ -14,6 +14,7 @@
     "generate": "nuxt generate",
     "deploy": "npm run generate && npm run sync",
     "sync": "node ./cockpit/sync",
+    "test": "node ./cockpit/test",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint"
   },
@@ -22,10 +23,13 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.3.1",
     "@nuxtjs/font-awesome": "^1.0.3",
+    "@nuxtjs/toast": "^3.0.1",
     "@nuxtjs/vuetify": "^0.4.2",
-    "nuxt": "latest"
+    "nuxt": "^1.4.1"
   },
   "devDependencies": {
+    "@nuxtjs/feed": "^0.1.1",
+    "@nuxtjs/sitemap": "^0.1.1",
     "@types/node": "^10.5.2",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.1",

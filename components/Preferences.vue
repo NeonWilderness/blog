@@ -29,6 +29,16 @@
         ></v-radio>
       </v-radio-group>    
     </div>
+    <v-flex xs12 class="mx-3">
+      <v-slider v-model="$store.state.postsPerPage"
+        always-dirty 
+        label="Beiträge je Seite" 
+        thumb-label="always"
+        :min="1" 
+        :max="12" 
+        :step="1">
+      </v-slider>
+    </v-flex>
 
     <v-subheader class="blue--text text--lighten-3">Hintergrundbild</v-subheader>
     <div class="mx-3">
@@ -51,7 +61,6 @@
       <v-btn color="secondary" ripple small @click="savePreferences">
         <v-icon left>fa-save</v-icon>Einstellungen sichern
       </v-btn>
-      <v-alert :value="showMessage" type="success">Einstellungen gesichert!</v-alert>
     </div>
 
   </v-navigation-drawer>
@@ -61,7 +70,6 @@
 export default {
   data: function() {
     return {
-      showMessage: false,
       storyLayoutOptions: [
         { val: 'single', text: 'volle Breite', icon: 'icon stop' },
         { val: 'double', text: '2-spaltig', icon: 'icon pause' },
@@ -82,18 +90,15 @@ export default {
       if (process.browser) {
         localStorage.setItem(this.$store.getters.getPreferencesKey, JSON.stringify({
           bgImage: (this.$store.getters.getBgIndex === 0 ? 0 : this.$store.getters.getCurrentBackgroundImage),
+          postsPerPage: this.$store.getters.getPostsPerPage,
           storyLayout: this.$store.getters.getStoryLayout
         }));
-        this.showMessage = true;
-        setTimeout(() => {
-          this.showMessage = false;
-          this.toggleDrawer();
-        }, 1800);
+        this.$toast.success('Einstellungen erfolgreich gesichert.', {icon: 'fa-check'});
       }
     },
     setCurrentBackgroundImage(index) {
       this.bgIndex = index;
-      this.$store.commit('setCurrentBackgroundImage', index);
+      this.$store.dispatch('setCurrentBackgroundImage', index);
     },
     toggleDrawer() {
       this.$store.commit('toggleDrawer');
@@ -127,7 +132,6 @@ export default {
 }
 .btnSave {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   margin-top: 2rem;
 }

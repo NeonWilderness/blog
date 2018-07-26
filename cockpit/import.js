@@ -98,6 +98,7 @@ if (argv.stop) process.exit();
 let lookupCategories = {};
 let lookupPosts = {};
 let limit = argv.limit || Number.MAX_SAFE_INTEGER;
+if (argv.oldest) stories = stories.reverse();
 
 deleteCategories(Cockpit)
   .then(() => importCategories(Cockpit, stories))

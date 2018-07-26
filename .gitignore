@@ -8,4 +8,5 @@ cert
 dist
 data/*.txt
 node_modules
+test.js
 todo.md

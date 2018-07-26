@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div id="wrapper" :class="{faded: isImgLoading}" :style="{backgroundImage: 'url('+ $store.state.bgImage +')'}">
+    <div id="wrapper" :class="{faded: $store.state.isImgLoading}" :style="{backgroundImage: 'url('+ $store.state.bgImage +')'}">
       <v-container fluid grid-list-md style="padding:0">
         <nuxt/>
       </v-container>
@@ -12,7 +12,7 @@
 export default {
   data: function() {
     return {
-      isImgLoading: true
+/*    isImgLoading: true */
     };
   },
   mounted: function() {
@@ -24,21 +24,15 @@ export default {
 
       let preferences = localStorage.getItem(this.$store.getters.getPreferencesKey);
       if (preferences) { // found preferences in localStorage
-        preferences = JSON.parse(preferences);
-        this.$store.commit('setCurrentBackgroundImage', preferences.bgImage);
-        this.$store.commit('setStoryLayout', preferences.storyLayout);
+        this.$store.dispatch('setPreferences', JSON.parse(preferences));
       } else { // no preferences, then use defaults
-        this.$store.commit('setCurrentBackgroundImage', useRandomImage);
-        this.$store.commit('setStoryLayout', 'single');
+        this.$store.dispatch('setPreferences', { 
+          bgImage: useRandomImage,
+          postsPerPage: 4,
+          storyLayout: 'single'
+        });
       }
-
-      let img = new Image();
-      img.src = this.$store.getters.getCurrentBackgroundImage;
-      img.onload = () => {
-        this.bgImage = img.src;
-        this.isImgLoading = false;
-      };
-
+      
     });
   }
 };
@@ -82,5 +76,10 @@ html {
 }
 .adjust-fa .fa {
   transform: translateY(-5%);
+}
+.application--wrap {
+  background-color: #212121;
+  background-image: url(/img/overlay.png);
+  background-repeat: repeat;
 }
 </style>
