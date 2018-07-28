@@ -1,13 +1,15 @@
 /**
  * Manages deletion and import of blog post categories
  */
-const { truncateCollection } = require('./shared');
+const { delayNextPromise, truncateCollection } = require('./shared');
 
 const deleteCategories = (Cockpit) => {
   return truncateCollection(Cockpit, 'categories');
 };
 
 const importCategories = (Cockpit, stories) => {
+  const wait = 20; // ms
+  let timeout = 0; // wait*index
 
   let categories = stories.reduce((all, story, index) => {
     if (story.fm.category in all)
@@ -20,7 +22,8 @@ const importCategories = (Cockpit, stories) => {
   let entries = Object.keys(categories)
     .sort()
     .reduce((all, category, index) => {
-      all.push(Cockpit.collectionSave('categories', { category, count: categories[category] }));
+      timeout += wait;
+      all.push(delayNextPromise(timeout).then(() => Cockpit.collectionSave('categories', { category, count: categories[category] })));
       return all;
     }, []);
 

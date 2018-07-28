@@ -20,6 +20,9 @@ const getters = {
   getPreferencesKey: state => {
     return state.preferencesKey;
   },
+  getStoryLayout: state => {
+    return state.storyLayout;
+  },
   getThumbsImages: state => {
     return state.bgImages.map(img => {
       return `/img/bg/thumbs/${img}`;
@@ -28,8 +31,8 @@ const getters = {
   isCurrentBackgroundImage: state => (img) => {
     return (state.bgImage === img.replace('thumbs/', ''));
   },
-  getStoryLayout: state => {
-    return state.storyLayout;
+  isValidLayoutID: state => (storyLayout) => {
+    return (Object.keys(state.layouts).indexOf(storyLayout) >= 0);
   }
 
 };

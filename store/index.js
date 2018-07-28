@@ -11,6 +11,11 @@ const Store = () => {
       bgIndex: -1,
       isDrawerVisible: false,
       isImgLoading: true,
+      layouts: {
+        single: { grid: 'xs12', columns: 1 },
+        double: { grid: 'xs6', columns: 2 },
+        triple: { grid: 'xs4', columns: 3 }
+      },
       maxPage: 0,
       page: 0,
       posts: [],

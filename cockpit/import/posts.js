@@ -1,7 +1,7 @@
 /**
  * Manages deletion and import of blog posts
  */
-const { truncateCollection } = require('./shared');
+const { delayNextPromise, truncateCollection } = require('./shared');
 
 class Post {
 
@@ -41,12 +41,15 @@ const deletePosts = (Cockpit) => {
 };
 
 const importPosts = (Cockpit, stories, lookupCategories, limit) => {
+  const wait = 20; // ms
+  let timeout = 0; // wait*index
 
   let posts = stories.reduce((all, story, index) => {
     if (index < limit && story.fm.status !== 'skip') {
       let post = new Post(story);
       post.setCategoryId(lookupCategories);
-      all.push(Cockpit.collectionSave('posts', post));
+      timeout += wait;
+      all.push(delayNextPromise(timeout).then(() => Cockpit.collectionSave('posts', post)));
     }
     return all;
   }, []);

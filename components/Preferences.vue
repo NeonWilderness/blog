@@ -97,7 +97,6 @@ export default {
       }
     },
     setCurrentBackgroundImage(index) {
-      this.bgIndex = index;
       this.$store.dispatch('setCurrentBackgroundImage', index);
     },
     toggleDrawer() {

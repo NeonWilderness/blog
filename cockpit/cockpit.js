@@ -14,9 +14,11 @@ const Cockpit = new CockpitApi({
 const readPosts = () => {
   return Cockpit.collectionGet('posts', {
     filter: { published: true },
+    populate: 1,
     sort: { date: -1 }
   })
     .then(data => {
+      //console.log(JSON.stringify(data,null,2));
       return data.entries;
     });
 };

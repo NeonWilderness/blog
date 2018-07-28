@@ -32,7 +32,7 @@ const deleteComments = (Cockpit) => {
 
 const importComments = (Cockpit, stories, lookupPosts, limit) => {
   const wait = 20; // ms
-  var timeout = 0; // wait*index
+  let timeout = 0; // wait*index
 
   const recursiveCommentLayer = (comments, index, postid) => {
     let comment = new Comment(comments[index], postid, '');

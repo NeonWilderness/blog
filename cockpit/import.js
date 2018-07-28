@@ -122,4 +122,7 @@ deleteCategories(Cockpit)
   .then(() => {
     importComments(Cockpit, stories, lookupPosts, limit);
     console.log(`Comments and replies added to collection "comments".`);
+  })
+  .catch((err) => {
+    console.log(`Import ended with error: ${err}.`);
   });

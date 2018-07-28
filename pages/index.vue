@@ -7,16 +7,30 @@
         <i class="fa fa-cog fa-spin fa-lg fa-fw"></i>
       </button>
     </section>
+    <section class="content">
+      <v-layout row wrap class="contentwrapper pt-2">
+        <v-flex xs12 md7 offset-md1 class="storywrapper">
+          <Story />
+        </v-flex>
+        <v-flex xs12 md3 class="sidebar">
+          <Sidebox />
+        </v-flex>
+      </v-layout>
+    </section>
     <Preferences />
   </div>
 </template>
 
 <script>
 import Preferences from "~/components/Preferences.vue";
+import Sidebox from "~/components/Sidebox.vue";
+import Story from "~/components/Story.vue";
 
 export default {
   components: {
-    Preferences
+    Preferences,
+    Sidebox,
+    Story
   },
   data: function() {
     return {
@@ -31,6 +45,16 @@ export default {
 </script>
 
 <style lang="less">
+.content {
+  margin-top: -5em;
+}
+.contentwrapper {
+  background-color: rgba(33,33,33,0.95);
+  margin-bottom: 0!important;
+}
+.storywrapper, .sidebar {
+  width: 100%;  
+}
 .hero {
   align-items: center;
   display: flex;

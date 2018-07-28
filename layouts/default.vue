@@ -9,30 +9,53 @@
 </template>
 
 <script>
+import { escape } from 'escape-goat';
+
+const prefDefaults = {
+  bgImage: 0,
+  postsPerPage: 4,
+  storyLayout: 'single'
+};
+
 export default {
   data: function() {
-    return {
-/*    isImgLoading: true */
-    };
+    return {};
+  },
+  methods: {
+    validatePreferences: function(prefs) {
+      prefs.bgImage = prefs.bgImage || prefDefaults.bgImage;
+      if (typeof prefs.bgImage === 'string')
+        prefs.bgImage = escape(prefs.bgImage);
+
+      if (isNaN(prefs.postsPerPage || prefDefaults.postsPerPage))
+        prefs.postsPerPage = prefDefaults.postsPerPage; // use default is not a number
+      prefs.postsPerPage = Math.max(Math.min(Number(prefs.postsPerPage), 12), 1);
+
+      prefs.storyLayout = escape(prefs.storyLayout);
+      if (!this.$store.getters.isValidLayoutID(prefs.storyLayout)) {
+        prefs.storyLayout = prefDefaults.storyLayout;
+        this.$toast.error(
+          'Ungültiger Layoutparameter. Verwende Standardeinstellung.',
+          { icon: 'fa-flash' }
+        );
+      }
+
+      return prefs;
+    }
   },
   mounted: function() {
-    const useRandomImage = 0;
-
     this.$axios.get('/img/backgrounds.json').then(res => {
-
       this.$store.commit('setBackgroundImages', res.data);
 
-      let preferences = localStorage.getItem(this.$store.getters.getPreferencesKey);
-      if (preferences) { // found preferences in localStorage
-        this.$store.dispatch('setPreferences', JSON.parse(preferences));
-      } else { // no preferences, then use defaults
-        this.$store.dispatch('setPreferences', { 
-          bgImage: useRandomImage,
-          postsPerPage: 4,
-          storyLayout: 'single'
-        });
-      }
-      
+      let preferences = localStorage.getItem(
+        this.$store.getters.getPreferencesKey
+      );
+      this.$store.dispatch(
+        'setPreferences',
+        preferences
+          ? this.validatePreferences(JSON.parse(preferences))
+          : prefDefaults
+      );
     });
   }
 };
@@ -41,8 +64,8 @@ export default {
 
 <style lang="less">
 html {
-  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
