@@ -9,6 +9,7 @@ const Store = () => {
       bgImage: '/img/px1.png',
       bgImages: [],
       bgIndex: -1,
+      categories: [],
       isDrawerVisible: false,
       isImgLoading: true,
       layouts: {
@@ -17,6 +18,7 @@ const Store = () => {
         triple: { grid: 'xs4', columns: 3 }
       },
       maxPage: 0,
+      mostRecentComments: [],
       page: 0,
       posts: [],
       postsPerPage: 4,

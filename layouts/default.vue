@@ -29,7 +29,10 @@ export default {
 
       if (isNaN(prefs.postsPerPage || prefDefaults.postsPerPage))
         prefs.postsPerPage = prefDefaults.postsPerPage; // use default is not a number
-      prefs.postsPerPage = Math.max(Math.min(Number(prefs.postsPerPage), 12), 1);
+      prefs.postsPerPage = Math.max(
+        Math.min(Number(prefs.postsPerPage), 12),
+        1
+      );
 
       prefs.storyLayout = escape(prefs.storyLayout);
       if (!this.$store.getters.isValidLayoutID(prefs.storyLayout)) {
@@ -44,7 +47,7 @@ export default {
     }
   },
   mounted: function() {
-    this.$axios.get('/img/backgrounds.json').then(res => {
+    this.$axios.get('/json/allBackgrounds.json').then(res => {
       this.$store.commit('setBackgroundImages', res.data);
 
       let preferences = localStorage.getItem(
@@ -56,6 +59,14 @@ export default {
           ? this.validatePreferences(JSON.parse(preferences))
           : prefDefaults
       );
+    });
+
+    this.$axios.get('/json/allCategories.json').then(res => {
+      this.$store.commit('setCategories', res.data);
+    });
+
+    this.$axios.get('/json/mostRecentComments.json').then(res => {
+      this.$store.commit('setMostRecentComments', res.data);
     });
   }
 };
@@ -104,5 +115,10 @@ html {
   background-color: #212121;
   background-image: url(/img/overlay.png);
   background-repeat: repeat;
+}
+.dense {
+  .v-list__tile {
+    height: 36px;
+  }
 }
 </style>

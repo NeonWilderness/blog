@@ -120,7 +120,10 @@ deleteCategories(Cockpit)
     return deleteComments(Cockpit);
   })
   .then(() => {
-    importComments(Cockpit, stories, lookupPosts, limit);
+    console.log('Now adding comments and replies...');
+    return importComments(Cockpit, stories, lookupPosts, limit);
+  })
+  .then(() => {
     console.log(`Comments and replies added to collection "comments".`);
   })
   .catch((err) => {

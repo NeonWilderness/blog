@@ -1,13 +1,4 @@
-require('dotenv-safe').load();
-
-/**
- * Create JSON file of all available background images in folder static/img/bg/
- */
-const fs = require('fs');
-fs.writeFileSync(
-  './static/img/backgrounds.json', 
-  JSON.stringify(fs.readdirSync('./static/img/bg/thumbs/').sort())
-);
+if (process.server) require('dotenv-safe').load();
 
 /**
  * Define script config differences bewteen dev/prod mode
@@ -49,7 +40,15 @@ module.exports = {
     ],
     script: (process.env.npm_lifecycle_event !== 'dev' ? prodScripts : devScripts)
   },
+  env: {
+    apiUrl: process.env.APIURL,
+    apiKey: process.env.APIKEY,
+    baseUrl: baseUrl
+  },
   loading: { color: '#3B8070' },
+  plugins: [
+    '~/plugins/vue-timeago'
+  ],
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/feed',
@@ -61,14 +60,14 @@ module.exports = {
   axios: {
     baseURL: baseUrl
   },
-/*  feed: [
-    {
-      path: '/feed.xml',
-      async create (feed) {},
-      cacheTime: 1000 * 60 * 15,
-      type: 'rss2' // rss2 | atom1 | json1
-    }
-  ], */
+  /*  feed: [
+      {
+        path: '/feed.xml',
+        async create (feed) {},
+        cacheTime: 1000 * 60 * 15,
+        type: 'rss2' // rss2 | atom1 | json1
+      }
+    ], */
 /*  sitemap: {
     cacheTime: 1000 * 60 * 15,
     exclude: [],
@@ -76,45 +75,35 @@ module.exports = {
     gzip: true,
     hostname: baseUrl,
     path: '/sitemap.xml',
-    routes: [
-      '/page/1',
-      {
-        url: '/page/2',
-        changefreq: 'daily',
-        priority: 1,
-        lastmodISO: '2017-06-30T13:30:00.000Z'
-      }
-    ]
+    routes: require('./static/json/allRoutes.json')
   }, */
   toast: {
-    duration : 2000,
-    iconPack : 'fontawesome',
-    position: 'top-center', 
-    theme: 'primary' 
+    duration: 2000,
+    iconPack: 'fontawesome',
+    position: 'top-center',
+    theme: 'primary'
   },
-  vuetify: { 
+  vuetify: {
     //  theme: {}
   },
-/*  generate: {
-    routes: function () {
-      return axios.get('https://my-api/users')
-      .then((res) => {
-        return res.data.map((slug) => {
-          return `/${slug}`
+  /*  generate: {
+      routes: function () {
+        return axios.get('https://my-api/users')
+        .then(res => {
+          return res.data.map(slug => `/${slug}`)
         })
-      })
-    }
-  }, */
+      }
+    }, */
   build: {
     extractCSS: true,
-    extend (config, { isDev, isClient }) {
+    extend(config, { isDev, isClient }) {
       if (isDev && isClient) {
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
           exclude: /(node_modules)/
-        })
+        });
       }
     }
   }

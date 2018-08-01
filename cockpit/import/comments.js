@@ -15,12 +15,12 @@ class Comment {
   constructor(comment, postid, parentid) {
     this.postid = postid;
     this.postdate = comment.date;
-    this.author = comment.author;
-    this.authorurl = comment.url;
+    this.author = comment.author.trim();
+    this.authorurl = comment.url.trim().toLowerCase();
     this.email = '';
     this.reviewed = true;
     this.approved = true;
-    this.content = comment.body;
+    this.content = comment.body.trim();
     this.parentid = parentid;
   }
 
@@ -64,7 +64,7 @@ const importComments = (Cockpit, stories, lookupPosts, limit) => {
   };
 
   stories.forEach((story, index) => {
-    if (index < limit && story.comments.length) {
+    if (story.fm.basename in lookupPosts && story.comments.length) {
       let postid = getPostId(lookupPosts, story.fm.basename);
       recursiveCommentLayer(story.comments, 0, postid);
     }

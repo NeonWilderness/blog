@@ -21,6 +21,7 @@ const analyzeStories = (stories) => {
   let usedDataCommands = {};
   let usedScripts = {};
   let skippedStories = [];
+  let commentators = {};
 
   stories.forEach((story) => {
 
@@ -65,12 +66,24 @@ const analyzeStories = (stories) => {
         usedScripts[script] = 1;
     });
 
-  });
+    story.comments.forEach( comment => {
+      let author = comment.author.trim();
+      if (!commentators.hasOwnProperty(author))
+        commentators[author] = comment.url.trim().toLowerCase();
+    });
 
+  });
+/*
   dumpStats(usedClasses, 'usedClasses');
   dumpStats(usedDataCommands, 'usedDataCommands');
   dumpStats(usedScripts, 'usedScripts');
   console.log('!! Skipped Stories:', skippedStories.join(', '));
+*/
+  let sortedCommentators =  Object.keys(commentators).sort();
+  sortedCommentators.forEach(commentator => {
+    console.log(commentator, commentators[commentator]);
+  });
+  console.log(`Found ${sortedCommentators.length} commentators.`);
 
 };
 

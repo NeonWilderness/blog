@@ -23,7 +23,12 @@ const importCategories = (Cockpit, stories) => {
     .sort()
     .reduce((all, category, index) => {
       timeout += wait;
-      all.push(delayNextPromise(timeout).then(() => Cockpit.collectionSave('categories', { category, count: categories[category] })));
+      all.push(
+        delayNextPromise(timeout)
+          .then(() => Cockpit.collectionSave('categories', { 
+            category, 
+            count: categories[category] }))
+      );
       return all;
     }, []);
 

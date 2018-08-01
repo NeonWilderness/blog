@@ -10,14 +10,14 @@ class Post {
     this.commentsallowed = (story.fm.allowcomments === '1');
     this.commentsclosed = false;
     this.date = story.fm.date;
-    this.title = story.fm.title;
+    this.title = story.fm.title.trim();
     this.category = {
       _id: '',
       link: 'categories',
       display: story.fm.category
     };
     this.image = null;
-    this.content = story.body.content;
+    this.content = story.body.content.trim();
     this.basename = story.fm.basename;
     this.counter = {
       reads: story.body.reads,

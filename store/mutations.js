@@ -13,11 +13,17 @@ const mutations = {
   setBgIndex(state, payload) { // index of background image {number}
     state.bgIndex = payload;
   },
+  setCategories(state, payload) { // array of categories {array} of { category, count, slug, _id }
+    state.categories = payload;
+  },
   setCurrentBackgroundImage(state, payload) { // path/name of loaded background image {string}
     state.bgImage = payload;
   },
   setImgLoading(state, payload) { // TRUE=new background image is currently loading {boolean}
     state.isImgLoading = payload;
+  },
+  setMostRecentComments(state, payload) { // array of max. 10 comments {array}
+    state.mostRecentComments = payload;
   },
   setPage(state, payload) { // new page value {number}
     state.page = sanitizePage(payload);

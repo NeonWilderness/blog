@@ -13,7 +13,10 @@
           <Story />
         </v-flex>
         <v-flex xs12 md3 class="sidebar">
-          <Sidebox />
+          <LatestComments />
+          <Sonnet />
+          <LuckyMan />
+          <ThisTime />
         </v-flex>
       </v-layout>
     </section>
@@ -22,15 +25,21 @@
 </template>
 
 <script>
+import LatestComments from "~/components/LatestComments.vue";
+import LuckyMan from "~/components/LuckyMan.vue";
 import Preferences from "~/components/Preferences.vue";
-import Sidebox from "~/components/Sidebox.vue";
+import Sonnet from "~/components/Sonnet.vue";
 import Story from "~/components/Story.vue";
+import ThisTime from "~/components/ThisTime.vue";
 
 export default {
   components: {
+    LatestComments,
+    LuckyMan,
     Preferences,
-    Sidebox,
-    Story
+    Sonnet,
+    Story,
+    ThisTime
   },
   data: function() {
     return {
