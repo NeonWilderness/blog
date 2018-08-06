@@ -12,7 +12,7 @@ const fs = require('fs');
 const path = require('path');
 
 const mostRecentComments = 10;
-const maxCommentAbstractLength = 87;
+const maxCommentAbstractLength = 57;
 
 const log = (name, len) => {
   console.log(`${name}.json created with ${len} entries.`);

@@ -51,6 +51,7 @@ module.exports = {
   ],
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/dotenv',
     '@nuxtjs/feed',
     '@nuxtjs/font-awesome',
     '@nuxtjs/sitemap',

@@ -13,9 +13,9 @@
                 <v-list-tile-avatar><img src="/img/user.png"></v-list-tile-avatar>
                 <v-list-tile-content>
                   <div class="comment mb-2">{{comment.content}}</div> 
-                  <v-list-tile-sub-title class="caption subtitle">
+                  <v-list-tile-sub-title class="caption d-flex">
                     <a v-if="comment.authorurl.length" 
-                      class="authorlink purple--text text--lighten-2" 
+                      class="authorlink teal--text text--lighten-1" 
                       target="_blank" 
                       :href="comment.authorurl">
                       {{comment.author}}
@@ -25,7 +25,7 @@
                       {{comment.author}}
                     </span>
                     <v-spacer />
-                    <timeago :datetime="comment.postdate"></timeago>
+                    <timeago :datetime="comment.postdate" :autoUpdate="60" class="text-xs-right"></timeago>
                   </v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
@@ -44,9 +44,6 @@
 .comment {
   font-size: 0.95rem;
   line-height: 1.2;
-}
-.subtitle {
-  display: flex;
 }
 </style>
 

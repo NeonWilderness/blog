@@ -106,7 +106,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .bgWrap {
   position: relative;
   width: 100%;

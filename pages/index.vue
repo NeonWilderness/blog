@@ -9,11 +9,11 @@
     </section>
     <section class="content">
       <v-layout row wrap class="contentwrapper pt-2">
-        <v-flex xs12 md7 offset-md1 class="storywrapper">
+        <v-flex xs12 md8 lg7 offset-lg1 class="storywrapper">
           <Story />
         </v-flex>
-        <v-flex xs12 md3 class="sidebar">
-          <LatestComments />
+        <v-flex xs12 md4 lg3 class="sidebar">
+          <WeepingWillow />
           <Sonnet />
           <LuckyMan />
           <ThisTime />
@@ -25,21 +25,21 @@
 </template>
 
 <script>
-import LatestComments from "~/components/LatestComments.vue";
 import LuckyMan from "~/components/LuckyMan.vue";
 import Preferences from "~/components/Preferences.vue";
 import Sonnet from "~/components/Sonnet.vue";
 import Story from "~/components/Story.vue";
 import ThisTime from "~/components/ThisTime.vue";
+import WeepingWillow from "~/components/WeepingWillow.vue";
 
 export default {
   components: {
-    LatestComments,
     LuckyMan,
     Preferences,
     Sonnet,
     Story,
-    ThisTime
+    ThisTime,
+    WeepingWillow
   },
   data: function() {
     return {
@@ -49,6 +49,9 @@ export default {
     openPreferences() {
       this.$store.commit('toggleDrawer');
     }
+  },
+  fetch ({ store }) {
+    return store.dispatch('establishCounterData');
   }
 };
 </script>
@@ -58,7 +61,7 @@ export default {
   margin-top: -5em;
 }
 .contentwrapper {
-  background-color: rgba(33,33,33,0.95);
+  background-color: rgba(33, 33, 33, 0.95);
   margin-bottom: 0!important;
 }
 .storywrapper, .sidebar {

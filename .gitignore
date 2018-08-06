@@ -7,6 +7,8 @@
 cert
 dist
 data/*.txt
+data/log*.html
+hook*.js
 node_modules
-test.js
-todo.md
+test*.js
+to*.md

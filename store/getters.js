@@ -14,6 +14,9 @@ const getters = {
   getCurrentPage: state => {
     return state.page;
   },
+  getMost: state => (type) => { // {string} type = reads|hearts|comments
+    return state.most[type][state.selectedPeriod];
+  },
   getPostsPerPage: state => {
     return state.postsPerPage;
   },

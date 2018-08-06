@@ -1,10 +1,11 @@
 /**
- * Read Cockpit CMS data for nuxt blog generation
- * ==============================================
+ * Read Cockpit CMS data for nuxt blog generation (server-side only)
+ * =================================================================
  * 
  */
 const CockpitApi = require('cockpit-sdk').default;
 const _merge = require('lodash.merge');
+require('dotenv-safe').load();
 
 const Cockpit = new CockpitApi({
   host: process.env.apiUrl || process.env.APIURL,

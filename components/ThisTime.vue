@@ -9,7 +9,7 @@
           <v-list dense class="dense">
             <v-list-tile avatar>
               <v-list-tile-avatar><v-icon>fa-clock-o</v-icon></v-list-tile-avatar>
-              <v-list-tile-title>{{getAge}} days</v-list-tile-title>
+              <v-list-tile-title :title="firstStoryDate">{{getAge}} days</v-list-tile-title>
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar><v-icon>fa-birthday-cake</v-icon></v-list-tile-avatar>
@@ -61,6 +61,6 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 </style>
 

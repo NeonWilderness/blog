@@ -4,6 +4,9 @@ const sanitizePage = (page, maxPage) => {
 
 const mutations = {
 
+  establishCockpitInstance(state, payload) {
+    state.cockpitApi = payload;
+  },
   incPage(state, payload) { // -x page/s backward, +x page/s forward {number}
     state.page = sanitizePage(state.page + payload);
   },
@@ -15,6 +18,9 @@ const mutations = {
   },
   setCategories(state, payload) { // array of categories {array} of { category, count, slug, _id }
     state.categories = payload;
+  },
+  setCounterData(state, {type, period, posts}) { // object { type, period, posts }
+    state.most[type][period] = posts;
   },
   setCurrentBackgroundImage(state, payload) { // path/name of loaded background image {string}
     state.bgImage = payload;
