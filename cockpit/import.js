@@ -89,12 +89,11 @@ let stories = fs.readFileSync(file)
     return all;
   }, []);
 
-console.log('Args:', argv);
 if (argv.convert) convertStories(stories);
   
 if (argv.analyze) analyzeStories(stories);
   
-if (argv.stop) process.exit();
+if (argv.stop) return;
 
 let lookupCategories = {};
 let lookupPosts = {};
