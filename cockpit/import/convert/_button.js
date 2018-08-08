@@ -1,8 +1,3 @@
-const convertClassToColor = ($el, remove, add) => {
-  $el.removeClass(remove);
-  $el.attr('color', add);
-};
-
 /**
  * Change foundation5 button to vuetify standard (v-btn)
  * @param {object} story story object
@@ -11,23 +6,24 @@ const convertClassToColor = ($el, remove, add) => {
  */
 const convertButton = (story, $, log) => {
 
-  $('.button', 'button').each((index, el) => {
+  log.set('button');
+
+  $('.button, button').each((index, el) => {
     let $el = $(el);
     let before = $.html(el);
     for (let cls of (el.attribs.class || '').split(' ')) {
       switch (cls) {
         case 'tiny':
         case 'small': 
-          $el.removeClass(cls);
-          $el.attr('small');
+          $el.removeClass(cls).attr('small');
           break;
         case 'success': 
         case 'secondary': 
         case 'info':
-          convertClassToColor(cls, cls);
+          $el.removeClass(cls).attr('color', cls);
           break;
         case 'alert': 
-          convertClass(cls, 'error');
+          $el.removeClass(cls).attr('color', 'error');
           break;
         case 'radius': 
           $el.removeClass(cls);
@@ -38,7 +34,9 @@ const convertButton = (story, $, log) => {
           break;
       }
     }
-    $el.attr(':ripple', 'true');
+    $el.removeClass('button').attr(':ripple', 'true');
+    if (!el.attribs.class.length) delete el.attribs.class;
+    if ('title' in el.attribs && !el.attribs.title.length) delete el.attribs.title;
     el.tagName = 'v-btn';
     log.item(story.fm.basename, before, $.html(el));
   });

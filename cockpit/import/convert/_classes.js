@@ -5,6 +5,9 @@
  * @param {log} $ logging instance
  */
 const convertClasses = (story, $, log) => {
+
+  log.set('classes');
+
   let classFixes = [
     { from: 'aligncenter', to: 'text-xs-center' },
     { from: 'alignright', to: 'text-xs-right' },

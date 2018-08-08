@@ -6,6 +6,8 @@
  */
 const convertDataAttributes = (story, $, log) => {
 
+  log.set('data-attributes');
+
   $('[title^="data-"]').each((i, el) => {
     let $el = $(el);
     let oldTitle = $el.attr('title');

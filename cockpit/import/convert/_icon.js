@@ -6,6 +6,8 @@
  */
 const convertIcon = (story, $, log) => {
 
+  log.set('icon');
+
   $('i.fa').each((index, el) => {
     let $el = $(el);
     let before = $.html(el);

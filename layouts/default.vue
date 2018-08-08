@@ -207,4 +207,7 @@ label {
 .v-alert>div>p:last-child {
   margin-bottom: 0;
 }
+.v-btn__content .fa {
+  margin-right: .6125em;
+}
 </style>

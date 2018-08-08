@@ -24,6 +24,7 @@ class logConversions {
               pre.before:before { content: "before:" }
               pre.after:before { content: "after:" }
               .basename { text-decoration: none; color: #008bca; }
+              .basename span { color: #ccc; font-size: .85em; margin-left: 1em; }
           </style>
       </head>
       <body>
@@ -38,25 +39,34 @@ class logConversions {
       </body>
       </html>
     `;
+    this.sub = '';
     this.items = [];
   }
 
-  dump() {
+  dump(converted) {
     fs.writeFileSync(
       path.resolve(process.cwd(), 'data', 'logConversion.html'), 
       this.html.replace('{{items}}', this.items.join('\n'))
+    );
+    fs.writeFileSync(
+      path.resolve(process.cwd(), 'data', 'logConverted.txt'), 
+      converted
     );
   }
 
   item(basename, before, after) {
     this.items.push(`
     <div class="changeItem">
-      <a class="basename" target="_blank" href="https://neonwilderness.twoday.net/stories/${basename.split('-').pop()}">${basename}</a>
+      <a class="basename" target="_blank" href="https://neonwilderness.twoday.net/stories/${basename.split('-').pop()}">${basename} <span>${this.sub}</span></a>
       <pre class="before"><code>${escape(before)}</code></pre>
       <pre class="after"><code>${escape(after)}</code></pre>
     </div>
     `
     );
+  }
+
+  set(sub) {
+    this.sub = sub;
   }
 
 }

@@ -6,6 +6,8 @@
  */
 const convertAlertbox = (story, $, log) => {
 
+  log.set('alertbox');
+
   $('.alert-box').each((index, el) => {
     let $el = $(el);
     let before = $.html(el);

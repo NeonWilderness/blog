@@ -89,6 +89,7 @@ let stories = fs.readFileSync(file)
     return all;
   }, []);
 
+console.log('Args:', argv);
 if (argv.convert) convertStories(stories);
   
 if (argv.analyze) analyzeStories(stories);

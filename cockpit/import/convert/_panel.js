@@ -6,6 +6,8 @@
  */
 const convertPanel = (story, $, log) => {
 
+  log.set('panel');
+
   $('.panel').each((index, el) => {
     let $el = $(el);
     let before = $.html(el);

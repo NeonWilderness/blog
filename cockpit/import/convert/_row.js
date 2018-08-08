@@ -6,6 +6,8 @@
  */
 const convertRow = (story, $, log) => {
 
+  log.set('row/columns');
+
   $('.row').each((index, el) => {
     let $el = $(el);
     let before = $.html(el);

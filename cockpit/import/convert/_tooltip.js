@@ -6,15 +6,20 @@
  */
 const convertTooltip = (story, $, log) => {
 
-  $('a.tip', '.has-tip').each((index, el) => {
+  log.set('tooltip');
+
+  $('a.tip, .has-tip').each((index, el) => {
     let $el = $(el);
     let before = $.html(el);
     let tooltiptext = $el.attr('title');
     let innertext = $el.html();
     $el.removeClass('tip has-tip')
+      .removeAttr('aria-haspopup')
       .removeAttr('data-tooltip')
       .removeAttr('rel')
+      .removeAttr('title')
       .attr('top', '');
+    if (!el.attribs.class.length) delete el.attribs.class;  
     el.tagName = 'v-tooltip';
     $el.html(`
       <span slot="activator" class="tooltip">${innertext}</span>
