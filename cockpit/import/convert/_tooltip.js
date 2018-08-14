@@ -3,8 +3,9 @@
  * @param {object} story story object
  * @param {cheerio} $ element/s to change
  * @param {log} $ logging instance
+ * @param {number} commentIdx -1: story, >=0: index of actual comment 
  */
-const convertTooltip = (story, $, log) => {
+const convertTooltip = (story, $, log, commentIdx = -1) => {
 
   log.set('tooltip');
 
@@ -25,7 +26,7 @@ const convertTooltip = (story, $, log) => {
       <span slot="activator" class="tooltip">${innertext}</span>
       <span>${tooltiptext}</span>
     `);
-    log.item(story.fm.basename, before, $.html(el));
+    log.item(`${story.fm.basename}${commentIdx >= 0 ? ' comment #' + commentIdx : ''}`, before, $.html(el));
   });
 
 };

@@ -3,8 +3,9 @@
  * @param {object} story story object
  * @param {cheerio} $ element/s to change
  * @param {log} $ logging instance
+ * @param {number} commentIdx -1: story, >=0: index of actual comment 
  */
-const convertDataAttributes = (story, $, log) => {
+const convertDataAttributes = (story, $, log, commentIdx = -1) => {
 
   log.set('data-attributes');
 
@@ -24,7 +25,7 @@ const convertDataAttributes = (story, $, log) => {
       }
     });
 
-    log.item(story.fm.basename, oldTitle, Object.keys(el.attribs).reduce((all, attr) => {
+    log.item(`${story.fm.basename}${commentIdx >= 0 ? ' comment #' + commentIdx : ''}`, oldTitle, Object.keys(el.attribs).reduce((all, attr) => {
       let val = $el.attr(attr);
       all += `${attr}${val.length ? '="' + val + '"' : ''} `;
       return all;

@@ -1,19 +1,18 @@
 /**
- * Change foundation5 orbit-container to vuetify standard (v-carousel)
+ * Change foundation5 grid classes row/columns to vuetify standard (v-container/v-layout/v-flex)
  * @param {object} story story object
  * @param {cheerio} $ element/s to change
  * @param {log} $ logging instance
+ * @param {number} commentIdx -1: story, >=0: index of actual comment 
  */
-const convertRow = (story, $, log) => {
+const convertRow = (story, $, log, commentIdx = -1) => {
 
-  log.set('row/columns');
-
-  $('.row').each((index, el) => {
+  function processRowElement(el) {
     let $el = $(el);
     let before = $.html(el);
     let hasCollapse = $el.hasClass('collapse');
     let data = [];
-    $el.find('.columns').each((colx, col) => {
+    $el.find('>.columns').each((colx, col) => {
       $col = $(col);
       $col.removeClass('columns');
       let cols = {}, newClass = [];
@@ -40,7 +39,17 @@ const convertRow = (story, $, log) => {
       .attr('fluid', '');
     if (!hasCollapse) $el.attr('grid-list-md', '');
     if (!el.attribs.class.length) delete el.attribs.class;
-    log.item(story.fm.basename, before, $.html(el));
+    log.item(`${story.fm.basename}${commentIdx >= 0 ? ' comment #' + commentIdx : ''}`, before, $.html(el));
+  }
+
+  log.set('row/columns');
+
+  $('.row .row').each((index, el) => {
+    processRowElement(el);
+  });
+
+  $('.row').each((index, el) => {
+    processRowElement(el);
   });
 
 };

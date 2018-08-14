@@ -3,8 +3,9 @@
  * @param {object} story story object
  * @param {cheerio} $ element/s to change
  * @param {log} $ logging instance
+ * @param {number} commentIdx -1: story, >=0: index of actual comment 
  */
-const convertIcon = (story, $, log) => {
+const convertIcon = (story, $, log, commentIdx = -1) => {
 
   log.set('icon');
 
@@ -23,7 +24,7 @@ const convertIcon = (story, $, log) => {
     else
       delete el.attribs.class;  
     el.tagName = 'v-icon';
-    log.item(story.fm.basename, before, $.html(el));
+    log.item(`${story.fm.basename}${commentIdx >= 0 ? ' comment #' + commentIdx : ''}`, before, $.html(el));
   });
 
 };

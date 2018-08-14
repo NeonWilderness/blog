@@ -3,8 +3,9 @@
  * @param {object} story story object
  * @param {cheerio} $ element/s to change
  * @param {log} $ logging instance
+ * @param {number} commentIdx -1: story, >=0: index of actual comment 
  */
-const convertHandwriting = (story, $, log) => {
+const convertHandwriting = (story, $, log, commentIdx = -1) => {
 
   log.set('handwriting');
 
@@ -16,7 +17,7 @@ const convertHandwriting = (story, $, log) => {
 </style>
     `);
     
-    log.item(story.fm.basename, '.neonhand', 'Added font style definition');
+    log.item(`${story.fm.basename}${commentIdx >= 0 ? ' comment #' + commentIdx : ''}`, '.neonhand', 'Added font style definition');
 
   }
 

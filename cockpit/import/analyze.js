@@ -21,7 +21,7 @@ const analyzeStories = (stories) => {
   let usedDataCommands = {};
   let usedScripts = {};
   let skippedStories = [];
-  let commentators = {};
+  //let commentators = {};
 
   stories.forEach((story) => {
 
@@ -43,7 +43,7 @@ const analyzeStories = (stories) => {
         };
       }
     });
-
+/*
     // consolidate all used data-commands
     $('[title^="data-"]').each((i, el) => {
       $(el).attr('title').split('|').forEach((cmd) => {
@@ -72,18 +72,31 @@ const analyzeStories = (stories) => {
         commentators[author] = comment.url.trim().toLowerCase();
     });
 
+    story.comments.forEach( (comment, index) => {
+      let $$ = cheerio.load(`<div>${comment.body}</div>`, { decodeEntities: false });
+      let tags = $$('*');
+      if (tags.length) {
+        tags.each( (index, el) => {
+          if (el.attribs.class && el.attribs.class.length) {
+            console.log(`>> #${index+1}: ${$$.html(el)}`);
+          }
+        });
+      }
+    });
+*/
   });
-/*
-  dumpStats(usedClasses, 'usedClasses');
+
+  dumpStats(usedClasses, 'usedClasses'); /*
   dumpStats(usedDataCommands, 'usedDataCommands');
   dumpStats(usedScripts, 'usedScripts');
   console.log('!! Skipped Stories:', skippedStories.join(', '));
-*/
+
   let sortedCommentators =  Object.keys(commentators).sort();
   sortedCommentators.forEach(commentator => {
     console.log(commentator, commentators[commentator]);
   });
   console.log(`Found ${sortedCommentators.length} commentators.`);
+*/
 
 };
 

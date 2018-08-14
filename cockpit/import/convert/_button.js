@@ -3,8 +3,9 @@
  * @param {object} story story object
  * @param {cheerio} $ element/s to change
  * @param {log} $ logging instance
+ * @param {number} commentIdx -1: story, >=0: index of actual comment 
  */
-const convertButton = (story, $, log) => {
+const convertButton = (story, $, log, commentIdx = -1) => {
 
   log.set('button');
 
@@ -38,7 +39,7 @@ const convertButton = (story, $, log) => {
     if (!el.attribs.class.length) delete el.attribs.class;
     if ('title' in el.attribs && !el.attribs.title.length) delete el.attribs.title;
     el.tagName = 'v-btn';
-    log.item(story.fm.basename, before, $.html(el));
+    log.item(`${story.fm.basename}${commentIdx >= 0 ? ' comment #' + commentIdx : ''}`, before, $.html(el));
   });
 
 };

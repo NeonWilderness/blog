@@ -3,8 +3,9 @@
  * @param {object} story story object
  * @param {cheerio} $ element/s to change
  * @param {log} $ logging instance
+ * @param {number} commentIdx -1: story, >=0: index of actual comment 
  */
-const convertAlertbox = (story, $, log) => {
+const convertAlertbox = (story, $, log, commentIdx = -1) => {
 
   log.set('alertbox');
 
@@ -17,7 +18,7 @@ const convertAlertbox = (story, $, log) => {
       .addClass('radius')
       .attr(':value', 'true');
     el.tagName = 'v-alert';
-    log.item(story.fm.basename, before, $.html(el));
+    log.item(`${story.fm.basename}${commentIdx >= 0 ? ' comment #' + commentIdx : ''}`, before, $.html(el));
   });
 
 };

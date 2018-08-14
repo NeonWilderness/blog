@@ -3,8 +3,9 @@
  * @param {object} story story object
  * @param {cheerio} $ element/s to change
  * @param {log} $ logging instance
+ * @param {number} commentIdx -1: story, >=0: index of actual comment 
  */
-const convertPanel = (story, $, log) => {
+const convertPanel = (story, $, log, commentIdx = -1) => {
 
   log.set('panel');
 
@@ -17,7 +18,7 @@ const convertPanel = (story, $, log) => {
       .attr(':value', 'true')
       .attr('color', hasCallout ? 'cyan' : 'grey');
     el.tagName = 'v-alert';
-    log.item(story.fm.basename, before, $.html(el));
+    log.item(`${story.fm.basename}${commentIdx >= 0 ? ' comment #' + commentIdx : ''}`, before, $.html(el));
   });
 
 };

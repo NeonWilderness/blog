@@ -148,9 +148,21 @@ label {
     height: 36px;
   }
 }
+.d-flex > li {
+  list-style-type: none;
+}
 .fa-li {
   margin-right: .5em;
   margin-top: .1em;
+}
+.neonimg {
+    box-shadow: 8px 8px 16px rgba(0,0,0,0.6);
+    margin: 16px 0;
+}
+.number {
+  width: 30px!important;
+  height: 30px!important;
+  box-shadow: none!important;
 }
 .pricing-table {
   border: solid 1px #ddd; 
@@ -184,9 +196,27 @@ label {
     padding: 0.9375rem 1.25rem; 
     text-align: center;
   }
+  .title {
+    background-color: #333;
+    color: #eee;
+    font-size: 1rem;
+    padding: 0.9375rem 1.25rem;
+    text-align: center;
+  }
 }
 .radius {
   border-radius: 2px;
+}
+.th {
+    border: solid 4px #fff;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
+    display: inline-block;
+    line-height: 0;
+    max-width: 100%;
+    transition: all 200ms ease-out;
+    &:hover, &:focus {
+      box-shadow: 0 0 6px 1px rgba(0,140,186,0.5);
+    }
 }
 .tooltip {
   border-bottom: 1px dotted rgba(0, 0, 0, .87);
@@ -209,5 +239,9 @@ label {
 }
 .v-btn__content .fa {
   margin-right: .6125em;
+}
+.v-chip--small {
+    height: 1.3rem;
+    margin: 0 .2rem;
 }
 </style>

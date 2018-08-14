@@ -3,8 +3,9 @@
  * @param {object} story story object
  * @param {cheerio} $ element/s to change
  * @param {log} $ logging instance
+ * @param {number} commentIdx -1: story, >=0: index of actual comment 
  */
-const convertPanel = (story, $, log) => {
+const convertPanel = (story, $, log, commentIdx = -1) => {
 
   log.set('orbit');
 
@@ -21,8 +22,11 @@ const convertPanel = (story, $, log) => {
        `);
     });
     el.tagName = 'v-carousel';
-    $el.html(`${data.join('')}`);
-    log.item(story.fm.basename, before, $.html(el));
+    $el
+      .removeClass('orbit-container')
+      .html(`${data.join('')}`);
+    if (!el.attribs.class.length) delete el.attribs.class;      
+    log.item(`${story.fm.basename}${commentIdx >= 0 ? ' comment #' + commentIdx : ''}`, before, $.html(el));
   });
 
 };
