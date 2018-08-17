@@ -21,7 +21,7 @@ const convertHeading = (story, $, log, commentIdx = -1) => {
   $('h1, h2, h3, h4, h5, h6').each((index, el) => {
     let $el = $(el);
     let before = $.html(el);
-    $el.addClass(`${headingClasses[el.tagName]} font-weight-light mb-2`);
+    $el.addClass(`${headingClasses[el.tagName]} font-weight-light my-2`);
     log.item(`${story.fm.basename}${commentIdx >= 0 ? ' comment #' + commentIdx : ''}`, before, $.html(el));
   });
 

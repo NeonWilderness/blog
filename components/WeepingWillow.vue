@@ -12,7 +12,9 @@
               <v-list-tile avatar :key="comment._id">
                 <v-list-tile-avatar><img src="/img/user.png"></v-list-tile-avatar>
                 <v-list-tile-content>
-                  <div class="comment mb-2">{{comment.content}}</div> 
+                  <a class="commentlink" :href="'/' + comment.basename">
+                    <div class="comment mb-2">{{comment.content}}</div>
+                  </a>
                   <v-list-tile-sub-title class="caption d-flex">
                     <a v-if="comment.authorurl.length" 
                       class="authorlink teal--text text--lighten-1" 
@@ -44,6 +46,13 @@
 .comment {
   font-size: 0.95rem;
   line-height: 1.2;
+}
+.commentlink {
+  text-decoration: none;
+  color: rgba(0,0,0,.87);
+  &:hover {
+    color: #00B8D4; // cyan accent-4  
+  }
 }
 </style>
 

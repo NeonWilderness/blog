@@ -21,6 +21,7 @@ const conversionFunctions = [
   require('./convert/_panel'),
   require('./convert/_orbit'),
   require('./convert/_row'),
+  require('./convert/_tabs'),
   require('./convert/_expansionpanel'),
   require('./convert/_handwriting')
 ];

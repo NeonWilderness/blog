@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer absolute fixed light right temporary v-model="$store.state.isDrawerVisible">
-    <v-toolbar color="blue lighten-3" dark flat>
+    <v-toolbar color="cyan" dark flat>
       <v-list>
         <v-list-tile>
           <v-list-tile-content>
@@ -17,11 +17,12 @@
 
     <v-divider></v-divider>
 
-    <v-subheader class="blue--text text--lighten-3">Layout Blogbeiträge</v-subheader>
+    <v-subheader class="cyan--text text--darken-1">Layout Blogbeiträge</v-subheader>
     <div class="mx-3">
       <v-radio-group v-model="$store.state.storyLayout" mandatory class="mt-0">
         <v-radio
           v-for="layout in storyLayoutOptions"
+          color="cyan darken-1"
           :class="layout.icon"
           :key="layout.val"
           :label="layout.text"
@@ -32,6 +33,7 @@
     <v-flex xs12 class="mx-3">
       <v-slider v-model="$store.state.postsPerPage"
         always-dirty 
+        color="cyan darken-1"
         label="Beiträge je Seite" 
         thumb-label="always"
         :min="1" 
@@ -40,7 +42,7 @@
       </v-slider>
     </v-flex>
 
-    <v-subheader class="blue--text text--lighten-3">Hintergrundbild</v-subheader>
+    <v-subheader class="cyan--text text--darken-1">Hintergrundbild</v-subheader>
     <div class="mx-3">
       <v-layout row wrap>
         <v-flex 
@@ -71,9 +73,9 @@ export default {
   data: function() {
     return {
       storyLayoutOptions: [
-        { val: 'single', text: 'volle Breite', icon: 'icon stop' },
-        { val: 'double', text: '2-spaltig', icon: 'icon pause' },
-        { val: 'triple', text: 'Übersicht', icon: 'icon th' }
+        { val: 'single', text: 'volle Breite', icon: 'icon icon-stop' },
+        { val: 'double', text: '2-spaltig', icon: 'icon icon-pause' },
+        { val: 'triple', text: 'Übersicht', icon: 'icon icon-th' }
       ]
     };
   },
@@ -122,11 +124,11 @@ export default {
   width: 100%;
   height: 100%;
   &.selected {
-    border-color: #ff8f00;
+    border-color: #00ACC1; // #ff8f00;
   }
   &:hover {
     cursor: pointer;
-    border-color: #ffb300;
+    border-color: #26C6DA; // #ffb300;
   }
 }
 .btnSave {
@@ -134,27 +136,22 @@ export default {
   justify-content: center;
   margin-top: 2rem;
 }
+</style>
+<style lang="less">
 .v-radio {
   &.icon label:before {
     font-family: 'FontAwesome';
     width: 2em;
     text-align: center;
   }
-  &.stop label {
-    &:before {
+  &.icon-stop label:before {
       content: '\f04d';
-    }
   }
-  &.pause label {
-    &:before {
+  &.icon-pause label:before {
       content: '\f04c';
-    }
   }
-  &.th label {
-    &:before {
+  &.icon-th label:before {
       content: '\f00a';
-    }
   }
 }
 </style>
-

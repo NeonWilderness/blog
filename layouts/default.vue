@@ -1,6 +1,8 @@
 <template>
   <v-app>
     <div id="wrapper" :class="{faded: $store.state.isImgLoading}" :style="{backgroundImage: 'url('+ $store.state.bgImage +')'}">
+      <h1>In a neon wilderness <span>he was restless</span></h1>
+      <h3>Redesigned.<br>Redefined.<br>Reborn.</h3>
       <v-container fluid grid-list-md style="padding:0">
         <nuxt/>
       </v-container>
@@ -98,11 +100,45 @@ html {
   background-size: cover;
   height: 100%;
   opacity: 1;
+  position: relative;
+  text-align: center;
   transition: 1.5s opacity;
   width: 100%;
   &.faded {
     opacity: 0;
     transition: none;
+  }
+  h1 {
+    position: absolute;
+    top: 2%;
+    left: 0;
+    background: rgba(21, 21, 21, 0.6);
+    color: #fff;
+    font-family: "Oswald";
+    font-size: 2.75rem;
+    font-weight: normal;
+    opacity: 0.8;
+    padding: 0.5em;
+    width: 100%;
+    word-spacing: 0;
+    span {
+      display: inline-block;
+      font-size: 0.6em;
+      opacity: 0.6;
+    }
+  }
+  h3 {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.6);
+    font-family: "Courgette";
+    font-size: 1.6875rem;
+    font-weight: 300;
+    top: 56px;
+    left: -140px;
+    width: 500px;
+    padding: 0.4em;
+    color: #df0025;
+    transform: rotate(-45deg);
   }
 }
 label {
@@ -135,10 +171,11 @@ label {
     width: 100%;
     z-index: 1;
 }
-.clearfix
+.clearfix {
   &:before, &:after {
     content: " ";
     display: table;
+  }
   &:after {
     clear: both;
   }  
@@ -237,9 +274,9 @@ label {
 .v-alert>div>p:last-child {
   margin-bottom: 0;
 }
-.v-btn__content .fa {
+/*.v-btn__content .fa {
   margin-right: .6125em;
-}
+}*/
 .v-chip--small {
     height: 1.3rem;
     margin: 0 .2rem;

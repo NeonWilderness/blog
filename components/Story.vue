@@ -11,15 +11,15 @@
         </v-container>
       </v-card-media>
       <v-toolbar color="grey lighten-4 body-1" flat height="42">
-        <v-icon>fa-comments-o</v-icon>
-        <v-subheader class="grey--text pl-2">6 Kommentare</v-subheader>
-        <v-spacer></v-spacer>
         <v-icon>fa-calendar-o</v-icon>
         <v-subheader class="grey--text pl-2 pr-4" title="27.07.2018 13:15">vor 2 Tagen</v-subheader>
         <v-icon>fa-eye</v-icon>
         <v-subheader class="grey--text pl-2 pr-4" title="gelesen">183</v-subheader>
         <v-icon>fa-heart-o</v-icon>
-        <v-subheader class="grey--text pl-2 pr-1" title="gut gefunden">3</v-subheader>
+        <v-subheader class="grey--text pl-2" title="gut gefunden">3</v-subheader>
+        <v-spacer></v-spacer>
+        <v-icon>fa-tags</v-icon>
+        <v-subheader class="grey--text pl-2 pr-0">Außergewöhnliches</v-subheader>
       </v-toolbar>    
       <v-card-text class="px-3">
         <cite>
@@ -34,15 +34,26 @@
           Roy Batty
         </cite>
       </v-card-text>
-      <v-toolbar color="grey lighten-4 body-1" flat height="42">
-        <v-btn flat small>
-          <v-icon>fa-pencil</v-icon>
-          <v-subheader class="grey--text pl-2">Kommentar verfassen</v-subheader>
-        </v-btn>
-        <v-spacer></v-spacer>
-        <v-btn icon title="Herz verschenken">
-          <v-icon color="red">fa-heart</v-icon>
-        </v-btn>
+      <v-toolbar color="grey lighten-4 body-1" flat height="42" class="storyfooter">
+        <v-layout align-center justify-space-around row>
+          <v-flex xs4 class="text-xs-left">
+            <v-btn flat small>
+              <v-icon>fa-pencil</v-icon>
+              <v-subheader class="grey--text pl-2">Kommentar verfassen</v-subheader>
+            </v-btn>
+          </v-flex>
+          <v-flex xs4 class="text-xs-center">
+            <v-btn flat small>
+              <v-icon>fa-comments-o</v-icon>
+              <v-subheader class="grey--text pl-2">6 Kommentare</v-subheader>
+            </v-btn>
+          </v-flex>
+          <v-flex xs4 class="text-xs-right">
+            <v-btn icon title="I like this">
+              <v-icon color="red">fa-heart</v-icon>
+            </v-btn>
+          </v-flex>
+        </v-layout>
       </v-toolbar>    
     </v-card>    
   </v-flex>
