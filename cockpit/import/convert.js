@@ -4,6 +4,7 @@
 const cheerio = require('cheerio');
 const fs = require('fs');
 const path = require('path');
+const pretty = require('pretty');
 const LogChanges = require('./convert/_log');
 
 const conversionFunctions = [
@@ -61,7 +62,7 @@ const convertStories = (stories) => {
       fn(story, $, log);
     });
     // change converted story content
-    story.body.content = $('div').html();
+    story.body.content = pretty($('div').html(), {odc:true});
 
     // convert story comments 
     story.comments.forEach((comment, index) => {
@@ -71,7 +72,7 @@ const convertStories = (stories) => {
         fn(story, $, log, index+1);
       });
       // change converted comment
-      comment.body = $('div').html();
+      comment.body = pretty($('div').html(), {odc:true});
 
     });
 

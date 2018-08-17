@@ -22,7 +22,10 @@ const convertLabel = (story, $, log, commentIdx = -1) => {
       .removeClass('label red alert blue info green success yellow warning')
       .attr('color', color)
       .attr('text-color', 'white');
-    if (el.tagName === 'span') $el.attr('small', '');
+    if (el.tagName === 'span') { 
+      $el.attr('small', '');
+      $el.find('v-icon').each((index, icon) => { $(icon).attr('small', ''); });
+    }
     if (!el.attribs.class.length) delete el.attribs.class;
     el.tagName = 'v-chip';
     log.item(`${story.fm.basename}${commentIdx >= 0 ? ' comment #' + commentIdx : ''}`, before, $.html(el));

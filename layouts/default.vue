@@ -274,11 +274,12 @@ label {
 .v-alert>div>p:last-child {
   margin-bottom: 0;
 }
-/*.v-btn__content .fa {
-  margin-right: .6125em;
-}*/
 .v-chip--small {
     height: 1.3rem;
     margin: 0 .2rem;
+}
+.v-chip .v-icon {
+  width: 2em;
+  text-align: center;
 }
 </style>

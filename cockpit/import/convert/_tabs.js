@@ -21,7 +21,7 @@ const convertTabs = (story, $, log, commentIdx = -1) => {
     let data = [];
 
     $el.find('li>a').each((index, tab) => { 
-      data.push(`<v-tab ripple>${$(tab).text()}</v-tab>`);
+      data.push(`<v-tab ripple>${$(tab).html()}</v-tab>`);
     });
     $el.next().find('>div').each((index, content) => { 
       data.push(`<v-tab-item><v-card flat><v-card-text>${$(content).html()}</v-card-text></v-card></v-tab-item>`);
