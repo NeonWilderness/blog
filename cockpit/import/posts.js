@@ -41,7 +41,7 @@ const deletePosts = (Cockpit) => {
 };
 
 const importPosts = (Cockpit, stories, lookupCategories, limit) => {
-  const wait = 20; // ms
+  const wait = 120; // ms
   let timeout = 0; // wait*index
 
   let posts = stories.reduce((all, story, index) => {
@@ -49,7 +49,10 @@ const importPosts = (Cockpit, stories, lookupCategories, limit) => {
       let post = new Post(story);
       post.setCategoryId(lookupCategories);
       timeout += wait;
-      all.push(delayNextPromise(timeout).then(() => Cockpit.collectionSave('posts', post)));
+      all.push(
+        delayNextPromise(timeout)
+          .then(() => Cockpit.collectionSave('posts', post))
+      );
     }
     return all;
   }, []);

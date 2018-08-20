@@ -12,16 +12,23 @@ const delayNextPromise = (delay => {
  * @param {string} collectionName Collection Name, e.g. posts | categories
  */
 const truncateCollection = (Cockpit, collectionName) => {
+  const wait = 120; // ms
+  let timeout = 0; // wait*index
+
   return new Promise((resolve, reject) => {
-    Cockpit.collection(collectionName).get((data) => {
+    Cockpit.collection(collectionName).get(data => {
       let total = data.total;
       return Promise.all(
-        data.entries.reduce((all, entry, index) => {
-          all.push(Cockpit.collectionRemove(collectionName, { _id: entry._id }));
+        data.entries.reduce((all, entry) => {
+          timeout += wait;
+          all.push(
+            delayNextPromise(timeout)
+              .then(() => Cockpit.collectionRemove(collectionName, { _id: entry._id }))
+          );
           return all;
         }, [])
       ).then(() => {
-        Cockpit.collection(collectionName).get((data) => {
+        Cockpit.collection(collectionName).get(data => {
           if (data.total === 0) {
             if (total === 0)
               console.info(`Collection "${collectionName}" already empty. Nothing to delete!`);
@@ -34,7 +41,7 @@ const truncateCollection = (Cockpit, collectionName) => {
           }
         });
       })
-        .catch((err) => {
+        .catch(err => {
           console.log(`Truncating collection "${collectionName}" failed with error: ${err}.`);
           reject();
         });

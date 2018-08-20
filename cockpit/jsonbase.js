@@ -62,17 +62,10 @@ cockpit.readPosts()
 
     // read all categories
     return cockpit.readCategories({
-      fields: { 'category': 1, 'count': 1, 'slug': 1 },
+      fields: { 'category': 1, 'slug': 1 },
       filter: { slug: { $not: 'unveroeffentlicht' }}
     })
       .then((categories) => {
-
-        // create allCategories.json
-        fs.writeFileSync(
-          path.resolve(process.cwd(), 'static/json/allCategories.json'),
-          JSON.stringify(categories)
-        );
-        log('allCategories', categories.length);
 
         // enhance allRoutes array with category routes
         allRoutes = categories.reduce((all, category, index) => {

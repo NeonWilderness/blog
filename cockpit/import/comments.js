@@ -30,34 +30,38 @@ const deleteComments = (Cockpit) => {
   return truncateCollection(Cockpit, 'comments');
 };
 
-const importComments = (Cockpit, stories, lookupPosts, limit) => {
-  const wait = 20; // ms
+const importComments = (Cockpit, stories, lookupPosts) => {
+  const wait = 120; // ms
   let timeout = 0; // wait*index
 
   const recursiveCommentLayer = (comments, index, postid) => {
     let comment = new Comment(comments[index], postid, '');
+    timeout += wait;
     delayNextPromise(timeout)
       .then(() => Cockpit.collectionSave('comments', comment))
-      .then((entry) => {
+      .then(entry => {
         let parentid = entry._id;
         let replies = [];
         index++;
         while (index < comments.length && comments[index].type === 'R') {
           let reply = new Comment(comments[index], postid, parentid);
           timeout += wait;
-          replies.push(delayNextPromise(timeout).then(() => Cockpit.collectionSave('comments', reply)));
+          replies.push(
+            delayNextPromise(timeout)
+              .then(() => Cockpit.collectionSave('comments', reply))
+          );
           index++;
         }
         Promise.all(replies)
-          .then((result) => {
+          .then(result => {
             if (index < comments.length) recursiveCommentLayer(comments, index, postid);
           })
-          .catch((err) => {
+          .catch(err => {
             console.error(`Saving replies of ${JSON.stringify(comment)} failed with error: ${err}.`);
             throw err;
           });
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(`Saving comment ${JSON.stringify(comment)} failed with error: ${err}.`);
         throw err;
       });

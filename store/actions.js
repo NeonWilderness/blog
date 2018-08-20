@@ -1,4 +1,6 @@
 import CockpitApi from '../cockpit/cockpitClient';
+import ellipsize from 'ellipsize';
+import innertext from 'innertext';
 import { getCutoffDate, sortDescByCounterType } from './util';
 
 const actions = {
@@ -6,11 +8,13 @@ const actions = {
   establishCounterData({ commit, state }) {
     return state.cockpitApi.readPosts({
       dump: false,
-      fields: { 'basename': 1, 'counter': 1, 'date': 1, 'title': 1 }
+      fields: { 'basename': 1, 'category': 1, 'counter': 1, 'date': 1, 'title': 1 }
     }).then(posts => {
-      // D90 | Y3 | F
-      //debugger; // eslint-disable-line
-      for (let period of state.selectPeriods) {
+
+      commit('setPosts', posts);
+      commit('setMaxPage');
+      
+      for (let period of state.selectPeriods) { // D90 | Y3 | F
         let selectedPosts = [];
         let cutoffDate = getCutoffDate(period.value);
         let index = 0;
@@ -18,6 +22,7 @@ const actions = {
           selectedPosts.push(posts[index]);
           index++;
         }
+
         Object.keys(state.most).forEach(counterType => {
           commit('setCounterData', {
             type: counterType,
@@ -25,12 +30,49 @@ const actions = {
             posts: sortDescByCounterType(selectedPosts, counterType).slice(0, state.maxPostsPerMost)
           });
         });
+
       }
+
+    });
+  },
+
+  loadCategories({ commit, state }) {
+    let categories = state.posts.reduce( (all, post, index) => {
+      if (post.category.slug in all)
+        all[post.category.slug].count++;
+      else 
+        all[post.category.slug] = {
+          _id: post.category._id,
+          category: post.category.category, 
+          count: 1,
+          slug: post.category.slug
+        };
+      return all;    
+    }, {});
+    commit('setCategories', categories);
+  },
+
+  loadMostRecentComments({ commit, state, getters }) {
+    return state.cockpitApi.readComments({
+      dump: false,
+      fields: { 'postid': 1, 'postdate': 1, 'author': 1, 'authorurl': 1, 'content': 1, 'parentid': 1 },
+      limit: state.maxMostRecentComments,
+      skip: 0
+    }).then(comments => {
+
+      commit('setMostRecentComments', comments.map(comment => {
+        comment.content = ellipsize(innertext(comment.content), state.maxCommentAbstractLength);
+        return {
+          basename: getters.getBasenameOfPostId(comment.postid), 
+          ...comment
+        };
+      }));
+
     });
   },
 
   nuxtServerInit({ commit }, { app, env }) {
-    console.log(`${process.server ? "server:" : "client:"}`, 'env:', JSON.stringify(env));
+    //console.log(`${process.server ? "server:" : "client:"}`, 'env:', JSON.stringify(env));
     let cockpitApi = new CockpitApi({
       host: env.apiUrl || env.APIURL,
       token: env.apiKey || env.APIKEY,
@@ -56,9 +98,10 @@ const actions = {
   },
 
   setPreferences({ commit, dispatch }, payload) { // reload saved preferences {object} (see Preferences component)
-    commit('setStoryLayout', payload.storyLayout)
-    commit('setPostsPerPage', payload.postsPerPage)
-    dispatch('setCurrentBackgroundImage', payload.bgImage)
+    commit('setStoryLayout', payload.storyLayout);
+    commit('setPostsPerPage', payload.postsPerPage);
+    commit('setMaxPage');
+    return dispatch('setCurrentBackgroundImage', payload.bgImage);
   }
 
 };

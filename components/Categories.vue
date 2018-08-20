@@ -4,7 +4,7 @@
       <v-layout row wrap>
         <v-flex xs12>
           <v-list subheader>
-            <v-list-tile v-for="category in $store.state.categories"
+            <v-list-tile v-for="category in $store.getters.getCategories"
               class="dense"
               :key="category._id"
               :to="'/topics/' + category.slug + '/'"

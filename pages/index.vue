@@ -8,7 +8,23 @@
     <section class="content">
       <v-layout row wrap class="contentwrapper pt-2">
         <v-flex xs12 md8 lg7 offset-lg1 class="storywrapper">
-          <Story />
+          <v-layout row wrap>
+            <v-flex 
+              v-for="n in $store.getters.getPostsPerPage"
+              :key="n" 
+              :class="$store.getters.getLayoutGrid"
+            >
+              <Story :index="n" />
+            </v-flex>
+          </v-layout>
+          <div class="text-xs-center">
+            <v-pagination
+              v-model="$store.state.page"
+              color="teal lighten-1"
+              :length="$store.state.maxPage"
+              total-visible="7"
+            ></v-pagination>
+          </div>      
         </v-flex>
         <v-flex xs12 md4 lg3 class="sidebar">
           <WeepingWillow />
@@ -23,12 +39,12 @@
 </template>
 
 <script>
-import LuckyMan from "~/components/LuckyMan.vue";
-import Preferences from "~/components/Preferences.vue";
-import Sonnet from "~/components/Sonnet.vue";
-import Story from "~/components/Story.vue";
-import ThisTime from "~/components/ThisTime.vue";
-import WeepingWillow from "~/components/WeepingWillow.vue";
+import LuckyMan from '~/components/LuckyMan.vue';
+import Preferences from '~/components/Preferences.vue';
+import Sonnet from '~/components/Sonnet.vue';
+import Story from '~/components/Story.vue';
+import ThisTime from '~/components/ThisTime.vue';
+import WeepingWillow from '~/components/WeepingWillow.vue';
 
 export default {
   components: {
@@ -40,16 +56,18 @@ export default {
     WeepingWillow
   },
   data: function() {
-    return {
-    };
+    return {};
   },
   methods: {
     openPreferences() {
       this.$store.commit('toggleDrawer');
     }
   },
-  fetch ({ store }) {
-    return store.dispatch('establishCounterData');
+  fetch({ store }) {
+    return Promise.all([
+      store.dispatch('establishCounterData').then(() => store.dispatch('loadCategories')),
+      store.dispatch('loadMostRecentComments')
+    ]);
   }
 };
 </script>
@@ -61,7 +79,7 @@ export default {
 }
 .contentwrapper {
   background-color: rgba(33, 33, 33, 0.95);
-  margin-bottom: 0!important;
+  margin-bottom: 0 !important;
 }
 .hero {
   min-height: 100vh;
@@ -75,7 +93,7 @@ export default {
     line-height: 48px;
     opacity: 0.9;
     padding: 0;
-    position: absolute;
+    position: fixed;
     right: -25px;
     text-align: center;
     top: 20%;
@@ -90,9 +108,10 @@ export default {
   }
 }
 .storyfooter .v-toolbar__content {
-    padding: 0 8px;
+  padding: 0 8px;
 }
-.storywrapper, .sidebar {
-  width: 100%;  
+.storywrapper,
+.sidebar {
+  width: 100%;
 }
 </style>

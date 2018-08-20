@@ -8,6 +8,8 @@ const convertStrings = (story, basenames, log) => {
   log.set('strings');
 
   let sStrings = [
+    { from: '<br>\s*\n', to: '<br/>' },
+    { from: '\n', to: '<br/>' },
     { from: 'http:\/\/www\.s522667522\.online\.de\/public\/', to: '/cockpit/storage/upload/' },
     { from: encodeURIComponent('http://www.s522667522.online.de/public/'), to: encodeURIComponent('/cockpit/storage/upload/') }
   ];

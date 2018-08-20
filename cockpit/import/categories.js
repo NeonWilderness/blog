@@ -8,31 +8,24 @@ const deleteCategories = (Cockpit) => {
 };
 
 const importCategories = (Cockpit, stories) => {
-  const wait = 20; // ms
+  const wait = 120; // ms
   let timeout = 0; // wait*index
 
   let categories = stories.reduce((all, story, index) => {
-    if (story.fm.category in all)
-      all[story.fm.category]++;
-    else
-      all[story.fm.category] = 1;
+    if (all.indexOf(story.fm.category) < 0)
+      all.push(story.fm.category);
     return all;
-  }, {});
+  }, []);
 
-  let entries = Object.keys(categories)
-    .sort()
-    .reduce((all, category, index) => {
-      timeout += wait;
-      all.push(
-        delayNextPromise(timeout)
-          .then(() => Cockpit.collectionSave('categories', { 
-            category, 
-            count: categories[category] }))
-      );
-      return all;
-    }, []);
-
-  return Promise.all(entries);
+  return Promise.all(
+    categories
+      .sort()
+      .map(category => {
+        timeout += wait;
+        return delayNextPromise(timeout)
+          .then(() => Cockpit.collectionSave('categories', { category }));
+      })
+    )
 
 };
 

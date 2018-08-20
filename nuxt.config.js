@@ -87,14 +87,14 @@ module.exports = {
   vuetify: {
     //  theme: {}
   },
-  /*  generate: {
+/*generate: {
       routes: function () {
         return axios.get('https://my-api/users')
         .then(res => {
           return res.data.map(slug => `/${slug}`)
         })
       }
-    }, */
+  },*/
   build: {
     extractCSS: true,
     extend(config, { isDev, isClient }) {

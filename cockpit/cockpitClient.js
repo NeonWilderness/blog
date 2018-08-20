@@ -27,14 +27,13 @@ class Cockpit {
   readPosts(options) {
     return this.readCollection('posts', _merge({
       filter: { published: true },
-      populate: 0,
+      populate: 1,
       sort: { date: -1 } // descending: newest on top
     }, options || {}));
   };
   
   readCategories(options) {
     return this.readCollection('categories', _merge({
-      filter: { count: true }, // make sure, count is not equal 0 (unused category)
       sort: { category: 1 } // ascending
     }, options || {}));
   };

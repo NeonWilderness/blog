@@ -18,8 +18,10 @@
         <v-icon>fa-heart-o</v-icon>
         <v-subheader class="grey--text pl-2" title="gut gefunden">3</v-subheader>
         <v-spacer></v-spacer>
-        <v-icon>fa-tags</v-icon>
-        <v-subheader class="grey--text pl-2 pr-0">Außergewöhnliches</v-subheader>
+        <v-subheader class="px-0" v-if="$store.getters.isSingleStoryLayout">
+          <v-icon>fa-tags</v-icon>
+          <span class="grey--text pl-2">Außergewöhnliches</span>
+        </v-subheader>
       </v-toolbar>    
       <v-card-text class="px-3">
         <cite>
@@ -36,19 +38,25 @@
       </v-card-text>
       <v-toolbar color="grey lighten-4 body-1" flat height="42" class="storyfooter">
         <v-layout align-center justify-space-around row>
-          <v-flex xs4 class="text-xs-left">
+          <v-flex xs4 class="text-xs-left" v-if="$store.getters.isSingleStoryLayout">
             <v-btn flat small>
               <v-icon>fa-pencil</v-icon>
               <v-subheader class="grey--text pl-2">Kommentar verfassen</v-subheader>
             </v-btn>
           </v-flex>
-          <v-flex xs4 class="text-xs-center">
+          <v-flex 
+            :xs4="$store.getters.isSingleStoryLayout"
+            :xs6="!$store.getters.isSingleStoryLayout"
+            :class="'text-xs-' + ($store.getters.isSingleStoryLayout ? 'center' : 'left')">
             <v-btn flat small>
               <v-icon>fa-comments-o</v-icon>
               <v-subheader class="grey--text pl-2">6 Kommentare</v-subheader>
             </v-btn>
           </v-flex>
-          <v-flex xs4 class="text-xs-right">
+          <v-flex 
+            :xs4="$store.getters.isSingleStoryLayout"
+            :xs6="!$store.getters.isSingleStoryLayout"
+            class="text-xs-right">
             <v-btn icon title="I like this">
               <v-icon color="red">fa-heart</v-icon>
             </v-btn>
@@ -61,6 +69,12 @@
 
 <script>
 export default {
+  props: {
+    index: {
+      type: Number,
+      required: true
+    }
+  },
   data: function() {
     return {
     };

@@ -5,14 +5,32 @@ const getters = {
       return `/img/bg/${img}`;
     });
   },
+  getBasenameOfPostId: state => (id) => { // {string} id = post id
+    for (let post of state.posts) {
+      if (post._id === id) return post.basename;
+    }
+    throw new Error(`Comment PostId: ${id} not found in posts.`);
+  },
   getBgIndex: state => {
     return state.bgIndex;
+  },
+  getCategories: state => {
+    return Object.keys(state.categories)
+      .map( slug => state.categories[slug] )
+      .sort( (a, b) => {
+        if (a.category < b.category) return -1;
+        if (b.category < a.category) return +1;
+        return 0;
+      });
   },
   getCurrentBackgroundImage: state => {
     return state.bgImage;
   },
   getCurrentPage: state => {
     return state.page;
+  },
+  getLayoutGrid: state => {
+    return state.layouts[state.storyLayout].grid;
   },
   getMost: state => (type) => { // {string} type = reads|hearts|comments
     return state.most[type][state.selectedPeriod];
@@ -33,6 +51,9 @@ const getters = {
   },
   isCurrentBackgroundImage: state => (img) => {
     return (state.bgImage === img.replace('thumbs/', ''));
+  },
+  isSingleStoryLayout: state => {
+    return (state.storyLayout === 'single');
   },
   isValidLayoutID: state => (storyLayout) => {
     return (Object.keys(state.layouts).indexOf(storyLayout) >= 0);

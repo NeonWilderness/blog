@@ -59,14 +59,6 @@ export default {
       );
     });
 
-    this.$axios.get('/json/allCategories.json').then(res => {
-      this.$store.commit('setCategories', res.data);
-    });
-
-    this.$axios.get('/json/mostRecentComments.json').then(res => {
-      this.$store.commit('setMostRecentComments', res.data);
-    });
-
   }
 };
 </script>

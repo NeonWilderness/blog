@@ -16,19 +16,21 @@ const Store = () => {
       isDrawerVisible: false,
       isImgLoading: true,
       layouts: {
-        single: { grid: 'xs12', columns: 1 },
-        double: { grid: 'xs6', columns: 2 },
-        triple: { grid: 'xs4', columns: 3 }
+        single: { grid: 'xs12 sm12', columns: 1 },
+        double: { grid: 'xs12 sm6', columns: 2 },
+        triple: { grid: 'xs12 sm4', columns: 3 }
       },
+      maxCommentAbstractLength: 57,
       maxPage: 0,
       maxPostsPerMost: 5,
+      maxMostRecentComments: 10,
       most: {
         reads: {},
         //hearts: {},
         comments: {}
       },
       mostRecentComments: [],
-      page: 0,
+      page: 1,
       posts: [],
       postsPerPage: 4,
       preferencesKey: 'preferences@NeonWilderness',

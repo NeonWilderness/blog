@@ -103,6 +103,7 @@ if (argv.oldest) stories = stories.reverse();
 deleteCategories(Cockpit)
   .then(() => importCategories(Cockpit, stories))
   .then(result => {
+    console.log(JSON.stringify(result));
     console.log(`${result.length} entries added to "categories".`);
     result.reduce( (all, entry, index) => {
       all[entry.category] = entry._id;
@@ -111,9 +112,9 @@ deleteCategories(Cockpit)
     return deletePosts(Cockpit);
   })
   .then(() => importPosts(Cockpit, stories, lookupCategories, limit))
-  .then((result) => {
+  .then(result => {
     console.log(`${result.length} articles added to "posts".`);
-    result.reduce( (all, entry, index) => {
+    result.reduce( (all, entry) => {
       all[entry.basename] = entry._id;
       return all;
     }, lookupPosts);
@@ -121,11 +122,11 @@ deleteCategories(Cockpit)
   })
   .then(() => {
     console.log('Now adding comments and replies...');
-    return importComments(Cockpit, stories, lookupPosts, limit);
+    return importComments(Cockpit, stories, lookupPosts);
   })
   .then(() => {
     console.log(`Comments and replies added to collection "comments".`);
   })
-  .catch((err) => {
+  .catch(err => {
     console.log(`Import ended with error: ${err}.`);
   });
