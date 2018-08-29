@@ -15,6 +15,7 @@ const Store = () => {
       firstStoryDate: '2006-10-24 03:16',
       isDrawerVisible: false,
       isImgLoading: true,
+      isToTopButtonVisible: false,
       layouts: {
         single: { grid: 'xs12 sm12', columns: 1 },
         double: { grid: 'xs12 sm6', columns: 2 },
@@ -24,6 +25,7 @@ const Store = () => {
       maxPage: 0,
       maxPostsPerMost: 5,
       maxMostRecentComments: 10,
+      maxStoryAbstractLength: 300,
       most: {
         reads: {},
         //hearts: {},
@@ -34,6 +36,7 @@ const Store = () => {
       posts: [],
       postsPerPage: 4,
       preferencesKey: 'preferences@NeonWilderness',
+      readcounterKey: 'readcounter@NeonWilderness',
       selectPeriods: [
         { text: '90 Tage', value: 'D90' },  // last 90 days
         { text: '3 Jahre', value: 'Y3' },   // last 3 years

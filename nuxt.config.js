@@ -1,9 +1,23 @@
 if (process.server) require('dotenv-safe').load();
 
+const fs = require('fs');
+const nodeExternals = require('webpack-node-externals')
+const path = require('path');
+const routes = require('./routes.config');
+
 /**
- * Define script config differences bewteen dev/prod mode
+ * Create JSON file of all available background images in folder static/img/bg/thumbs
  */
-// define common scripts valid for both dev and prod mode
+let backgrounds = fs.readdirSync(path.resolve(process.cwd(), 'static/img/bg/thumbs/')).sort();
+fs.writeFileSync(
+  path.resolve(process.cwd(), 'static/json/allBackgrounds.json'),
+  JSON.stringify(backgrounds)
+);
+
+/**
+ * Define script config differences between dev/prod mode
+ */
+// define common scripts valid for BOTH dev and prod mode
 let commonScripts = [
 ];
 
@@ -12,7 +26,7 @@ let devScripts = [
   ...commonScripts
 ];
 
-// define/add scripts valid for BUILD/GENERATE mode only
+// define/add scripts valid for PROD mode (build/generate) only
 let prodScripts = [
   ...commonScripts,
   { src: '/js/statinit.js' },
@@ -36,7 +50,7 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.jpg' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Courgette:400|Roboto:400|Oswald:400' }
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Courgette:400|Oswald:400' }
     ],
     script: (process.env.npm_lifecycle_event !== 'dev' ? prodScripts : devScripts)
   },
@@ -47,6 +61,7 @@ module.exports = {
   },
   loading: { color: '#3B8070' },
   plugins: [
+    '~/plugins/vue-cockpit',
     '~/plugins/vue-timeago'
   ],
   modules: [
@@ -69,15 +84,15 @@ module.exports = {
         type: 'rss2' // rss2 | atom1 | json1
       }
     ], */
-/*  sitemap: {
-    cacheTime: 1000 * 60 * 15,
-    exclude: [],
-    generate: true,
-    gzip: true,
-    hostname: baseUrl,
-    path: '/sitemap.xml',
-    routes: require('./static/json/allRoutes.json')
-  }, */
+  sitemap: {
+      cacheTime: 1000 * 60 * 15,
+      exclude: [],
+      generate: true,
+      gzip: true,
+      hostname: baseUrl,
+      path: '/sitemap.xml',
+      routes
+  },
   toast: {
     duration: 2000,
     iconPack: 'fontawesome',
@@ -85,19 +100,18 @@ module.exports = {
     theme: 'primary'
   },
   vuetify: {
-    //  theme: {}
+    theme: {
+      primary: '#720d5d',
+      secondary: '#e30425',
+      accent: '#4e0d3a'      
+    }
   },
-/*generate: {
-      routes: function () {
-        return axios.get('https://my-api/users')
-        .then(res => {
-          return res.data.map(slug => `/${slug}`)
-        })
-      }
-  },*/
+  generate: {
+    routes
+  },
   build: {
     extractCSS: true,
-    extend(config, { isDev, isClient }) {
+    extend(config, { isDev, isClient, isServer }) {
       if (isDev && isClient) {
         config.module.rules.push({
           enforce: 'pre',
@@ -106,6 +120,15 @@ module.exports = {
           exclude: /(node_modules)/
         });
       }
-    }
+      if (isServer) {
+        config.externals = [
+          nodeExternals({
+            whitelist: [/^vuetify/]
+          })
+        ]
+      }      
+    },
+    transpile: [/^vuetify/],
+    vendor: []
   }
 }

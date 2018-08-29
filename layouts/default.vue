@@ -5,6 +5,19 @@
       <h3>Redesigned.<br>Redefined.<br>Reborn.</h3>
       <v-container fluid grid-list-md style="padding:0">
         <nuxt/>
+        <v-btn
+          @click="goToTop"
+          bottom
+          color="secondary"
+          dark
+          fab
+          fixed
+          right
+          ripple
+          :value="$store.state.isToTopButtonVisible"
+        >
+          <v-icon style="display:inline-flex">fa-chevron-up fa-lg</v-icon>
+      </v-btn>
       </v-container>
     </div>
   </v-app>
@@ -24,6 +37,12 @@ export default {
     return {};
   },
   methods: {
+    goToTop: function() {
+      document.getElementById('wrapper').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    },
     validatePreferences: function(prefs) {
       prefs.bgImage = prefs.bgImage || prefDefaults.bgImage;
       if (typeof prefs.bgImage === 'string')
@@ -102,7 +121,7 @@ html {
   }
   h1 {
     position: absolute;
-    top: 2%;
+    top: 0;
     left: 0;
     background: rgba(21, 21, 21, 0.6);
     color: #fff;

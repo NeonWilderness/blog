@@ -1,7 +1,26 @@
-import CockpitApi from '../cockpit/cockpitClient';
+import CockpitApi from '~/cockpit/cockpitClient';
 import ellipsize from 'ellipsize';
 import innertext from 'innertext';
 import { getCutoffDate, sortDescByCounterType } from './util';
+
+const removeUnwantedTags = (html, tags) => {
+  let startsAt, endsAt;
+  for (let tag of tags) {
+    startsAt = html.indexOf(`<${tag}`);
+    while (startsAt >= 0) {
+      endsAt = html.indexOf(`</${tag}>`, startsAt + tag.length + 2);
+      if (endsAt < 0) throw new Error(`Missing closing tag in story html: ${html}.`);
+      html = `${html.substr(0, startsAt)}${html.substr(endsAt + tag.length + 3)}`;
+      startsAt = html.indexOf(`<${tag}`);
+    }
+  }
+  return html;
+};
+
+const deriveAbstract = (html, abstractLength) => {
+  let cleanup = removeUnwantedTags(html, ['style', 'v-chip', 'v-icon']);
+  return ellipsize(innertext(cleanup), abstractLength);
+};
 
 const actions = {
 
@@ -13,7 +32,7 @@ const actions = {
 
       commit('setPosts', posts);
       commit('setMaxPage');
-      
+
       for (let period of state.selectPeriods) { // D90 | Y3 | F
         let selectedPosts = [];
         let cutoffDate = getCutoffDate(period.value);
@@ -37,17 +56,17 @@ const actions = {
   },
 
   loadCategories({ commit, state }) {
-    let categories = state.posts.reduce( (all, post, index) => {
+    let categories = state.posts.reduce((all, post) => {
       if (post.category.slug in all)
         all[post.category.slug].count++;
-      else 
+      else
         all[post.category.slug] = {
           _id: post.category._id,
-          category: post.category.category, 
+          category: post.category.category,
           count: 1,
           slug: post.category.slug
         };
-      return all;    
+      return all;
     }, {});
     commit('setCategories', categories);
   },
@@ -63,7 +82,7 @@ const actions = {
       commit('setMostRecentComments', comments.map(comment => {
         comment.content = ellipsize(innertext(comment.content), state.maxCommentAbstractLength);
         return {
-          basename: getters.getBasenameOfPostId(comment.postid), 
+          basename: getters.getBasenameOfPostId(comment.postid),
           ...comment
         };
       }));
@@ -72,13 +91,79 @@ const actions = {
   },
 
   nuxtServerInit({ commit }, { app, env }) {
-    //console.log(`${process.server ? "server:" : "client:"}`, 'env:', JSON.stringify(env));
-    let cockpitApi = new CockpitApi({
+    const cockpitInstance = new CockpitApi({
       host: env.apiUrl || env.APIURL,
       token: env.apiKey || env.APIKEY,
       axios: app.$axios
     });
-    commit('establishCockpitInstance', cockpitApi)
+    commit('establishCockpitInstance', cockpitInstance);
+  },
+
+  readPostComments({ state }, { cockpit, postid }) { // payload = { cockpit, postid }
+
+    return new Promise((resolve, reject) => {
+      cockpit.readComments({
+        dump: false,
+        filter: { postid }
+      }).then(comments => {
+        resolve({ comments });
+      }).catch(err => { reject(err); });
+    });
+
+  },
+
+  readPostBasename({ state }, { cockpit, params }) { // payload = { cockpit, params }
+
+    return new Promise((resolve, reject) => {
+      cockpit.readPosts({
+        dump: false,
+        filter: { basename: params.slug }
+      }).then(([post]) => {
+        post.abstract = deriveAbstract(post.content, state.maxStoryAbstractLength);
+        if (typeof post.image !== 'object') {
+          let img = post.content.match(/<img.*?src="(.*?)"/);
+          if (img) post.image = {
+            path: img[1].replace(
+              /^\/cockpit\/storage\/uploads?/,
+              `${state.cockpitApi.host}/storage/uploads`
+            )
+          }
+        } else {
+          post.image.path = `${state.cockpitApi.host}/storage/uploads${post.image.path}`;
+        }
+        resolve({ post });
+      }).catch(err => { reject(err); });
+    });
+
+  },
+
+  readPostsSlice({ state }, payload) { // payload = cockpit instance
+
+    return new Promise((resolve, reject) => {
+      payload.readPosts({
+        dump: false,
+        limit: state.postsPerPage,
+        skip: (state.page - 1) * state.postsPerPage
+      }).then(posts => {
+        let refinedPosts = posts.map(post => {
+          post.abstract = deriveAbstract(post.content, state.maxStoryAbstractLength);
+          if (typeof post.image !== 'object') {
+            let img = post.content.match(/<img.*?src="(.*?)"/);
+            if (img) post.image = {
+              path: img[1].replace(
+                /^\/cockpit\/storage\/uploads?/,
+                `${state.cockpitApi.host}/storage/uploads`
+              )
+            }
+          } else {
+            post.image.path = `${state.cockpitApi.host}/storage/uploads${post.image.path}`;
+          }
+          return post;
+        });
+        resolve({ posts: refinedPosts });
+      }).catch(err => { reject(err); });
+    });
+
   },
 
   setCurrentBackgroundImage({ commit, getters, state }, payload) { // preload/set a new background image

@@ -1,35 +1,10 @@
 <template>
   <div>
-    <section class="hero">
-      <button class="btnPreferences" title="Einstellungen" @click="openPreferences">
-        <i class="fa fa-cog fa-spin fa-lg fa-fw"></i>
-      </button>
-    </section>
+    <section class="hero"></section>
     <section class="content">
-      <v-layout 
-        row 
-        wrap 
-        class="contentwrapper pt-2"
-        v-scroll="onScroll"
-      >
+      <v-layout row wrap class="contentwrapper pt-2">
         <v-flex xs12 md8 lg7 offset-lg1 class="storywrapper">
-          <v-layout row wrap>
-            <v-flex 
-              v-for="n in posts.length"
-              :key="n" 
-              :class="$store.getters.getLayoutGrid"
-            >
-              <Story :post="posts[n - 1]" :comments="[]" view="grid" />
-            </v-flex>
-          </v-layout>
-          <div class="text-xs-center">
-            <v-pagination
-              v-model="$store.state.page"
-              color="teal lighten-1"
-              :length="$store.state.maxPage"
-              total-visible="7"
-            ></v-pagination>
-          </div>      
+          <Story :post="post" :comments="comments" view="full" />
         </v-flex>
         <v-flex xs12 md4 lg3 class="sidebar">
           <WeepingWillow />
@@ -39,13 +14,11 @@
         </v-flex>
       </v-layout>
     </section>
-    <Preferences />
   </div>
 </template>
 
 <script>
 import LuckyMan from '~/components/LuckyMan.vue';
-import Preferences from '~/components/Preferences.vue';
 import Sonnet from '~/components/Sonnet.vue';
 import Story from '~/components/Story.vue';
 import ThisTime from '~/components/ThisTime.vue';
@@ -54,7 +27,6 @@ import WeepingWillow from '~/components/WeepingWillow.vue';
 export default {
   components: {
     LuckyMan,
-    Preferences,
     Sonnet,
     Story,
     ThisTime,
@@ -63,32 +35,34 @@ export default {
   data: function() {
     return {};
   },
-  asyncData: function({ app, store }) {
-    return store.dispatch('readPostsSlice', app.$cockpit);
-  },
-  watch: {
-    currentPage: function(newPage, oldPage) {
-      this.$store
-        .dispatch('readPostsSlice', this.$cockpit)
-        .then(({ posts }) => {
-          this.posts = posts;
+  asyncData: function({ app, params, payload, store }) {
+
+    const getPostComments = postid =>
+      app.$cockpit.readComments({
+        dump: false,
+        filter: { postid },
+        sort: { parentid: 1, postdate: 1 }
+      });
+
+    if (payload) {
+      return getPostComments(payload._id).then(comments => {
+        return { post: payload, comments };
+      });
+    } else {
+      return store.dispatch('readPostBasename', {
+        cockpit: app.$cockpit,
+        params
+      }).then(({post}) => {
+        return getPostComments(post._id).then(comments => {
+          return { post, comments };
         });
+      });
     }
-  },
-  methods: {
-    onScroll(e) {
-      let offsetTop = window.pageYOffset || document.documentElement.scrollTop;
-      console.log(offsetTop);
-      this.$store.commit('setToTopButtonVisibility', offsetTop);
-    },
-    openPreferences() {
-      this.$store.commit('toggleDrawer');
-    }
+    
   },
   fetch({ store }) {
-    if (store.state.posts.length>0)
-      return Promise.resolve();
-    else  
+    if (store.state.posts.length > 0) return Promise.resolve();
+    else
       return store
         .dispatch('establishCounterData')
         .then(() =>

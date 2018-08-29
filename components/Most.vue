@@ -15,7 +15,7 @@
             <v-list-tile 
               v-for="(post, index) in getMost"
               :key="post._id"
-              :to="'/' + post.basename + '/'">
+              :to="'/' + post.basename">
               <v-list-tile-avatar>
                 <v-btn fab dark small color="teal lighten-1">{{index + 1}}</v-btn>
               </v-list-tile-avatar>

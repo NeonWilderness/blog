@@ -27,7 +27,11 @@
                       {{comment.author}}
                     </span>
                     <v-spacer />
-                    <timeago :datetime="comment.postdate" :autoUpdate="60" class="text-xs-right"></timeago>
+                    <timeago 
+                      :datetime="comment.postdate" 
+                      :autoUpdate="60" 
+                      class="text-xs-right"
+                    />
                   </v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
@@ -45,7 +49,7 @@
 }
 .comment {
   font-size: 0.95rem;
-  line-height: 1.2;
+  line-height: 1.3;
 }
 .commentlink {
   text-decoration: none;

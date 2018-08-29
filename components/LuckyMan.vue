@@ -33,19 +33,19 @@ export default {
           text: 'Alien-Tool',
           desc: 'Nutze Twoday als Hülle für deinen neuen Blog bei Wordpress, Blogspot etc.',
           icon: 'alien.png',
-          basename: '/alien-inside-twoday-1022653371/'
+          basename: '/alien-inside-twoday-1022653371'
         },
         {
           text: 'Blog-Export-Tool',
           desc: 'Exportiere Twoday-Blogs sicher und in validem Movable-Type-Format',
           icon: 'blogexport.jpg',
-          basename: '/blog-export-on-steroids-1022222314/'
+          basename: '/blog-export-on-steroids-1022222314'
         },
         {
           text: 'Videoload2-Tool',
           desc: 'Zeige Videos, Musikclips und andere Dienste von über 20 Anbietern',
           icon: 'videoload2.jpg',
-          basename: '/videoload2-1022598270/'
+          basename: '/videoload2-1022598270'
         }
       ]
     };

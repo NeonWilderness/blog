@@ -1,3 +1,6 @@
+require('dotenv-safe').load();
+const baseUrl = process.env.BASEURL.substr(process.env.BASEURL.indexOf('://') + 1);
+
 /**
  * Replace some urls/strings
  * @param {object} story story object
@@ -7,11 +10,20 @@ const convertStrings = (story, basenames, log) => {
 
   log.set('strings');
 
-  let sStrings = [
-    { from: '<br>\s*\n', to: '<br/>' },
-    { from: '\n', to: '<br/>' },
-    { from: 'http:\/\/www\.s522667522\.online\.de\/public\/', to: '/cockpit/storage/upload/' },
-    { from: encodeURIComponent('http://www.s522667522.online.de/public/'), to: encodeURIComponent('/cockpit/storage/upload/') }
+  let sStrings = [ // change rules
+    { from: '<br>\\s*\\n', to: '<br/>' },
+    { from: '([^>])\\n', to: `$1<br/>` },
+    { from: '<br\/>$', to: '' },
+    { from: '(<\/br>\n|<\/br>$|<\/br>)', to: '' },
+    { from: '\\s+title=""', to: '' },
+    {
+      from: 'http://www\\.s522667522\\.online\\.de/public/',
+      to: `${baseUrl}/cockpit/storage/uploads/`
+    },
+    {
+      from: encodeURIComponent('http://www.s522667522.online.de/public/'),
+      to: encodeURIComponent(`${baseUrl}/cockpit/storage/upload/`)
+    }
   ];
 
   for (let s of sStrings) {
@@ -44,7 +56,7 @@ const convertStrings = (story, basenames, log) => {
       }
       // eliminate potential last slash
       if (url[url.length - 1] === '/')
-      url = url.substr(0, url.length - 1);
+        url = url.substr(0, url.length - 1);
       // isolate story-id or -basename
       let storyId = url.split('/').pop();
       // check if id is numeric
@@ -56,9 +68,9 @@ const convertStrings = (story, basenames, log) => {
         storyId = basenames[storyId];
         story.body.content = story.body.content.replace(
           RegExp(storyUrl, 'gi'),
-          `/${storyId}/${name}`
+          `/${storyId}${name}`
         );
-        log.item(story.fm.basename, storyUrl, `/${storyId}/${name}`);
+        log.item(story.fm.basename, storyUrl, `/${storyId}${name}`);
       }
     });
   }

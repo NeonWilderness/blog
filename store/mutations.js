@@ -3,7 +3,7 @@ const mutations = {
   establishCockpitInstance(state, payload) {
     state.cockpitApi = payload;
   },
-  setBackgroundImages(state, payload) { // background image names assembled from /img/backgrounds.json during compile time
+  setBackgroundImages(state, payload) { // background image names assembled from static/img/bg during compile time
     state.bgImages = payload;
   },
   setBgIndex(state, payload) { // index of background image {number}
@@ -28,6 +28,11 @@ const mutations = {
     state.mostRecentComments = payload;
   },
   setPosts(state, payload) { // array of cockpit posts {array}
+    for (let post of payload) {
+      Object.keys(post.category).forEach(prop => {
+        if (prop[0] === '_') delete post.category[prop];
+      })
+    }
     state.posts = payload;
   },
   setPostsPerPage(state, payload) { // number of posts per blog page {number}
@@ -35,6 +40,9 @@ const mutations = {
   },
   setStoryLayout(state, payload) { // layout of posts on the blog page {string}
     state.storyLayout = payload;
+  },
+  setToTopButtonVisibility(state, payload) { // scrollTop {number}
+    state.isToTopButtonVisible = (payload > 500);
   },
   toggleDrawer(state) {
     state.isDrawerVisible = !state.isDrawerVisible;

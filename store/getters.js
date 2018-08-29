@@ -16,8 +16,8 @@ const getters = {
   },
   getCategories: state => {
     return Object.keys(state.categories)
-      .map( slug => state.categories[slug] )
-      .sort( (a, b) => {
+      .map(slug => state.categories[slug])
+      .sort((a, b) => {
         if (a.category < b.category) return -1;
         if (b.category < a.category) return +1;
         return 0;
@@ -28,6 +28,11 @@ const getters = {
   },
   getCurrentPage: state => {
     return state.page;
+  },
+  getCurrentPosts: state => {
+    let startAt = (state.page - 1) * state.postsPerPage;
+    let endAt = startAt + state.postsPerPage;
+    return state.posts.slice(startAt, endAt);
   },
   getLayoutGrid: state => {
     return state.layouts[state.storyLayout].grid;

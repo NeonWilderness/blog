@@ -12,6 +12,7 @@ const conversionFunctions = [
   require('./convert/_dataattributes'),
   require('./convert/_headings'),
   require('./convert/_code'),
+  require('./convert/_fontsize'),
   require('./convert/_number'),
   require('./convert/_icon'),
   require('./convert/_label'),
@@ -61,7 +62,7 @@ const convertStories = (stories) => {
     conversionFunctions.forEach(fn => {
       fn(story, $, log);
     });
-    // change converted story content
+    // prettify converted story content
     story.body.content = pretty($('div').html(), {odc:true});
 
     // convert story comments 
@@ -71,7 +72,7 @@ const convertStories = (stories) => {
       conversionFunctions.forEach(fn => {
         fn(story, $, log, index+1);
       });
-      // change converted comment
+      // prettify converted comment
       comment.body = pretty($('div').html(), {odc:true});
 
     });

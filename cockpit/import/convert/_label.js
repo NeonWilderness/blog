@@ -27,6 +27,7 @@ const convertLabel = (story, $, log, commentIdx = -1) => {
       $el.find('v-icon').each((index, icon) => { $(icon).attr('small', ''); });
     }
     if (!el.attribs.class.length) delete el.attribs.class;
+    if ($el.html().length === 0) $el.html('<![CDATA[]]>');
     el.tagName = 'v-chip';
     log.item(`${story.fm.basename}${commentIdx >= 0 ? ' comment #' + commentIdx : ''}`, before, $.html(el));
   });

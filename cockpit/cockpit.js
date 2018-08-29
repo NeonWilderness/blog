@@ -26,7 +26,7 @@ const readCollection = (collection, options) => {
 const readPosts = (options) => {
   return readCollection('posts', _merge({
     filter: { published: true },
-    populate: 0,
+    populate: 1,
     sort: { date: -1 } // descending: newest on top
   }, options || {}));
 };
