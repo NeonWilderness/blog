@@ -1,23 +1,28 @@
 <template>
   <v-app>
-    <div id="wrapper" :class="{faded: $store.state.isImgLoading}" :style="{backgroundImage: 'url('+ $store.state.bgImage +')'}">
+    <div id="wrapper" 
+      :class="{faded: $store.state.isImgLoading}" 
+      :style="{backgroundImage: 'url('+ $store.state.bgImage +')'}"
+    >
       <h1>In a neon wilderness <span>he was restless</span></h1>
       <h3>Redesigned.<br>Redefined.<br>Reborn.</h3>
       <v-container fluid grid-list-md style="padding:0">
         <nuxt/>
-        <v-btn
-          @click="goToTop"
-          bottom
-          color="secondary"
-          dark
-          fab
-          fixed
-          right
-          ripple
-          :value="$store.state.isToTopButtonVisible"
-        >
-          <v-icon style="display:inline-flex">fa-chevron-up fa-lg</v-icon>
-      </v-btn>
+        <transition name="goTopBtn-fade">
+          <v-btn
+            @click="goToTop"
+            bottom
+            color="secondary"
+            dark
+            fab
+            fixed
+            right
+            ripple
+            v-show="$store.getters.isGoToTopButtonVisible"
+          >
+            <v-icon class="d-inline-flex">fa-chevron-up fa-lg</v-icon>
+          </v-btn>
+        </transition>
       </v-container>
     </div>
   </v-app>
@@ -38,10 +43,8 @@ export default {
   },
   methods: {
     goToTop: function() {
-      document.getElementById('wrapper').scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
+      let el = document.getElementById('wrapper');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     },
     validatePreferences: function(prefs) {
       prefs.bgImage = prefs.bgImage || prefDefaults.bgImage;
@@ -150,6 +153,12 @@ html {
     padding: 0.4em;
     color: #df0025;
     transform: rotate(-45deg);
+  }
+  .goTopBtn-fade-enter-active, .goTopBtn-fade-leave-active {
+    transition: opacity 1s;
+  }
+  .goTopBtn-fade-enter, .goTopBtn-fade-leave-to {
+    opacity: 0;
   }
 }
 label {

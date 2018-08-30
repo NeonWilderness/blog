@@ -78,8 +78,7 @@ export default {
   methods: {
     onScroll(e) {
       let offsetTop = window.pageYOffset || document.documentElement.scrollTop;
-      console.log(offsetTop);
-      this.$store.commit('setToTopButtonVisibility', offsetTop);
+      this.$store.commit('setScrollPosition', offsetTop);
     },
     openPreferences() {
       this.$store.commit('toggleDrawer');

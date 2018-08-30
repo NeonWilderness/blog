@@ -41,8 +41,8 @@ const mutations = {
   setStoryLayout(state, payload) { // layout of posts on the blog page {string}
     state.storyLayout = payload;
   },
-  setToTopButtonVisibility(state, payload) { // scrollTop {number}
-    state.isToTopButtonVisible = (payload > 500);
+  setScrollPosition(state, payload) { // scrollTop {number}
+    state.scrollPosition = payload;
   },
   toggleDrawer(state) {
     state.isDrawerVisible = !state.isDrawerVisible;

@@ -14,7 +14,10 @@ class Cockpit {
   }
 
   readCollection(collection, options) {
-    return this.axios.post(`${this.host}/api/collections/get/${collection}`, _merge(options, {token: this.token}))
+    return this.axios.post(
+      `${this.host}/api/collections/get/${collection}`,
+      _merge(options, { token: this.token })
+    )
       .then(res => {
         if ('dump' in options && options.dump) console.log(JSON.stringify(res.data, null, 2));
         return res.data.entries;
@@ -31,20 +34,34 @@ class Cockpit {
       sort: { date: -1 } // descending: newest on top
     }, options || {}));
   };
-  
+
   readCategories(options) {
     return this.readCollection('categories', _merge({
       sort: { category: 1 } // ascending
     }, options || {}));
   };
-  
+
   readComments(options) {
     return this.readCollection('comments', _merge({
       filter: { reviewed: true, approved: true },
       sort: { postdate: -1 } // descending by postdate (standard for latest comments view)
     }, options || {}));
   };
-  
+
+  saveCollection(collection, options) {
+    return this.axios.post(
+      `${this.host}/api/collections/save/${collection}`,
+      _merge(options, { token: this.token })
+    )
+      .then(entry => {
+        if ('dump' in options && options.dump) console.log(JSON.stringify(entry, null, 2));
+        return entry;
+      })
+      .catch(err => {
+        console.log(`saveCollection "${collection}" ended with error: ${err}`);
+      });
+  };
+
 }
 
 export default Cockpit;

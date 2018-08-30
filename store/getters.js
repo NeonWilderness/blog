@@ -23,6 +23,12 @@ const getters = {
         return 0;
       });
   },
+  getCounterByPostId: state => (id) => { // {string} id = post id
+    for (let post of state.posts) {
+      if (post._id === id) return post.counter;
+    }
+    throw new Error(`PostId: ${id} not found in posts.`);
+  },
   getCurrentBackgroundImage: state => {
     return state.bgImage;
   },
@@ -46,6 +52,9 @@ const getters = {
   getPreferencesKey: state => {
     return state.preferencesKey;
   },
+  getStoriesReadKey: state => {
+    return state.storiesreadKey;
+  },
   getStoryLayout: state => {
     return state.storyLayout;
   },
@@ -56,6 +65,9 @@ const getters = {
   },
   isCurrentBackgroundImage: state => (img) => {
     return (state.bgImage === img.replace('thumbs/', ''));
+  },
+  isGoToTopButtonVisible: state => {
+    return (state.scrollPosition > 500);
   },
   isSingleStoryLayout: state => {
     return (state.storyLayout === 'single');

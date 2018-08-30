@@ -153,8 +153,8 @@ export default {
         if (this.comments.length > 0) {
           this.isCommentListVisible = !this.isCommentListVisible;
           if (this.isCommentListVisible) {
-            document.getElementById('startOfComments').scrollIntoView({
-              behavior: 'smooth',
+            document.getElementById('startOfComments').scrollIntoView({ 
+              behavior: 'smooth', 
               block: 'start'
             });
           }
@@ -162,6 +162,25 @@ export default {
       } else {
         this.$router.push(`/${this.post.basename}#comments`);
       };
+    }
+  },
+  mounted: function() {
+    if (this.isSingleStoryView) { // update readcounter only when in full view mode
+      let storiesRead = localStorage.getItem(this.$store.getters.getStoriesReadKey);
+      storiesRead = storiesRead ? JSON.parse(storiesRead) : [];
+      console.log(`storiesRead after parse: ${JSON.stringify(storiesRead)}`);
+      if (storiesRead.indexOf(this.post._id) < 0) {
+        storiesRead.push(this.post._id);
+        localStorage.setItem(
+          this.$store.getters.getStoriesReadKey, 
+          JSON.stringify(storiesRead)
+        );
+        this.$store.dispatch('incPostCounter', {
+          type: 'reads', 
+          id: this.post._id,
+          cockpit: this.$cockpit
+        });
+      }
     }
   }
 }

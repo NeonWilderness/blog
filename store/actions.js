@@ -54,6 +54,18 @@ const actions = {
 
     });
   },
+  
+  // payload = { type: 'reads'|'hearts'|'comments', id: 'postid', cockpit }
+  incPostCounter({ commit, getters, state }, { type, id, cockpit }) {
+    let counter = getters.getCounterByPostId(id);
+    counter[type]++;
+    return cockpit.saveCollection('posts', {
+      data: {
+        _id: id,
+        counter
+      }
+    });
+  },
 
   loadCategories({ commit, state }) {
     let categories = state.posts.reduce((all, post) => {

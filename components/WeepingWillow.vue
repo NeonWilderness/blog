@@ -12,7 +12,7 @@
               <v-list-tile avatar :key="comment._id">
                 <v-list-tile-avatar><img src="/img/user.png"></v-list-tile-avatar>
                 <v-list-tile-content>
-                  <a class="commentlink" :href="'/' + comment.basename">
+                  <a class="commentlink" :href="'/' + comment.basename + '#comments'">
                     <div class="comment mb-2">{{comment.content}}</div>
                   </a>
                   <v-list-tile-sub-title class="caption d-flex">

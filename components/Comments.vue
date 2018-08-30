@@ -1,59 +1,61 @@
 <template>
-  <v-card v-show="visible" class="mt-3">
-    <a name="comments" id="startOfComments"></a>
-    <v-toolbar 
-      color="secondary lighten-2" 
-      dark 
-      height="40"
-    >Kommentare &mdash; <span class="ml-1">{{title}}</span></v-toolbar>
-    <v-layout row wrap>
-      <v-flex xs12>
-        <v-card 
-          v-for="(comment, index) in getSortedComments" 
-          :class="comment.type"
-          :key="comment._id"
-        >
-          <v-divider v-if="index > 0" />
-          <v-layout row d-flex>
-            <v-flex class="avatar ml-3 pt-4">
-              <img class="authoricon" src="/img/user.png" width="48">
-            </v-flex>
-            <v-flex>
-              <v-card-title class="subheading d-flex">
-                <a v-if="comment.authorurl.length" 
-                  class="authorlink teal--text text--lighten-1" 
-                  target="_blank" 
-                  :href="comment.authorurl">
-                  {{comment.author}}
-                </a>
-                <span v-else 
-                  class="authorlink notlinked">
-                  {{comment.author}}
-                </span>
-                <v-spacer />
-                <timeago 
-                  :datetime="comment.postdate" 
-                  :title="comment.postdate" 
-                  :autoUpdate="60" 
-                  class="text-xs-right grey--text"
-                />
-              </v-card-title>
-              <v-card-text v-html="comment.content" class="pt-0"></v-card-text>
-              <v-card-actions class="mb-1">
-                <v-btn 
-                  color="accent" 
-                  dark
-                  flat
-                  ripple 
-                  small
-                >antworten</v-btn>
-              </v-card-actions>              
-            </v-flex>
-          </v-layout>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-card>    
+  <div id="startOfComments">
+    <a name="comments"></a>
+    <v-card v-show="visible" class="mt-3">
+      <v-toolbar 
+        color="secondary lighten-2" 
+        dark 
+        height="40"
+      >Kommentare &mdash; <span class="ml-1">{{title}}</span></v-toolbar>
+      <v-layout row wrap>
+        <v-flex xs12>
+          <v-card 
+            v-for="(comment, index) in getSortedComments" 
+            :class="comment.type"
+            :key="comment._id"
+          >
+            <v-divider v-if="index > 0" />
+            <v-layout row d-flex>
+              <v-flex class="avatar ml-3 pt-4">
+                <img class="authoricon" src="/img/user.png" width="48">
+              </v-flex>
+              <v-flex>
+                <v-card-title class="subheading d-flex">
+                  <a v-if="comment.authorurl.length" 
+                    class="authorlink teal--text text--lighten-1" 
+                    target="_blank" 
+                    :href="comment.authorurl">
+                    {{comment.author}}
+                  </a>
+                  <span v-else 
+                    class="authorlink notlinked">
+                    {{comment.author}}
+                  </span>
+                  <v-spacer />
+                  <timeago 
+                    :datetime="comment.postdate" 
+                    :title="comment.postdate" 
+                    :autoUpdate="60" 
+                    class="text-xs-right grey--text"
+                  />
+                </v-card-title>
+                <v-card-text v-html="comment.content" class="pt-0"></v-card-text>
+                <v-card-actions class="mb-1">
+                  <v-btn 
+                    color="accent" 
+                    dark
+                    flat
+                    ripple 
+                    small
+                  >antworten</v-btn>
+                </v-card-actions>              
+              </v-flex>
+            </v-layout>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-card> 
+  </div>   
 </template>
 
 <script>
@@ -89,12 +91,10 @@ export default {
   mounted: function() {
     setTimeout(function(){
       if (location.hash === '#comments') {
-        document.getElementById('startOfComments').scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
+        let el = document.getElementById('startOfComments');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-    }, 500);
+    }, 300);
   }  
 }
 </script>
