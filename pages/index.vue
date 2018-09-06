@@ -24,10 +24,11 @@
           </v-layout>
           <div class="text-xs-center">
             <v-pagination
-              v-model="$store.state.page"
               color="teal lighten-1"
               :length="$store.state.maxPage"
               total-visible="7"
+              :value="$store.state.page"
+              @input="pageChange"
             ></v-pagination>
           </div>      
         </v-flex>
@@ -66,15 +67,6 @@ export default {
   asyncData: function({ app, store }) {
     return store.dispatch('readPostsSlice', app.$cockpit);
   },
-  watch: {
-    currentPage: function(newPage, oldPage) {
-      this.$store
-        .dispatch('readPostsSlice', this.$cockpit)
-        .then(({ posts }) => {
-          this.posts = posts;
-        });
-    }
-  },
   methods: {
     onScroll(e) {
       let offsetTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -82,12 +74,19 @@ export default {
     },
     openPreferences() {
       this.$store.commit('toggleDrawer');
+    },
+    pageChange(newPage) {
+      this.$store.commit('setPage', newPage);
+      return this.$store
+        .dispatch('readPostsSlice', this.$cockpit)
+        .then(({ posts }) => {
+          this.posts = posts;
+        });
     }
   },
   fetch({ store }) {
-    if (store.state.posts.length>0)
-      return Promise.resolve();
-    else  
+    if (store.state.posts.length > 0) return Promise.resolve();
+    else
       return store
         .dispatch('establishCounterData')
         .then(() =>
@@ -97,7 +96,7 @@ export default {
           ])
         )
         .catch(err => {
-          console.log(`Fetch@_slug.vue ended with error: ${err}.`);
+          console.log(`fetch@_slug.vue ended with error: ${err}.`);
         });
   }
 };

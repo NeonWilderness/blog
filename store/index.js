@@ -42,7 +42,6 @@ const Store = () => {
         { text: 'vollständig', value: 'F' } // Full
       ],
       selectedPeriod: 'F',
-      storiesreadKey: 'storiesread@NeonWilderness',
       storyLayout: 'single'
     },
     getters,

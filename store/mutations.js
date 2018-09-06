@@ -27,6 +27,9 @@ const mutations = {
   setMostRecentComments(state, payload) { // array of max. 10 comments {array}
     state.mostRecentComments = payload;
   },
+  setPage(state, payload) { // page {number}
+    state.page = payload;
+  },
   setPosts(state, payload) { // array of cockpit posts {array}
     for (let post of payload) {
       Object.keys(post.category).forEach(prop => {

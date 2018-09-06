@@ -37,12 +37,26 @@ export default {
   },
   asyncData: function({ app, params, payload, store }) {
 
+    const sortCommentsByParent = (comments) => {
+      return comments
+        .filter(commentOrReply => !commentOrReply.parentid.length)
+        .reduce((all, comment) => {
+          all.push(Object.assign(comment, {selected: false, type: 'comment'}));
+          return all.concat(
+            comments
+              .filter(commentOrReply => commentOrReply.parentid === comment._id)
+              .map(reply => Object.assign(reply, {selected: false, type: 'reply'}))
+          );
+        }, [])
+    };
+
+    // read comments of specific post and add property 'selected'
     const getPostComments = postid =>
       app.$cockpit.readComments({
         dump: false,
         filter: { postid },
         sort: { parentid: 1, postdate: 1 }
-      });
+      }).then(comments => sortCommentsByParent(comments));
 
     if (payload) {
       return getPostComments(payload._id).then(comments => {
@@ -72,7 +86,7 @@ export default {
           ])
         )
         .catch(err => {
-          console.log(`Fetch@_slug.vue ended with error: ${err}.`);
+          console.log(`fetch@_slug.vue ended with error: ${err}.`);
         });
   }
 };

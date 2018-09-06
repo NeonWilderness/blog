@@ -6,13 +6,21 @@
         color="secondary lighten-2" 
         dark 
         height="40"
-      >Kommentare &mdash; <span class="ml-1">{{title}}</span></v-toolbar>
+      >
+        Kommentare &mdash; 
+        <span class="ml-1">{{title}}</span>
+        <v-spacer/>
+        <v-btn icon @click.prevent="$emit('closeComments')">
+          <v-icon color="secondary lighten-5" title="Kommentare ausblenden">fa-times</v-icon>
+        </v-btn>
+      </v-toolbar>
       <v-layout row wrap>
         <v-flex xs12>
           <v-card 
-            v-for="(comment, index) in getSortedComments" 
+            v-for="(comment, index) in comments" 
             :class="comment.type"
             :key="comment._id"
+            :id="'comment-' + index"
           >
             <v-divider v-if="index > 0" />
             <v-layout row d-flex>
@@ -42,6 +50,7 @@
                 <v-card-text v-html="comment.content" class="pt-0"></v-card-text>
                 <v-card-actions class="mb-1">
                   <v-btn 
+                    @click="addReply(index)"
                     color="accent" 
                     dark
                     flat
@@ -51,6 +60,11 @@
                 </v-card-actions>              
               </v-flex>
             </v-layout>
+            <CommentOrReply
+              :id="'commentform-' + index"
+              :parent="comment"
+              @closeComment="comments[index].selected = false"
+            />
           </v-card>
         </v-flex>
       </v-layout>
@@ -59,7 +73,13 @@
 </template>
 
 <script>
+import CommentOrReply from '~/components/CommentOrReply.vue';
+import { setTimeout } from 'timers';
+
 export default {
+  components: {
+    CommentOrReply
+  },
   props: {
     comments: {
       type: Array,
@@ -75,24 +95,21 @@ export default {
     }
   },
   computed: {
-    getSortedComments: function() {
-      return this.comments
-        .filter(commentOrReply => !commentOrReply.parentid.length)
-        .reduce((all, comment) => {
-          all.push(Object.assign(comment, {type: 'comment'}));
-          return all.concat(
-            this.comments
-              .filter(commentOrReply => commentOrReply.parentid === comment._id)
-              .map(reply => Object.assign(reply, {type: 'reply'}))
-          );
-        }, [])
+  },
+  methods: {
+    addReply: function(index) {
+      this.comments.forEach((comment, idx) => { comment.selected = (idx === index) });
+      setTimeout(function() {
+        document.getElementById(`commentform-${index}`)
+          .scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }, 100);
     }
   },
   mounted: function() {
     setTimeout(function(){
       if (location.hash === '#comments') {
-        let el = document.getElementById('startOfComments');
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.getElementById('startOfComments')
+          .scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }, 300);
   }  

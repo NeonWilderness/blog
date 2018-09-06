@@ -54,9 +54,9 @@ const actions = {
 
     });
   },
-  
+
   // payload = { type: 'reads'|'hearts'|'comments', id: 'postid', cockpit }
-  incPostCounter({ commit, getters, state }, { type, id, cockpit }) {
+  incPostCounter({ getters }, { type, id, cockpit }) {
     let counter = getters.getCounterByPostId(id);
     counter[type]++;
     return cockpit.saveCollection('posts', {

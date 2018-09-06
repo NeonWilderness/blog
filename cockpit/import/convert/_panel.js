@@ -16,7 +16,7 @@ const convertPanel = (story, $, log, commentIdx = -1) => {
     $el.removeClass('panel callout')
       .addClass('radius')
       .attr(':value', 'true')
-      .attr('color', hasCallout ? 'cyan' : 'grey');
+      .attr('color', hasCallout ? 'teal lighten-2' : 'grey');
     el.tagName = 'v-alert';
     log.item(`${story.fm.basename}${commentIdx >= 0 ? ' comment #' + commentIdx : ''}`, before, $.html(el));
   });

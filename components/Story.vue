@@ -6,7 +6,7 @@
         :href="'/'+post.basename" 
         v-if="!isSingleStoryView"
       >
-        <v-card-media class="white--text" height="300px" :src="image">
+        <v-img class="white--text" height="300px" :src="image">
           <v-container fill-height fluid>
             <v-layout>
               <v-flex align-end>
@@ -14,7 +14,7 @@
               </v-flex>
             </v-layout>
           </v-container>
-        </v-card-media>
+        </v-img>
       </a>
       <v-toolbar 
         color="secondary" 
@@ -39,10 +39,9 @@
           <span class="grey--text pl-2">{{post.category.category}}</span>
         </v-subheader>
       </v-toolbar>
-      <v-card-text 
-        v-if="isSingleStoryView" 
-        v-html="post.content"
-      ></v-card-text>
+      <v-card-text v-if="isSingleStoryView">
+        <v-runtime-template :template="'<div>' + post.content + '</div>'"></v-runtime-template>
+      </v-card-text>
       <v-card-text 
         class="storyabstract px-3" 
         style="position: relative"
@@ -94,24 +93,53 @@
             :xs6="!isSingleStoryView"
             class="text-xs-right"
           >
-            <v-btn icon title="Gefällt mir">
+            <v-btn icon title="Gefällt mir" @click.prevent="heartStory">
               <v-icon color="red">fa-heart</v-icon>
             </v-btn>
           </v-flex>
 
         </v-layout>
       </v-toolbar>    
-    </v-card>    
-    <Comments :comments="comments" :title="post.title" :visible="isCommentListVisible" />
+    </v-card>
+    <v-toolbar
+      class="mt-2"
+      color="transparent"
+      id="pagingBar"
+      style="box-shadow:none" 
+      v-if="isSingleStoryView"
+    >
+      <v-btn color="grey darken-4" dark :disabled="!hasYoungerPost" fab :to="'/' + basenameYoungerPost">
+        <v-icon dark>fa-chevron-left fa-lg</v-icon>
+      </v-btn>
+      <v-spacer/>      
+      <v-btn color="grey darken-4" dark :disabled="!hasOlderPost" fab :to="'/' + basenameOlderPost">
+        <v-icon dark>fa-chevron-right fa-lg</v-icon>
+      </v-btn>      
+    </v-toolbar>
+    <CommentOrReply 
+      :postid="post._id" 
+      :visible="isAddCommentVisible"
+      @closeComment="isAddCommentVisible = false"
+    />
+    <Comments 
+      :comments="comments" 
+      :title="post.title" 
+      :visible="isCommentListVisible"
+      @closeComments="collapseComments"
+    />
   </v-flex>
 </template>
 
 <script>
 import Comments from '~/components/Comments.vue';
+import CommentOrReply from '~/components/CommentOrReply.vue';
+import VRuntimeTemplate from 'v-runtime-template';
 
 export default {
   components: {
-    Comments
+    Comments,
+    CommentOrReply,
+    VRuntimeTemplate
   },
   props: {
     post: {
@@ -122,75 +150,114 @@ export default {
       type: Array,
       required: false
     },
-    view: { // grid=1-3 stories in a row | full=one story per page incl. comments
+    view: {
+      // 'grid'=1-3 stories in a row | 'full'=one story per page incl. comments
       type: String,
       required: true
     }
   },
   data: function() {
     return {
+      isAddCommentVisible: false,
       isCommentListVisible: (process.browser ? location.hash === '#comments' : false)
     };
   },
   computed: {
+    basenameOlderPost: function() {
+      return this.$store.getters.getPostOlder(this.postIndex);
+    },
+    basenameYoungerPost: function() {
+      return this.$store.getters.getPostYounger(this.postIndex);
+    },
     commentString: function() {
       let comments = this.post.counter.comments || 0;
-      return `${comments} Kommentar${comments == 1 ? '' : 'e' }`;
+      return `${comments} Kommentar${comments === 1 ? '' : 'e'}`;
+    },
+    hasOlderPost: function() {
+      return !!this.basenameOlderPost;
+    },
+    hasYoungerPost: function() {
+      return !!this.basenameYoungerPost;
     },
     image: function() {
-      return (this.post.image ? this.post.image.path : '/img/px1.png');
+      return this.post.image ? this.post.image.path : '/img/px1.png';
     },
     isSingleStoryView: function() {
       return this.view === 'full';
+    },
+    postIndex: function() {
+      return this.$store.getters.getIndexOfBasename(this.post.basename);
     }
   },
   methods: {
     addComment: function() {
-      alert('addComment clicked!');
+      console.dir(this.$el);
+      this.isAddCommentVisible = true;
+    },
+    collapseComments: function() {
+      this.toggleComments();
+      document.getElementById('pagingBar').scrollIntoView({
+        behavior: 'smooth',
+        block: 'end'
+      });
+    },
+    heartStory: function() {
+      if (this.updateStoryList('hearts')) {
+        this.$toast.success(
+          'Hey - vielen Dank! Freut mich sehr, dass dir der Beitrag gefallen hat!',
+          { icon: 'fa-heart' }
+        );
+      } else {
+        this.$toast.info(
+          'Hach, das ist wirklich sehr nett, aber du hast bereits ein Herz für diesen Beitrag vergeben! ;)',
+          { icon: 'fa-heart' }
+        );
+      }
     },
     toggleComments: function() {
       if (this.isSingleStoryView) {
         if (this.comments.length > 0) {
           this.isCommentListVisible = !this.isCommentListVisible;
           if (this.isCommentListVisible) {
-            document.getElementById('startOfComments').scrollIntoView({ 
-              behavior: 'smooth', 
+            document.getElementById('startOfComments').scrollIntoView({
+              behavior: 'smooth',
               block: 'start'
             });
           }
         }
       } else {
         this.$router.push(`/${this.post.basename}#comments`);
-      };
-    }
-  },
-  mounted: function() {
-    if (this.isSingleStoryView) { // update readcounter only when in full view mode
-      let storiesRead = localStorage.getItem(this.$store.getters.getStoriesReadKey);
-      storiesRead = storiesRead ? JSON.parse(storiesRead) : [];
-      console.log(`storiesRead after parse: ${JSON.stringify(storiesRead)}`);
-      if (storiesRead.indexOf(this.post._id) < 0) {
-        storiesRead.push(this.post._id);
-        localStorage.setItem(
-          this.$store.getters.getStoriesReadKey, 
-          JSON.stringify(storiesRead)
-        );
-        this.$store.dispatch('incPostCounter', {
-          type: 'reads', 
+      }
+    },
+    updateStoryList: async function(type) {
+      // {string} type = reads|hearts
+      let storageKey = this.$store.getters.getStoryStateKey(type);
+      let storiesType = localStorage.getItem(storageKey);
+      storiesType = storiesType ? JSON.parse(storiesType) : [];
+      if (storiesType.indexOf(this.post._id) > 0) return Promise.resolve(false);
+      else {
+        storiesType.push(this.post._id);
+        localStorage.setItem(storageKey, JSON.stringify(storiesType));
+        return await this.$store.dispatch('incPostCounter', {
+          type,
           id: this.post._id,
           cockpit: this.$cockpit
         });
       }
     }
+  },
+  mounted: function() {
+    // update readcounter only when in full view mode
+    if (this.isSingleStoryView) this.updateStoryList('reads');
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
 .posttitle {
-  background-color: rgba(227, 4, 37, .9); // #e30425 secondary
-  line-height: 30px!important;
-  padding: .3em .5em;  
+  background-color: rgba(227, 4, 37, 0.9); // #e30425 secondary
+  line-height: 30px !important;
+  padding: 0.3em 0.5em;
 }
 .storylink {
   text-decoration: none;
@@ -200,7 +267,7 @@ export default {
 }
 .storyabstract {
   .textlink {
-    color: rgba(0, 0, 0, .87);
+    color: rgba(0, 0, 0, 0.87);
     text-decoration: none;
   }
   .buttonlink {
@@ -216,6 +283,9 @@ export default {
       opacity: 1;
     }
   }
+}
+.v-toolbar .v-subheader {
+  height: auto;
 }
 </style>
 

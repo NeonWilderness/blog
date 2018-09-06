@@ -1,7 +1,6 @@
 if (process.server) require('dotenv-safe').load();
 
 const fs = require('fs');
-const nodeExternals = require('webpack-node-externals')
 const path = require('path');
 const routes = require('./routes.config');
 
@@ -40,6 +39,7 @@ const baseUrl = (process.env.npm_lifecycle_event !== 'dev' ? process.env.BASEURL
 
 module.exports = {
   css: [
+    '~/assets/styles.less'
   ],
   head: {
     title: 'In a neon wilderness',
@@ -50,7 +50,10 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.jpg' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Courgette:400|Oswald:400' }
+      { 
+        rel: 'stylesheet', 
+        href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Courgette:400|Oswald:400|Material+Icons'
+      }
     ],
     script: (process.env.npm_lifecycle_event !== 'dev' ? prodScripts : devScripts)
   },
@@ -62,7 +65,8 @@ module.exports = {
   loading: { color: '#3B8070' },
   plugins: [
     '~/plugins/vue-cockpit',
-    '~/plugins/vue-timeago'
+    '~/plugins/vue-timeago',
+    '~/plugins/vuetify.js'
   ],
   modules: [
     '@nuxtjs/axios',
@@ -70,8 +74,7 @@ module.exports = {
     '@nuxtjs/feed',
     '@nuxtjs/font-awesome',
     '@nuxtjs/sitemap',
-    '@nuxtjs/toast',
-    '@nuxtjs/vuetify'
+    '@nuxtjs/toast'
   ],
   axios: {
     baseURL: baseUrl
@@ -94,25 +97,22 @@ module.exports = {
       routes
   },
   toast: {
-    duration: 2000,
+    duration: 4000,
     iconPack: 'fontawesome',
     position: 'top-center',
     theme: 'primary'
-  },
-  vuetify: {
-    theme: {
-      primary: '#720d5d',
-      secondary: '#e30425',
-      accent: '#4e0d3a'      
-    }
   },
   generate: {
     routes
   },
   build: {
+    vendor: [
+      '~/plugins/vuetify.js'
+    ],
     extractCSS: true,
-    extend(config, { isDev, isClient, isServer }) {
+    extend(config, { isDev, isClient }) {
       if (isDev && isClient) {
+        config.resolve.alias["vue"] = "vue/dist/vue.common"; // enable with-compiler Vue.js version
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
@@ -120,15 +120,6 @@ module.exports = {
           exclude: /(node_modules)/
         });
       }
-      if (isServer) {
-        config.externals = [
-          nodeExternals({
-            whitelist: [/^vuetify/]
-          })
-        ]
-      }      
-    },
-    transpile: [/^vuetify/],
-    vendor: []
+    }
   }
 }

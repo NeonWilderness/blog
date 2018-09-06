@@ -5,7 +5,7 @@
       :style="{backgroundImage: 'url('+ $store.state.bgImage +')'}"
     >
       <h1>In a neon wilderness <span>he was restless</span></h1>
-      <h3>Redesigned.<br>Redefined.<br>Reborn.</h3>
+      <h3 class="reborn">Redesigned.<br>Redefined.<br>Reborn.</h3>
       <v-container fluid grid-list-md style="padding:0">
         <nuxt/>
         <transition name="goTopBtn-fade">
@@ -141,7 +141,7 @@ html {
       opacity: 0.6;
     }
   }
-  h3 {
+  h3.reborn {
     position: absolute;
     background: rgba(255, 255, 255, 0.6);
     font-family: "Courgette";
@@ -298,8 +298,9 @@ label {
     height: 1.3rem;
     margin: 0 .2rem;
 }
-.v-chip .v-icon {
-  width: 2em;
+.v-chip .v-icon, .v-btn .v-icon {
+  display: inline-flex;
   text-align: center;
+  width: 2em;
 }
 </style>

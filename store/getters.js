@@ -40,17 +40,32 @@ const getters = {
     let endAt = startAt + state.postsPerPage;
     return state.posts.slice(startAt, endAt);
   },
+  getIndexOfBasename: state => (basename) => { // {string} basename = post basename
+    for (let i = 0, len = state.posts.length; i < len; i++) {
+      if (state.posts[i].basename === basename) return i;
+    }
+    return -1;
+  },
   getLayoutGrid: state => {
     return state.layouts[state.storyLayout].grid;
   },
   getMost: state => (type) => { // {string} type = reads|hearts|comments
     return state.most[type][state.selectedPeriod];
   },
+  getPostOlder: (state) => (postIndex) => { // {number} postIndex = index of post.basename
+    return ((postIndex === state.posts.length - 1) || (postIndex < 0) ? '' : state.posts[postIndex + 1].basename);
+  },
+  getPostYounger: (state) => (postIndex) => { // {number} postIndex = index of post.basename
+    return (postIndex < 1 ? '' : state.posts[postIndex - 1].basename);
+  },
   getPostsPerPage: state => {
     return state.postsPerPage;
   },
   getPreferencesKey: state => {
     return state.preferencesKey;
+  },
+  getStoryStateKey: state => (type) => { // {string} type = reads|hearts
+    return `story${type}@NeonWilderness`;
   },
   getStoriesReadKey: state => {
     return state.storiesreadKey;
