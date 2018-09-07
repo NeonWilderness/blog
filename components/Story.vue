@@ -159,7 +159,9 @@ export default {
   data: function() {
     return {
       isAddCommentVisible: false,
-      isCommentListVisible: (process.browser ? location.hash === '#comments' : false)
+      isCommentListVisible: process.browser
+        ? location.hash === '#comments'
+        : false
     };
   },
   computed: {
@@ -202,17 +204,19 @@ export default {
       });
     },
     heartStory: function() {
-      if (this.updateStoryList('hearts')) {
-        this.$toast.success(
-          'Hey - vielen Dank! Freut mich sehr, dass dir der Beitrag gefallen hat!',
-          { icon: 'fa-heart' }
-        );
-      } else {
-        this.$toast.info(
-          'Hach, das ist wirklich sehr nett, aber du hast bereits ein Herz für diesen Beitrag vergeben! ;)',
-          { icon: 'fa-heart' }
-        );
-      }
+      this.updateStoryList('hearts').then(counterIncreased => {
+        if (counterIncreased) {
+          this.$toast.success(
+            'Hey - vielen Dank! Freut mich sehr, dass dir der Beitrag gefallen hat!',
+            { icon: 'fa-heart' }
+          );
+        } else {
+          this.$toast.info(
+            'Hach, das ist wirklich sehr nett, aber du hast bereits ein Herz für diesen Beitrag vergeben! ;)',
+            { icon: 'fa-heart' }
+          );
+        }
+      });
     },
     toggleComments: function() {
       if (this.isSingleStoryView) {
@@ -229,16 +233,18 @@ export default {
         this.$router.push(`/${this.post.basename}#comments`);
       }
     },
-    updateStoryList: async function(type) {
+    updateStoryList: function(type) {
       // {string} type = reads|hearts
       let storageKey = this.$store.getters.getStoryStateKey(type);
       let storiesType = localStorage.getItem(storageKey);
       storiesType = storiesType ? JSON.parse(storiesType) : [];
-      if (storiesType.indexOf(this.post._id) > 0) return Promise.resolve(false);
+      if (storiesType.indexOf(this.post._id) >= 0)
+        return Promise.resolve(false);
       else {
+        this.post.counter[type]++;
         storiesType.push(this.post._id);
         localStorage.setItem(storageKey, JSON.stringify(storiesType));
-        return await this.$store.dispatch('incPostCounter', {
+        return this.$store.dispatch('incPostCounter', {
           type,
           id: this.post._id,
           cockpit: this.$cockpit

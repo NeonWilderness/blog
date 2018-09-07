@@ -4,7 +4,7 @@
       :class="{faded: $store.state.isImgLoading}" 
       :style="{backgroundImage: 'url('+ $store.state.bgImage +')'}"
     >
-      <h1>In a neon wilderness <span>he was restless</span></h1>
+      <h1 class="sitetitle">In a neon wilderness <span>he was restless</span></h1>
       <h3 class="reborn">Redesigned.<br>Redefined.<br>Reborn.</h3>
       <v-container fluid grid-list-md style="padding:0">
         <nuxt/>
@@ -122,7 +122,7 @@ html {
     opacity: 0;
     transition: none;
   }
-  h1 {
+  h1.sitetitle {
     position: absolute;
     top: 0;
     left: 0;

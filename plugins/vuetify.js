@@ -6,9 +6,9 @@ Vue.use(Vuetify, {
     primary: '#720d5d',
     secondary: '#e30425',
     accent: '#4e0d3a',
-    info: '#2979ff',
-    warning: '#ffb300',
-    error: '#ff5252',
-    success: '#43a047'
+    info: '#2196f3',
+    warning: '#ff9800',
+    error: '#f44336',
+    success: '#4caf50'
   }
 });

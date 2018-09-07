@@ -47,7 +47,9 @@
                     class="text-xs-right grey--text"
                   />
                 </v-card-title>
-                <v-card-text v-html="comment.content" class="pt-0"></v-card-text>
+                <v-card-text class="pt-0">
+                  <v-runtime-template :template="'<div>' + comment.content + '</div>'"></v-runtime-template>
+                </v-card-text>
                 <v-card-actions class="mb-1">
                   <v-btn 
                     @click="addReply(index)"
@@ -74,11 +76,12 @@
 
 <script>
 import CommentOrReply from '~/components/CommentOrReply.vue';
-import { setTimeout } from 'timers';
+import VRuntimeTemplate from 'v-runtime-template';
 
 export default {
   components: {
-    CommentOrReply
+    CommentOrReply,
+    VRuntimeTemplate
   },
   props: {
     comments: {

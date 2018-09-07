@@ -19,10 +19,9 @@ const convertExpansionPanel = (story, $, log, commentIdx = -1) => {
 
     if (titles.length !== contents.length) throw new Error('Accordion Error: different titles/contents count');
 
-    let textColor = ($el.hasClass('accLight') ? '' : ' white--text');
     titles.each((index, title) => {
       data.push(
-        `<v-expansion-panel-content ${textColor ? 'class="' + textColor.trim() + '" ' : ''}expand-icon="fa-chevron-down${textColor}" lazy="true" ripple="true">
+        `<v-expansion-panel-content class="teal lighten-2 white--text" expand-icon="fa-chevron-down white--text" :lazy="true" :ripple="true">
            <div slot="header">${title}</div>
            <v-card>
              <v-card-text>${contents[index]}</v-card-text>
