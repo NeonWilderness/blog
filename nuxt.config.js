@@ -49,6 +49,8 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'In A Neon Wilderness: Blogging about urban hymns and bitter-sweet symphonies' }
     ],
     link: [
+      { rel: 'dns-prefetch', href: 'https://fonts.googleapis.com' },
+      { rel: 'dns-prefetch', href: baseUrl },
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.jpg' },
       { 
         rel: 'stylesheet', 
@@ -65,6 +67,7 @@ module.exports = {
   loading: { color: '#3B8070' },
   plugins: [
     '~/plugins/vue-cockpit',
+    '~/plugins/vue-component',
     '~/plugins/vue-timeago',
     '~/plugins/vuetify.js'
   ],

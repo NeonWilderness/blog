@@ -9,6 +9,7 @@ dist
 data/*.txt
 data/authors.*
 data/log*.html
+fix*.js
 hook*.js
 node_modules
 test*.js

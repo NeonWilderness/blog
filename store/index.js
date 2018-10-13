@@ -12,6 +12,12 @@ const Store = () => {
       bgIndex: -1,
       categories: [],
       cockpitApi: null,
+      credentials: {
+        email: '',
+        name: '',
+        url: ''
+      },
+      credentialsKey: 'credentials@NeonWilderness',
       firstStoryDate: '2006-10-24 03:16',
       isDrawerVisible: false,
       isImgLoading: true,
@@ -33,7 +39,7 @@ const Store = () => {
       mostRecentComments: [],
       page: 1,
       posts: [],
-      postsPerPage: 4,
+      postsPerPage: 6,
       preferencesKey: 'preferences@NeonWilderness',
       scrollPosition: 0,
       selectPeriods: [
@@ -42,7 +48,7 @@ const Store = () => {
         { text: 'vollständig', value: 'F' } // Full
       ],
       selectedPeriod: 'F',
-      storyLayout: 'single'
+      storyLayout: 'double'
     },
     getters,
     actions,

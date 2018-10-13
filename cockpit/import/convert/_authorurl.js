@@ -1,5 +1,5 @@
 /**
- * Change foundation5 alert-box to vuetify standard (v-alert)
+ * Convert author blog urls to new urls (if known)
  * @param {object} story story object
  * @param {object} authors lookup user => url
  */

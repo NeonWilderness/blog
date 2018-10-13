@@ -12,7 +12,7 @@
         class="contentwrapper pt-2"
         v-scroll="onScroll"
       >
-        <v-flex xs12 md8 lg7 offset-lg1 class="storywrapper">
+        <v-flex xs12 md8 :class="'storywrapper ' + largeSpaceClass">
           <v-layout row wrap>
             <v-flex 
               v-for="n in posts.length"
@@ -64,6 +64,11 @@ export default {
   data: function() {
     return {};
   },
+  computed: {
+    largeSpaceClass: function() {
+      return (this.$store.getters.getStoryLayout === 'triple' ? 'lg9' : 'lg7 offset-lg1');
+    }
+  },
   asyncData: function({ app, store }) {
     return store.dispatch('readPostsSlice', app.$cockpit);
   },
@@ -96,7 +101,7 @@ export default {
           ])
         )
         .catch(err => {
-          console.log(`fetch@_slug.vue ended with error: ${err}.`);
+          console.log(`fetch@index.vue ended with error: ${err}.`);
         });
   }
 };

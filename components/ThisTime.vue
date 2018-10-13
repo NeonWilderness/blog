@@ -29,14 +29,12 @@
 <script>
 const day = 1000 * 60 * 60 * 24;
 export default {
-  data: function() {
-    return {
-      firstStoryDate: '2006-10-24 03:16'
-    };
-  },
   computed: {
     copyright: function() {
       return `&copy; 2006-${new Date().getFullYear()} NeonWilderness`;
+    },
+    firstStoryDate: function() {
+      return this.$store.state.firstStoryDate;
     },
     getAge: function() {
       return Math.floor((Date.now() - Date.parse(this.firstStoryDate)) / day);

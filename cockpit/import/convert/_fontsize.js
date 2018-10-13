@@ -1,5 +1,5 @@
 /**
- * Change span-class code to vuetify standard (code)
+ * Change "font size" command to "small"
  * @param {object} story story object
  * @param {cheerio} $ element/s to change
  * @param {log} $ logging instance

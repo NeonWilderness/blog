@@ -132,6 +132,7 @@ const actions = {
         filter: { basename: params.slug }
       }).then(([post]) => {
         post.abstract = deriveAbstract(post.content, state.maxStoryAbstractLength);
+        post.videoload = (post.content.indexOf('html5video') >= 0);
         if (typeof post.image !== 'object') {
           let img = post.content.match(/<img.*?src="(.*?)"/);
           if (img) post.image = {
@@ -176,6 +177,12 @@ const actions = {
       }).catch(err => { reject(err); });
     });
 
+  },
+
+  saveComment({ dispatch }, { comment, cockpit }) {
+    return cockpit.saveCollection('comments', { data: comment })
+      .then( () => dispatch('incPostCounter', { type: 'comments', id: comment.postid, cockpit }))
+      .catch(err => console.log(`Sicherung Kommentar endete mit Fehler: ${err}.`));
   },
 
   setCurrentBackgroundImage({ commit, getters, state }, payload) { // preload/set a new background image

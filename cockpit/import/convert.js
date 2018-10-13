@@ -9,6 +9,7 @@ const LogChanges = require('./convert/_log');
 
 const conversionFunctions = [
   require('./convert/_classes'),
+  require('./convert/_style'),
   require('./convert/_dataattributes'),
   require('./convert/_headings'),
   require('./convert/_code'),

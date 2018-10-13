@@ -25,7 +25,9 @@
             <v-divider v-if="index > 0" />
             <v-layout row d-flex>
               <v-flex class="avatar ml-3 pt-4">
-                <img class="authoricon" src="/img/user.png" width="48">
+                <img v-if="comment.email" class="authoricon" :src="`https://www.gravatar.com/avatar/${comment.email}?s=48&d=mp`" width="48">
+                <img v-else-if="isTwodayBlog(comment)" class="authoricon" :src="getTwodayBlogIconUrl(comment)" width="48" onError="this.onerror=null;this.src='/img/user.png';">
+                <img v-else class="authoricon opaque" src="/img/user.png" width="48">
               </v-flex>
               <v-flex>
                 <v-card-title class="subheading d-flex">
@@ -69,6 +71,9 @@
             />
           </v-card>
         </v-flex>
+        <v-flex v-if="unapproved > 0" class="py-0">
+          <div class="secondary lighten-2 white--text text-xs-center py-3">{{unapprovedText}}</div>
+        </v-flex>
       </v-layout>
     </v-card> 
   </div>   
@@ -92,31 +97,52 @@ export default {
       type: String,
       required: true
     },
+    unapproved: {
+      type: Number,
+      required: true
+    },
     visible: {
       type: Boolean,
       required: true
     }
   },
   computed: {
+    unapprovedText: function() {
+      return `${this.unapproved} weitere${this.unapproved===1 ? 'r' : ''} Kommentar${this.unapproved===1 ? '' : 'e'} ${this.unapproved===1 ? 'muss' : 'müssen'} noch freigeschaltet werden`;
+    }
   },
   methods: {
     addReply: function(index) {
-      this.comments.forEach((comment, idx) => { comment.selected = (idx === index) });
+      this.comments.forEach((comment, idx) => {
+        comment.selected = idx === index;
+      });
       setTimeout(function() {
-        document.getElementById(`commentform-${index}`)
+        document
+          .getElementById(`commentform-${index}`)
           .scrollIntoView({ behavior: 'smooth', block: 'end' });
       }, 100);
+    },
+    getTwodayBlogIconUrl: function(comment) {
+      let url =
+        comment.authorurl +
+        (comment.authorurl[comment.authorurl.length - 1] === '/' ? '' : '/') +
+        'images/icon';
+      return url;
+    },
+    isTwodayBlog: function(comment) {
+      return !!comment.authorurl.match(/\.twoday\.net/);
     }
   },
   mounted: function() {
-    setTimeout(function(){
+    setTimeout(function() {
       if (location.hash === '#comments') {
-        document.getElementById('startOfComments')
+        document
+          .getElementById('startOfComments')
           .scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-    }, 300);
-  }  
-}
+    }, 200);
+  }
+};
 </script>
 
 <style lang="less" scoped>
@@ -127,7 +153,9 @@ export default {
 }
 .authoricon {
   border-radius: 50%;
-  opacity: .2;
+  &.opaque {
+    opacity: 0.2;
+  }
 }
 .authorlink {
   text-decoration: none;
@@ -135,7 +163,8 @@ export default {
     color: #9e9e9e;
   }
 }
-.comment, .reply {
+.comment,
+.reply {
   box-shadow: none;
 }
 .reply {

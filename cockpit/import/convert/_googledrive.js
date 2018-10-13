@@ -23,7 +23,7 @@ const convertGoogleDrive = (story, $, log, commentIdx = -1) => {
       let alt = $el.attr('alt');
       $el
         .attr('src', `${imageDir}${alt}`)
-        .attr('width', `100%`)
+        .attr('width', '100%')
         .attr('alt', alt.split('/').pop());
     } 
     $el.removeClass('googledrive noadds th');

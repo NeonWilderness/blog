@@ -3,10 +3,15 @@
     <v-card class="elevation-3">
       <a 
         class="storylink" 
-        :href="'/'+post.basename" 
+        @click.prevent="goToPost()"
         v-if="!isSingleStoryView"
       >
-        <v-img class="white--text" height="300px" :src="image">
+        <v-img 
+          :aspect-ratio="16/9"
+          class="white--text" 
+          position="top center"
+          :src="image"
+        >
           <v-container fill-height fluid>
             <v-layout>
               <v-flex align-end>
@@ -30,9 +35,9 @@
         </v-subheader>
         <v-spacer v-if="!isSingleStoryView"></v-spacer>
         <v-icon>fa-eye</v-icon>
-        <v-subheader class="grey--text pl-2 pr-4" title="gelesen">{{post.counter.reads || 0}}</v-subheader>
+        <v-subheader class="grey--text pl-2 pr-4" title="gelesen">{{post.counter.reads}}</v-subheader>
         <v-icon>fa-heart-o</v-icon>
-        <v-subheader class="grey--text pl-2 pr-0" title="gut gefunden">{{post.counter.hearts || 0}}</v-subheader>
+        <v-subheader class="grey--text pl-2 pr-0" title="gut gefunden">{{post.counter.hearts}}</v-subheader>
         <v-spacer v-if="isSingleStoryView"></v-spacer>
         <v-subheader class="px-0" v-if="isSingleStoryView">
           <v-icon>fa-tags</v-icon>
@@ -49,7 +54,7 @@
       >
         <a 
           class="textlink" 
-          :href="'/'+post.basename"
+          @click.prevent="goToPost()"
         >{{post.abstract}}</a>
         <v-btn 
           absolute 
@@ -57,7 +62,6 @@
           color="grey lighten-4" 
           icon 
           nuxt 
-          right 
           :to="'/'+post.basename"
         >
           <v-icon>fa-chevron-right</v-icon>
@@ -123,7 +127,8 @@
     />
     <Comments 
       :comments="comments" 
-      :title="post.title" 
+      :title="post.title"
+      :unapproved="unapprovedComments" 
       :visible="isCommentListVisible"
       @closeComments="collapseComments"
     />
@@ -134,6 +139,8 @@
 import Comments from '~/components/Comments.vue';
 import CommentOrReply from '~/components/CommentOrReply.vue';
 import VRuntimeTemplate from 'v-runtime-template';
+
+import loadScripts from 'load-scripts';
 
 export default {
   components: {
@@ -172,7 +179,7 @@ export default {
       return this.$store.getters.getPostYounger(this.postIndex);
     },
     commentString: function() {
-      let comments = this.post.counter.comments || 0;
+      let comments = this.post.counter.comments;
       return `${comments} Kommentar${comments === 1 ? '' : 'e'}`;
     },
     hasOlderPost: function() {
@@ -189,11 +196,13 @@ export default {
     },
     postIndex: function() {
       return this.$store.getters.getIndexOfBasename(this.post.basename);
+    },
+    unapprovedComments: function() {
+      return (this.post.counter.comments - this.comments.length);
     }
   },
   methods: {
     addComment: function() {
-      console.dir(this.$el);
       this.isAddCommentVisible = true;
     },
     collapseComments: function() {
@@ -202,6 +211,9 @@ export default {
         behavior: 'smooth',
         block: 'end'
       });
+    },
+    goToPost: function(hash) {
+      this.$router.push(`/${this.post.basename}${hash || ''}`);
     },
     heartStory: function() {
       this.updateStoryList('hearts').then(counterIncreased => {
@@ -230,7 +242,7 @@ export default {
           }
         }
       } else {
-        this.$router.push(`/${this.post.basename}#comments`);
+        this.goToPost('#comments');
       }
     },
     updateStoryList: function(type) {
@@ -253,8 +265,19 @@ export default {
     }
   },
   mounted: function() {
-    // update readcounter only when in full view mode
-    if (this.isSingleStoryView) this.updateStoryList('reads');
+    // only when in full view mode
+    if (this.isSingleStoryView) {
+      // update the story's readcounter
+      this.updateStoryList('reads');
+      // and check for potential videoload instances
+      if (this.post.videoload)
+        loadScripts('./js/videoload2.js').then(() => {
+          video2day.run({
+            debug: true,
+            lazyLoad: true
+          });
+        });
+    }
   }
 };
 </script>
@@ -277,8 +300,9 @@ export default {
     text-decoration: none;
   }
   .buttonlink {
-    bottom: 16px;
+    bottom: 14px;
     opacity: 0;
+    right: 14px;
     transition: 1s opacity;
   }
   &:hover {

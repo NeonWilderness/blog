@@ -15,6 +15,9 @@ const mutations = {
   setCounterData(state, {type, period, posts}) { // object { type, period, posts }
     state.most[type][period] = posts;
   },
+  setCredentials(state, payload) { // credentials object { email, name, url }
+    state.credentials = payload;
+  },
   setCurrentBackgroundImage(state, payload) { // path/name of loaded background image {string}
     state.bgImage = payload;
   },
@@ -32,9 +35,19 @@ const mutations = {
   },
   setPosts(state, payload) { // array of cockpit posts {array}
     for (let post of payload) {
+
+      // add potentially missing counter fields and values
+      let counter = Object.assign({ reads: '0', hearts: '0', comments: '0'}, post.counter || {});
+      // and convert to numbers
+      post.counter.reads = Number(counter.reads);
+      post.counter.hearts = Number(counter.hearts);
+      post.counter.comments = Number(counter.comments);
+
+      // eliminate unwanted cockpit system fields
       Object.keys(post.category).forEach(prop => {
         if (prop[0] === '_') delete post.category[prop];
-      })
+      });
+
     }
     state.posts = payload;
   },

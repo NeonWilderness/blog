@@ -33,8 +33,8 @@ import { escape } from 'escape-goat';
 
 const prefDefaults = {
   bgImage: 0,
-  postsPerPage: 4,
-  storyLayout: 'single'
+  postsPerPage: 6,
+  storyLayout: 'double'
 };
 
 export default {
@@ -45,6 +45,12 @@ export default {
     goToTop: function() {
       let el = document.getElementById('wrapper');
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    },
+    validateCredentials: function(creds) { 
+      Object.keys(creds).forEach(prop => {
+        creds[prop] = escape(creds[prop]);
+      });
+      return creds;
     },
     validatePreferences: function(prefs) {
       prefs.bgImage = prefs.bgImage || prefDefaults.bgImage;
@@ -72,6 +78,12 @@ export default {
     this.$axios.get('/json/allBackgrounds.json').then(res => {
       this.$store.commit('setBackgroundImages', res.data);
 
+      let credentials = localStorage.getItem(this.$store.getters.getCredentialsKey);
+      if (credentials) 
+        this.$store.commit(
+          'setCredentials', 
+          this.validateCredentials(JSON.parse(credentials))
+        );
       let preferences = localStorage.getItem(this.$store.getters.getPreferencesKey);
       this.$store.dispatch(
         'setPreferences',

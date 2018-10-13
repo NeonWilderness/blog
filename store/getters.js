@@ -29,6 +29,9 @@ const getters = {
     }
     throw new Error(`PostId: ${id} not found in posts.`);
   },
+  getCredentialsKey: state => {
+    return state.credentialsKey;
+  },
   getCurrentBackgroundImage: state => {
     return state.bgImage;
   },

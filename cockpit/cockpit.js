@@ -14,13 +14,13 @@ const Cockpit = new CockpitApi({
 
 const readCollection = (collection, options) => {
   return Cockpit.collectionGet(collection, options)
-  .then(data => {
-    if ('dump' in options && options.dump) console.log(JSON.stringify(data, null, 2));
-    return data.entries;
-  })
-  .catch(err => {
-    console.log(`readCollection "${collection}" ended with error: ${err}`);
-  });
+    .then(data => {
+      if ('dump' in options && options.dump) console.log(JSON.stringify(data, null, 2));
+      return data.entries;
+    })
+    .catch(err => {
+      console.log(`readCollection "${collection}" ended with error: ${err}`);
+    });
 };
 
 const readPosts = (options) => {
@@ -45,8 +45,16 @@ const readComments = (options) => {
   }, options || {}));
 };
 
+const saveCollection = (collection, data) => {
+  return Cockpit.collectionSave(collection, data)
+    .catch(err => {
+      console.log(`saveCollection "${collection}" ended with error: ${err}`);
+    });
+};
+
 module.exports = {
   readCategories,
   readComments,
-  readPosts
+  readPosts,
+  saveCollection
 };
