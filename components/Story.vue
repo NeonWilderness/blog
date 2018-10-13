@@ -124,6 +124,7 @@
       :postid="post._id" 
       :visible="isAddCommentVisible"
       @closeComment="isAddCommentVisible = false"
+      @newComment="refreshComments"
     />
     <Comments 
       :comments="comments" 
@@ -230,15 +231,20 @@ export default {
         }
       });
     },
+    refreshComments: function(comment) {
+      console.log('refreshComments (Story) called.', comment);
+    },
     toggleComments: function() {
       if (this.isSingleStoryView) {
         if (this.comments.length > 0) {
           this.isCommentListVisible = !this.isCommentListVisible;
           if (this.isCommentListVisible) {
-            document.getElementById('startOfComments').scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            });
+            setTimeout(() => {
+              this.$vuetify.goTo(
+                '.storyfooter', 
+                {duration:400, offset:0}
+              );
+            }, 200);
           }
         }
       } else {

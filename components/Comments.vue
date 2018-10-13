@@ -68,11 +68,14 @@
               :id="'commentform-' + index"
               :parent="comment"
               @closeComment="comments[index].selected = false"
+              @newComment="refreshComments"
             />
           </v-card>
         </v-flex>
         <v-flex v-if="unapproved > 0" class="py-0">
-          <div class="secondary lighten-2 white--text text-xs-center py-3">{{unapprovedText}}</div>
+          <div class="secondary lighten-2 white--text text-xs-center py-3">
+            <i class="fa fa-info-circle mr-3"></i>{{unapprovedText}}
+          </div>
         </v-flex>
       </v-layout>
     </v-card> 
@@ -116,11 +119,11 @@ export default {
       this.comments.forEach((comment, idx) => {
         comment.selected = idx === index;
       });
-      setTimeout(function() {
+      setTimeout(() => {
         document
           .getElementById(`commentform-${index}`)
           .scrollIntoView({ behavior: 'smooth', block: 'end' });
-      }, 100);
+      }, 200);
     },
     getTwodayBlogIconUrl: function(comment) {
       let url =
@@ -131,10 +134,13 @@ export default {
     },
     isTwodayBlog: function(comment) {
       return !!comment.authorurl.match(/\.twoday\.net/);
+    },
+    refreshComments: function(comment) {
+      console.log('refreshComments (Comments) called.', comment);
     }
   },
   mounted: function() {
-    setTimeout(function() {
+    setTimeout(() => {
       if (location.hash === '#comments') {
         document
           .getElementById('startOfComments')

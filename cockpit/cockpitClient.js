@@ -13,6 +13,15 @@ class Cockpit {
     this.axios = axios;
   }
 
+  isUserApproved(encryptedEmail) {
+    return this.readCollection('comments', {
+      filter: { reviewed: true, approved: true, email: encryptedEmail },
+      fields: { _id: true }
+    })
+      .then(entries => (entries.length > 1))
+      .catch(err => false);
+  };
+
   readCollection(collection, options) {
     return this.axios.post(
       `${this.host}/api/collections/get/${collection}`,

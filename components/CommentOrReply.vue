@@ -154,7 +154,7 @@ export default {
 
         this.saveCredentials();
 
-        let now = new Date().toLocaleString();
+        let now = new Date().toLocaleString(), msg;
         let comment = {
             postid: (this.parent ? this.parent.postid : this.postid),
             postdate: now.substr(0,10).split('.').reverse().join('-') + now.substr(11,6),
@@ -162,18 +162,27 @@ export default {
             authorurl: this.url,
             email: this.hash,
             content: this.content,
-            parentid: (this.parent ? this.parent.parentid : '')
+            parentid: (this.parent ? (this.parent.parentid ? this.parent.parentid : this.parent._id) : '')
           };
 
-        this.$store.dispatch('saveComment', {
-          comment,
-          cockpit: this.$cockpit
-        })
-          .then(() => {
-            return this.$toast.success('Vielen Dank für deinen Kommentar! Sobald er freigeschaltet ist, wird er hier angezeigt.', {icon: 'fa-check'});
-          });
+        this.$cockpit.isUserApproved(this.hash)
+          .then(approved => {
+            comment.approved = comment.reviewed = approved;
+            msg = (approved ? 'Er ist bereits freigeschaltet' : 'Sobald er freigeschaltet ist, wird er hier angezeigt');
+            return this.$store.dispatch('saveComment', {
+              comment,
+              cockpit: this.$cockpit
+            });
+          })
+            .then(() => {
+              this.$emit('newComment', comment);
+              return this.$toast.success(`Vielen Dank für deinen Kommentar! ${msg}.`, {icon: 'fa-check'});
+            });
 
         this.$emit('closeComment');
+        this.email = this.$store.state.credentials.email;
+        this.name = this.$store.state.credentials.name;
+        this.url = this.$store.state.credentials.url;
       }
     }
   }
