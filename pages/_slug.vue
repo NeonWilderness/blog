@@ -9,7 +9,7 @@
         v-scroll="onScroll"
       >
         <v-flex xs12 md8 lg7 offset-lg1 class="storywrapper">
-          <Story :post="post" :comments="comments" view="full" />
+          <Story :post="post" view="full" />
         </v-flex>
         <v-flex xs12 md4 lg3 class="sidebar">
           <WeepingWillow />
@@ -41,47 +41,24 @@ export default {
     return {};
   },
   asyncData: function({ app, params, payload, store }) {
-    const sortCommentsByParent = comments => {
-      return comments
-        .filter(commentOrReply => !commentOrReply.parentid.length)
-        .reduce((all, comment) => {
-          all.push(
-            Object.assign(comment, { selected: false, type: 'comment' })
-          );
-          return all.concat(
-            comments
-              .filter(commentOrReply => commentOrReply.parentid === comment._id)
-              .map(reply =>
-                Object.assign(reply, { selected: false, type: 'reply' })
-              )
-          );
-        }, []);
-    };
-
-    // read comments of specific post and add property 'selected'
+    // read comments of a specific post and save to store
     const getPostComments = postid =>
-      app.$cockpit
-        .readComments({
+      app.$cockpit.readComments({
           dump: false,
           filter: { postid },
           sort: { parentid: 1, postdate: 1 }
         })
-        .then(comments => sortCommentsByParent(comments));
+        .then(comments => store.commit('setComments', comments));
 
     if (payload) {
-      return getPostComments(payload._id).then(comments => {
-        return { post: payload, comments };
-      });
+      return getPostComments(payload._id).then(() => { return { post: payload }; });
     } else {
-      return store
-        .dispatch('readPostBasename', {
+      return store.dispatch('readPostBasename', {
           cockpit: app.$cockpit,
           params
         })
         .then(({ post }) => {
-          return getPostComments(post._id).then(comments => {
-            return { post, comments };
-          });
+          return getPostComments(post._id).then(() => { return { post }; });
         });
     }
   },
@@ -114,6 +91,7 @@ export default {
     }
   },
   mounted: function() {
+
     let expansionItems = document.querySelectorAll('.storywrapper .v-expansion-panel__header');
     expansionItems.forEach(item => {
       item.addEventListener('click', e => {
@@ -123,6 +101,14 @@ export default {
         );
       });
     });
+/*
+    setTimeout(() => {
+      this.$vuetify.goTo(
+        '.storywrapper', 
+        {duration:400, offset:0}
+      );
+    }, 200);
+*/
   }
 };
 </script>

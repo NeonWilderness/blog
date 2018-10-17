@@ -19,7 +19,7 @@
               :key="n" 
               :class="$store.getters.getLayoutGrid"
             >
-              <Story :post="posts[n - 1]" :comments="[]" view="grid" />
+              <Story :post="posts[n - 1]" view="grid" />
             </v-flex>
           </v-layout>
           <div class="text-xs-center">

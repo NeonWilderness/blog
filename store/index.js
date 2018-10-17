@@ -17,6 +17,7 @@ const Store = () => {
         name: '',
         url: ''
       },
+      comments: [],
       credentialsKey: 'credentials@NeonWilderness',
       firstStoryDate: '2006-10-24 03:16',
       isDrawerVisible: false,

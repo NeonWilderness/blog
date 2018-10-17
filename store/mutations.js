@@ -1,5 +1,8 @@
 const mutations = {
 
+  addNewComment(state, payload) { // comment {object}
+    if (payload.approved) state.comments.push(payload);
+  },
   establishCockpitInstance(state, payload) {
     state.cockpitApi = payload;
   },
@@ -11,6 +14,12 @@ const mutations = {
   },
   setCategories(state, payload) { // array of categories {array} of { category, count, slug, _id }
     state.categories = payload;
+  },
+  setComments(state, payload) { // array of comments
+    state.comments = payload.map(comment => { 
+      comment.selected = false;
+      return comment;
+    });
   },
   setCounterData(state, {type, period, posts}) { // object { type, period, posts }
     state.most[type][period] = posts;

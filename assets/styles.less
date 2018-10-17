@@ -44,7 +44,7 @@ table {
 	line-height: 4.125rem;
 	padding: 2px 5px 0 0;
 }
-.fa-ul {
+.fa-ul, .margin {
   margin-bottom: 1rem;
   li {
     margin-top: .5rem;
@@ -54,6 +54,20 @@ table {
   content: "*";
   color: #f04124;
   margin-left: 0.4rem;
+}
+.version { 
+  td {
+    font-size: .9rem;
+    i { margin-right: .5rem; }
+  }
+  &.fixes td i {
+    color: #f04124;
+    line-height: 1rem;
+  }
+  &.features td i {
+    color: #4caf50;
+    line-height: 1rem;
+  }
 }
 .v-expansion-panel {
   img {

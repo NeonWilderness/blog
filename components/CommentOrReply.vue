@@ -137,11 +137,11 @@ export default {
           if (!this.name && entry.displayName) this.name = entry.displayName;
           if (!this.url && entry.urls && entry.urls.length > 0) this.url = entry.urls[0].value;
         })
-        .catch(err => console.log(`No gravatar info for: ${email}.`));
+        .catch(err => console.log(`No gravatar data for: ${this.email}.`));
       }
     },
     saveCredentials: function() {
-      if (process.browser) {
+      if (process.browser && this.$store.getters.isCredentialChange(this.email, this.name, this.url)) {
         localStorage.setItem(this.$store.getters.getCredentialsKey, JSON.stringify({
           email: this.email,
           name: this.name,
@@ -154,7 +154,7 @@ export default {
 
         this.saveCredentials();
 
-        let now = new Date().toLocaleString(), msg;
+        let now = new Date().toLocaleString('de-DE'), msg;
         let comment = {
             postid: (this.parent ? this.parent.postid : this.postid),
             postdate: now.substr(0,10).split('.').reverse().join('-') + now.substr(11,6),
@@ -167,22 +167,19 @@ export default {
 
         this.$cockpit.isUserApproved(this.hash)
           .then(approved => {
-            comment.approved = comment.reviewed = approved;
-            msg = (approved ? 'Er ist bereits freigeschaltet' : 'Sobald er freigeschaltet ist, wird er hier angezeigt');
+            comment.approved = comment.reviewed = approved; //fixme: re-enforce server-side
+            msg = (approved ? 'Er wurde sofort freigeschaltet' : 'Sobald er freigeschaltet ist, wird er hier angezeigt');
             return this.$store.dispatch('saveComment', {
               comment,
               cockpit: this.$cockpit
             });
           })
             .then(() => {
-              this.$emit('newComment', comment);
+              this.content = '';
               return this.$toast.success(`Vielen Dank für deinen Kommentar! ${msg}.`, {icon: 'fa-check'});
             });
 
         this.$emit('closeComment');
-        this.email = this.$store.state.credentials.email;
-        this.name = this.$store.state.credentials.name;
-        this.url = this.$store.state.credentials.url;
       }
     }
   }

@@ -23,6 +23,17 @@ const getters = {
         return 0;
       });
   },
+  getSortedComments: state => {
+    return state.comments
+    .filter(commentOrReply => !commentOrReply.parentid.length)
+    .reduce((all, comment) => {
+      all.push(comment);
+      return all.concat(
+        state.comments
+          .filter(commentOrReply => commentOrReply.parentid === comment._id)
+      );
+    }, []);
+  },
   getCounterByPostId: state => (id) => { // {string} id = post id
     for (let post of state.posts) {
       if (post._id === id) return post.counter;
@@ -80,6 +91,13 @@ const getters = {
     return state.bgImages.map(img => {
       return `/img/bg/thumbs/${img}`;
     });
+  },
+  isCredentialChange: state => (email, name, url) => {
+    return (
+      email !== state.credentials.email || 
+      name !== state.credentials.name || 
+      url !== state.credentials.url
+    );
   },
   isCurrentBackgroundImage: state => (img) => {
     return (state.bgImage === img.replace('thumbs/', ''));

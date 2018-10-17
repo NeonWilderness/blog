@@ -179,9 +179,13 @@ const actions = {
 
   },
 
-  saveComment({ dispatch }, { comment, cockpit }) {
+  saveComment({ commit, dispatch }, { comment, cockpit }) {
     return cockpit.saveCollection('comments', { data: comment })
-      .then( () => dispatch('incPostCounter', { type: 'comments', id: comment.postid, cockpit }))
+      .then(entry => {
+        entry.data.selected = false;
+        commit('addNewComment', entry.data);
+        return dispatch('incPostCounter', { type: 'comments', id: comment.postid, cockpit })
+      })
       .catch(err => console.log(`Sicherung Kommentar endete mit Fehler: ${err}.`));
   },
 

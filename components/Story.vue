@@ -82,7 +82,7 @@
           </v-flex>
 
           <v-flex 
-            v-if="isSingleStoryView"
+            v-if="isSingleStoryView && !commentsDisabled"
             xs4
             class="text-xs-center"
           >
@@ -90,6 +90,16 @@
               <v-icon>fa-pencil</v-icon>
               <v-subheader class="grey--text pl-2">Kommentar verfassen</v-subheader>
             </v-btn>
+          </v-flex>
+          <v-flex
+            v-if="commentsDisabled"
+            xs4
+            class="text-xs-center"
+          >
+            <v-chip disabled label outline small>
+              <span v-if="!post.commentsallowed">Kommentarfunktion deaktiviert</span>
+              <span v-if="post.commentsclosed">Kommentare geschlossen</span>
+            </v-chip>
           </v-flex>
 
           <v-flex 
@@ -123,14 +133,15 @@
     <CommentOrReply 
       :postid="post._id" 
       :visible="isAddCommentVisible"
+      v-if="isSingleStoryView"
       @closeComment="isAddCommentVisible = false"
-      @newComment="refreshComments"
     />
     <Comments 
-      :comments="comments" 
+      :enabled="!commentsDisabled"
       :title="post.title"
       :unapproved="unapprovedComments" 
       :visible="isCommentListVisible"
+      v-if="isSingleStoryView"
       @closeComments="collapseComments"
     />
   </v-flex>
@@ -154,10 +165,6 @@ export default {
       type: Object,
       required: true
     },
-    comments: {
-      type: Array,
-      required: false
-    },
     view: {
       // 'grid'=1-3 stories in a row | 'full'=one story per page incl. comments
       type: String,
@@ -179,9 +186,19 @@ export default {
     basenameYoungerPost: function() {
       return this.$store.getters.getPostYounger(this.postIndex);
     },
+    comments: function() {
+      return (this.view === 'full' ? this.$store.getters.getSortedComments : []);
+    },
+    commentsDisabled: function() {
+      return (!this.post.commentsallowed || this.post.commentsclosed);
+    },
+    numberOfCommentsInDB: function() {
+      let { comments } = this.$store.getters.getCounterByPostId(this.post._id);
+      return comments;
+    },
     commentString: function() {
-      let comments = this.post.counter.comments;
-      return `${comments} Kommentar${comments === 1 ? '' : 'e'}`;
+      let n = this.numberOfCommentsInDB;
+      return `${n} Kommentar${n === 1 ? '' : 'e'}`;
     },
     hasOlderPost: function() {
       return !!this.basenameOlderPost;
@@ -199,7 +216,7 @@ export default {
       return this.$store.getters.getIndexOfBasename(this.post.basename);
     },
     unapprovedComments: function() {
-      return (this.post.counter.comments - this.comments.length);
+      return (this.numberOfCommentsInDB - this.comments.length);
     }
   },
   methods: {
@@ -230,9 +247,6 @@ export default {
           );
         }
       });
-    },
-    refreshComments: function(comment) {
-      console.log('refreshComments (Story) called.', comment);
     },
     toggleComments: function() {
       if (this.isSingleStoryView) {

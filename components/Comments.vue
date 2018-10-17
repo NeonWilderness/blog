@@ -18,7 +18,7 @@
         <v-flex xs12>
           <v-card 
             v-for="(comment, index) in comments" 
-            :class="comment.type"
+            :class="comment.parentid.length ? 'reply' : 'comment'"
             :key="comment._id"
             :id="'comment-' + index"
           >
@@ -54,21 +54,22 @@
                 </v-card-text>
                 <v-card-actions class="mb-1">
                   <v-btn 
-                    @click="addReply(index)"
+                    @click.prevent="openReplyForm(index)"
                     color="accent" 
                     dark
                     flat
                     ripple 
                     small
+                    v-if="enabled"
                   >antworten</v-btn>
                 </v-card-actions>              
               </v-flex>
             </v-layout>
             <CommentOrReply
+              @closeComment="comments[index].selected = false"
               :id="'commentform-' + index"
               :parent="comment"
-              @closeComment="comments[index].selected = false"
-              @newComment="refreshComments"
+              v-if="enabled"
             />
           </v-card>
         </v-flex>
@@ -92,8 +93,8 @@ export default {
     VRuntimeTemplate
   },
   props: {
-    comments: {
-      type: Array,
+    enabled: { // TRUE=commenting is allowed and not closed
+      type: Boolean,
       required: true
     },
     title: {
@@ -110,14 +111,17 @@ export default {
     }
   },
   computed: {
+    comments: function() {
+      return this.$store.getters.getSortedComments;
+    },
     unapprovedText: function() {
       return `${this.unapproved} weitere${this.unapproved===1 ? 'r' : ''} Kommentar${this.unapproved===1 ? '' : 'e'} ${this.unapproved===1 ? 'muss' : 'müssen'} noch freigeschaltet werden`;
     }
   },
   methods: {
-    addReply: function(index) {
+    openReplyForm: function(index) {
       this.comments.forEach((comment, idx) => {
-        comment.selected = idx === index;
+        comment.selected = (idx == index);
       });
       setTimeout(() => {
         document
@@ -126,17 +130,13 @@ export default {
       }, 200);
     },
     getTwodayBlogIconUrl: function(comment) {
-      let url =
-        comment.authorurl +
+      let url = comment.authorurl +
         (comment.authorurl[comment.authorurl.length - 1] === '/' ? '' : '/') +
         'images/icon';
       return url;
     },
     isTwodayBlog: function(comment) {
       return !!comment.authorurl.match(/\.twoday\.net/);
-    },
-    refreshComments: function(comment) {
-      console.log('refreshComments (Comments) called.', comment);
     }
   },
   mounted: function() {
