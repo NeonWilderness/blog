@@ -23,17 +23,6 @@ const getters = {
         return 0;
       });
   },
-  getSortedComments: state => {
-    return state.comments
-    .filter(commentOrReply => !commentOrReply.parentid.length)
-    .reduce((all, comment) => {
-      all.push(comment);
-      return all.concat(
-        state.comments
-          .filter(commentOrReply => commentOrReply.parentid === comment._id)
-      );
-    }, []);
-  },
   getCounterByPostId: state => (id) => { // {string} id = post id
     for (let post of state.posts) {
       if (post._id === id) return post.counter;
@@ -78,6 +67,17 @@ const getters = {
   getPreferencesKey: state => {
     return state.preferencesKey;
   },
+  getSortedComments: state => {
+    return state.comments
+    .filter(commentOrReply => !commentOrReply.parentid.length)
+    .reduce((all, comment) => {
+      all.push(comment);
+      return all.concat(
+        state.comments
+          .filter(commentOrReply => commentOrReply.parentid === comment._id)
+      );
+    }, []);
+  },
   getStoryStateKey: state => (type) => { // {string} type = reads|hearts
     return `story${type}@NeonWilderness`;
   },
@@ -110,6 +110,9 @@ const getters = {
   },
   isValidLayoutID: state => (storyLayout) => {
     return (Object.keys(state.layouts).indexOf(storyLayout) >= 0);
+  },
+  isVideoloadUsedInComments: state => {
+    return state.comments.some(comment => comment.videoload);
   }
 
 };

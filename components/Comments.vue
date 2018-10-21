@@ -26,7 +26,7 @@
             <v-layout row d-flex>
               <v-flex class="avatar ml-3 pt-4">
                 <img v-if="comment.email" class="authoricon" :src="`https://www.gravatar.com/avatar/${comment.email}?s=48&d=mp`" width="48">
-                <img v-else-if="isTwodayBlog(comment)" class="authoricon" :src="getTwodayBlogIconUrl(comment)" width="48" onError="this.onerror=null;this.src='/img/user.png';">
+                <img v-else-if="isTwodayBlog(comment)" class="authoricon" :src="getTwodayBlogIconUrl(comment)" width="48" onerror="this.onerror=null;this.src='/img/user.png';">
                 <img v-else class="authoricon opaque" src="/img/user.png" width="48">
               </v-flex>
               <v-flex>
@@ -50,7 +50,7 @@
                   />
                 </v-card-title>
                 <v-card-text class="pt-0">
-                  <v-runtime-template :template="'<div>' + comment.content + '</div>'"></v-runtime-template>
+                  <v-runtime-template :template="contentTemplate(comment)"></v-runtime-template>
                 </v-card-text>
                 <v-card-actions class="mb-1">
                   <v-btn 
@@ -119,15 +119,8 @@ export default {
     }
   },
   methods: {
-    openReplyForm: function(index) {
-      this.comments.forEach((comment, idx) => {
-        comment.selected = (idx == index);
-      });
-      setTimeout(() => {
-        document
-          .getElementById(`commentform-${index}`)
-          .scrollIntoView({ behavior: 'smooth', block: 'end' });
-      }, 200);
+    contentTemplate: function(comment) {
+      return `<div class="vContent">${comment.content}</div>`;
     },
     getTwodayBlogIconUrl: function(comment) {
       let url = comment.authorurl +
@@ -137,6 +130,16 @@ export default {
     },
     isTwodayBlog: function(comment) {
       return !!comment.authorurl.match(/\.twoday\.net/);
+    },
+    openReplyForm: function(index) {
+      this.comments.forEach((comment, idx) => {
+        comment.selected = (idx == index);
+      });
+      setTimeout(() => {
+        document
+          .getElementById(`commentform-${index}`)
+          .scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }, 200);
     }
   },
   mounted: function() {

@@ -45,7 +45,7 @@
         </v-subheader>
       </v-toolbar>
       <v-card-text v-if="isSingleStoryView">
-        <v-runtime-template :template="'<div>' + post.content + '</div>'"></v-runtime-template>
+        <v-runtime-template :template="contentTemplate"></v-runtime-template>
       </v-card-text>
       <v-card-text 
         class="storyabstract px-3" 
@@ -192,6 +192,9 @@ export default {
     commentsDisabled: function() {
       return (!this.post.commentsallowed || this.post.commentsclosed);
     },
+    contentTemplate: function() {
+      return `<div class="vContent">${this.post.content}</div>`;
+    },
     numberOfCommentsInDB: function() {
       let { comments } = this.$store.getters.getCounterByPostId(this.post._id);
       return comments;
@@ -289,10 +292,11 @@ export default {
     if (this.isSingleStoryView) {
       // update the story's readcounter
       this.updateStoryList('reads');
-      // and check for potential videoload instances
-      if (this.post.videoload)
+      // and check for potential videoload instances in the post and the comments
+      if (this.post.videoload || this.$store.getters.isVideoloadUsedInComments)
         loadScripts('./js/videoload2.js').then(() => {
           video2day.run({
+            contentClass: 'vContent',
             debug: true,
             lazyLoad: true
           });

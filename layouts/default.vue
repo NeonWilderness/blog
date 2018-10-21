@@ -232,6 +232,15 @@ label {
   width: 30px!important;
   height: 30px!important;
   box-shadow: none!important;
+  &.tiny {
+    width: 24px!important;
+    height: 24px!important;
+  }
+  &.inline {
+    border-radius: 50%;
+    display: inline-block;
+    text-align: center;
+  }
 }
 .pricing-table {
   border: solid 1px #ddd; 
