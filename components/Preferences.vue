@@ -41,6 +41,19 @@
         :step="1">
       </v-slider>
     </v-flex>
+    <v-flex xs12 class="mx-3">
+      <div class="d-flex">
+        <v-switch 
+          class="mt-0"
+          color="cyan darken-1"
+          label="Gravatar-Daten merken?" 
+          v-model="$store.state.rememberGravatar"
+        ></v-switch>
+        <div class="subheading mt-1 cyan--text text--darken-1">
+          {{$store.state.rememberGravatar ? 'ja' : 'nein'}}
+        </div>
+      </div>
+    </v-flex>  
 
     <v-subheader class="cyan--text text--darken-1">Hintergrundbild</v-subheader>
     <div class="mx-3">
@@ -93,8 +106,12 @@ export default {
         localStorage.setItem(this.$store.getters.getPreferencesKey, JSON.stringify({
           bgImage: (this.$store.getters.getBgIndex === 0 ? 0 : this.$store.getters.getCurrentBackgroundImage),
           postsPerPage: this.$store.getters.getPostsPerPage,
-          storyLayout: this.$store.getters.getStoryLayout
+          storyLayout: this.$store.getters.getStoryLayout,
+          rememberGravatar: this.$store.getters.getRememberGravatar
         }));
+        if (this.$store.getters.getRememberGravatar) {
+          localStorage.removeItem(this.$store.getters.getCredentialsKey);
+        }
         this.$toast.success('Einstellungen erfolgreich gesichert.', {icon: 'fa-check'});
       }
     },
@@ -134,7 +151,7 @@ export default {
 .btnSave {
   display: flex;
   justify-content: center;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 </style>
 <style lang="less">

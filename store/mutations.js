@@ -12,6 +12,9 @@ const mutations = {
   setBgIndex(state, payload) { // index of background image {number}
     state.bgIndex = payload;
   },
+  setCategory(state, payload) { // category slug {string}
+  if (payload !== state.category) state.category = payload;
+  },
   setCategories(state, payload) { // array of categories {array} of { category, count, slug, _id }
     state.categories = payload;
   },
@@ -35,7 +38,16 @@ const mutations = {
     state.isImgLoading = payload;
   },
   setMaxPage(state) {
-    state.maxPage = Math.floor(Math.abs(state.posts.length - 1) / state.postsPerPage);
+    let counter;
+    if (state.category.length) {
+      counter = state.posts.reduce((all, post) => {
+        if (post.category.slug === state.category) all++;
+        return all;
+      }, 0);
+    } else {
+      counter = state.posts.length;
+    }
+    state.maxPage = Math.ceil(counter / state.postsPerPage);
   },
   setMostRecentComments(state, payload) { // array of max. 10 comments {array}
     state.mostRecentComments = payload;

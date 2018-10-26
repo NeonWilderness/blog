@@ -7,7 +7,7 @@
             <v-list-tile v-for="category in $store.getters.getCategories"
               class="dense"
               :key="category._id"
-              :to="'/topic/' + category.slug"
+              @click="routeToCategory(category.slug)"
             >{{category.category}} ({{category.count}})
             </v-list-tile>
           </v-list>
@@ -17,6 +17,13 @@
   </v-flex>
 </template>
 
-<style lang="less" scoped>
-</style>
-
+<script>
+export default {
+  methods: {
+    routeToCategory: function(slug) {
+      this.$store.commit('setCategory', slug);
+      if (location.pathname.length > 1) this.$router.push('/');
+    }
+  }
+}
+</script>

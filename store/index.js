@@ -10,6 +10,7 @@ const Store = () => {
       bgImage: '/img/px1.png',
       bgImages: [],
       bgIndex: -1,
+      category: '',
       categories: [],
       cockpitApi: null,
       credentials: {
@@ -42,6 +43,7 @@ const Store = () => {
       posts: [],
       postsPerPage: 6,
       preferencesKey: 'preferences@NeonWilderness',
+      rememberGravatar: true,
       scrollPosition: 0,
       selectPeriods: [
         { text: '90 Tage', value: 'D90' },  // last 90 days

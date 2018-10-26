@@ -34,7 +34,8 @@ import { escape } from 'escape-goat';
 const prefDefaults = {
   bgImage: 0,
   postsPerPage: 6,
-  storyLayout: 'double'
+  storyLayout: 'double',
+  rememberGravatar: true
 };
 
 export default {
@@ -70,6 +71,7 @@ export default {
           { icon: 'fa-flash' }
         );
       }
+      prefs.rememberGravatar = !!prefs.rememberGravatar;
 
       return prefs;
     }
@@ -78,19 +80,23 @@ export default {
     this.$axios.get('/json/allBackgrounds.json').then(res => {
       this.$store.commit('setBackgroundImages', res.data);
 
-      let credentials = localStorage.getItem(this.$store.getters.getCredentialsKey);
-      if (credentials) 
-        this.$store.commit(
-          'setCredentials', 
-          this.validateCredentials(JSON.parse(credentials))
-        );
       let preferences = localStorage.getItem(this.$store.getters.getPreferencesKey);
       this.$store.dispatch(
         'setPreferences',
         preferences
           ? this.validatePreferences(JSON.parse(preferences))
           : prefDefaults
-      );
+      )
+      .then( () => {
+        if (this.$store.getters.rememberGravatar) {
+          let credentials = localStorage.getItem(this.$store.getters.getCredentialsKey);
+          if (credentials) 
+            this.$store.commit(
+              'setCredentials', 
+              this.validateCredentials(JSON.parse(credentials))
+            );
+        }
+      });
     });
 
   }

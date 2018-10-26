@@ -55,6 +55,12 @@ const actions = {
     });
   },
 
+  filterForCategory({ commit, dispatch }, cockpit) {
+    commit('setPage', 1);
+    commit('setMaxPage');
+    return dispatch('readPostsSlice', cockpit);
+  },
+
   // payload = { type: 'reads'|'hearts'|'comments', id: 'postid', cockpit }
   incPostCounter({ getters }, { type, id, cockpit }) {
     let counter = getters.getCounterByPostId(id);
@@ -133,7 +139,9 @@ const actions = {
       }).then(([post]) => {
         post.abstract = deriveAbstract(post.content, state.maxStoryAbstractLength);
         post.videoload = (post.content.indexOf('html5video') >= 0);
-        if (typeof post.image !== 'object') {
+        if (post.image !== null && typeof post.image === 'object') {
+          post.image.path = `${state.cockpitApi.host}/storage/uploads${post.image.path}`;
+        } else {
           let img = post.content.match(/<img.*?src="(.*?)"/);
           if (img) post.image = {
             path: img[1].replace(
@@ -141,8 +149,6 @@ const actions = {
               `${state.cockpitApi.host}/storage/uploads`
             )
           }
-        } else {
-          post.image.path = `${state.cockpitApi.host}/storage/uploads${post.image.path}`;
         }
         resolve({ post });
       }).catch(err => { reject(err); });
@@ -152,15 +158,20 @@ const actions = {
 
   readPostsSlice({ state }, payload) { // payload = cockpit instance
 
+    let options = {
+      dump: false,
+      limit: state.postsPerPage,
+      skip: (state.page - 1) * state.postsPerPage
+    };
+    if (state.category.length) 
+      options.filter = { 'category': state.categories[state.category].category };
     return new Promise((resolve, reject) => {
-      payload.readPosts({
-        dump: false,
-        limit: state.postsPerPage,
-        skip: (state.page - 1) * state.postsPerPage
-      }).then(posts => {
+      payload.readPosts(options).then(posts => {
         let refinedPosts = posts.map(post => {
           post.abstract = deriveAbstract(post.content, state.maxStoryAbstractLength);
-          if (typeof post.image !== 'object') {
+          if (post.image !== null && typeof post.image === 'object') {
+            post.image.path = `${state.cockpitApi.host}/storage/uploads${post.image.path}`;
+          } else {
             let img = post.content.match(/<img.*?src="(.*?)"/);
             if (img) post.image = {
               path: img[1].replace(
@@ -168,8 +179,6 @@ const actions = {
                 `${state.cockpitApi.host}/storage/uploads`
               )
             }
-          } else {
-            post.image.path = `${state.cockpitApi.host}/storage/uploads${post.image.path}`;
           }
           return post;
         });

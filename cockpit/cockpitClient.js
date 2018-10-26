@@ -14,12 +14,15 @@ class Cockpit {
   }
 
   isUserApproved(encryptedEmail) {
-    return this.readCollection('comments', {
-      filter: { reviewed: true, approved: true, email: encryptedEmail },
-      fields: { _id: true }
-    })
-      .then(entries => (entries.length > 1))
-      .catch(err => false);
+    if (encryptedEmail.length !== 32) // fixme: check mail length also server-side!
+      return Promise.resolve(false);
+    else  
+      return this.readCollection('comments', {
+        filter: { reviewed: true, approved: true, email: encryptedEmail },
+        fields: { _id: true }
+      })
+        .then(entries => (entries.length > 1))
+        .catch(err => false);
   };
 
   readCollection(collection, options) {

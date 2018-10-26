@@ -223,8 +223,11 @@ export default {
     }
   },
   methods: {
-    addComment: function() {
-      this.isAddCommentVisible = true;
+    addComment: function(e) {
+      if (e.ctrlKey && e.shiftKey)
+        window.open(`${process.env.BASEURL}/cockpit/collections/entry/posts/${this.post._id}`, '_blank');
+      else  
+        this.isAddCommentVisible = true;
     },
     collapseComments: function() {
       this.toggleComments();

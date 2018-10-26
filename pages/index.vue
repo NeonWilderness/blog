@@ -12,6 +12,21 @@
         class="contentwrapper pt-2"
         v-scroll="onScroll"
       >
+        <v-flex xs12 md8 lg7 offset-lg1 v-if="$store.state.category.length">
+          <v-breadcrumbs class="py-2" divider="/" style="position:relative">
+            <v-breadcrumbs-item
+              @click="$store.commit('setCategory', item.slug)"
+              v-for="(item, index) in $store.getters.getBreadcrumbs"
+              :disabled="index > 0"
+              href="/"
+              :key="item.text"
+              ripple
+            >
+              <v-icon>{{item.icon}}</v-icon>
+              {{ item.text }}
+            </v-breadcrumbs-item>        
+          </v-breadcrumbs>
+        </v-flex>
         <v-flex xs12 md8 :class="'storywrapper ' + largeSpaceClass">
           <v-layout row wrap>
             <v-flex 
@@ -65,12 +80,21 @@ export default {
     return {};
   },
   computed: {
+    currentCategory: function() {
+      return this.$store.state.category;
+    },
     largeSpaceClass: function() {
       return (this.$store.getters.getStoryLayout === 'triple' ? 'lg9' : 'lg7 offset-lg1');
     }
   },
-  asyncData: function({ app, store }) {
-    return store.dispatch('readPostsSlice', app.$cockpit);
+  watch: {
+    currentCategory: function() {
+      this.$store
+        .dispatch('filterForCategory', this.$cockpit)
+        .then(({ posts }) => {
+          this.posts = posts;
+        });
+    }
   },
   methods: {
     onScroll(e) {
@@ -88,6 +112,9 @@ export default {
           this.posts = posts;
         });
     }
+  },
+  asyncData: function({ app, store }) {
+    return store.dispatch('readPostsSlice', app.$cockpit);
   },
   fetch({ store }) {
     if (store.state.posts.length > 0) return Promise.resolve();
@@ -149,5 +176,23 @@ export default {
 .storywrapper,
 .sidebar {
   width: 100%;
+}
+.v-breadcrumbs li .v-icon {
+  color: #757575;
+  line-height: 1.1;
+  margin-right: .5rem;
+}
+.v-breadcrumbs__divider {
+  color: #f04124!important;
+}
+.v-breadcrumbs__item {
+  color: #BDBDBD;
+  font-size: .8rem;
+  &:hover {
+    color: #f04124;
+  }
+}
+.v-breadcrumbs__item--disabled {
+  color: #757575!important;
 }
 </style>

@@ -14,6 +14,14 @@ const getters = {
   getBgIndex: state => {
     return state.bgIndex;
   },
+  getBreadcrumbs: state => {
+    if (!state.category.length) return null;
+    let topic = state.categories[state.category];
+    return [
+      { text: 'Home', icon: 'fa-home', slug: '' },
+      { text: topic.category, icon: 'fa-tags', slug: topic.slug }
+    ];
+  },
   getCategories: state => {
     return Object.keys(state.categories)
       .map(slug => state.categories[slug])
@@ -66,6 +74,9 @@ const getters = {
   },
   getPreferencesKey: state => {
     return state.preferencesKey;
+  },
+  getRememberGravatar: state => {
+    return state.rememberGravatar;
   },
   getSortedComments: state => {
     return state.comments

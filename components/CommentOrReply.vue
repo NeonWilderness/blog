@@ -141,7 +141,10 @@ export default {
       }
     },
     saveCredentials: function() {
-      if (process.browser && this.$store.getters.isCredentialChange(this.email, this.name, this.url)) {
+      if (process.browser && 
+        this.$store.getters.getRememberGravatar && 
+        this.$store.getters.isCredentialChange(this.email, this.name, this.url)
+      ) {
         localStorage.setItem(this.$store.getters.getCredentialsKey, JSON.stringify({
           email: this.email,
           name: this.name,
