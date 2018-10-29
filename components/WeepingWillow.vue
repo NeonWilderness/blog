@@ -55,7 +55,7 @@
   text-decoration: none;
   color: rgba(0,0,0,.87);
   &:hover {
-    color: #00B8D4; // cyan accent-4  
+    color: #4A148C; // purple darken-4
   }
 }
 </style>

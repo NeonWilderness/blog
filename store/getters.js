@@ -124,6 +124,11 @@ const getters = {
   },
   isVideoloadUsedInComments: state => {
     return state.comments.some(comment => comment.videoload);
+  },
+  wasLastCommentAutoApproved: state => {
+    if (state.comments.length === 0) return false;
+    let lastComment = state.comments[state.comments.length - 1];
+    return lastComment.approved;
   }
 
 };

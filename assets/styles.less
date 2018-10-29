@@ -11,7 +11,7 @@ blockquote {
   color: #6f6f6f;
   font-style: italic;
   margin-bottom: 1rem;
-  padding: 0.5625rem 1.25rem 0 1.1875rem;
+  padding: 0.5625rem 1.25rem 0.5625rem 1.1875rem;
   .v-icon {
     margin-right: .5rem;
   }
@@ -24,6 +24,10 @@ cite {
   margin: 1.5rem;
   padding: 1rem;
   width: 80%;
+  & > blockquote {
+    border: 0;
+    padding-left: 0;
+  }
 }
 code, pre.html {
   background-color: #f7f7f9;

@@ -38,15 +38,11 @@ const mutations = {
     state.isImgLoading = payload;
   },
   setMaxPage(state) {
-    let counter;
-    if (state.category.length) {
-      counter = state.posts.reduce((all, post) => {
-        if (post.category.slug === state.category) all++;
-        return all;
-      }, 0);
-    } else {
-      counter = state.posts.length;
-    }
+    let counter = (
+      state.category.length ?
+      state.posts.reduce((all, post) => all + Number(post.category.slug === state.category), 0) :
+      state.posts.length
+    );
     state.maxPage = Math.ceil(counter / state.postsPerPage);
   },
   setMostRecentComments(state, payload) { // array of max. 10 comments {array}

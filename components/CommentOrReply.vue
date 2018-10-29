@@ -157,27 +157,29 @@ export default {
 
         this.saveCredentials();
 
-        let now = new Date().toLocaleString('de-DE'), msg;
+        let now = new Date().toLocaleString('de-DE');
         let comment = {
             postid: (this.parent ? this.parent.postid : this.postid),
             postdate: now.substr(0,10).split('.').reverse().join('-') + now.substr(11,6),
             author: this.name,
             authorurl: this.url,
             email: this.hash,
+            reviewed: false,
+            approved: false,
             content: this.content,
             parentid: (this.parent ? (this.parent.parentid ? this.parent.parentid : this.parent._id) : '')
           };
 
-        this.$cockpit.isUserApproved(this.hash)
-          .then(approved => {
-            comment.approved = comment.reviewed = approved; //fixme: re-enforce server-side
-            msg = (approved ? 'Er wurde sofort freigeschaltet' : 'Sobald er freigeschaltet ist, wird er hier angezeigt');
-            return this.$store.dispatch('saveComment', {
+          this.$store.dispatch('saveComment', {
               comment,
               cockpit: this.$cockpit
-            });
-          })
+            })
             .then(() => {
+              let msg = (
+                this.$store.getters.wasLastCommentAutoApproved ? 
+                'Er wurde sofort freigeschaltet' : 
+                'Sobald er freigeschaltet ist, wird er hier angezeigt'
+              );
               this.content = '';
               return this.$toast.success(`Vielen Dank für deinen Kommentar! ${msg}.`, {icon: 'fa-check'});
             });

@@ -69,7 +69,8 @@ const actions = {
       data: {
         _id: id,
         counter
-      }
+      },
+      dump: false
     });
   },
 
@@ -139,16 +140,15 @@ const actions = {
       }).then(([post]) => {
         post.abstract = deriveAbstract(post.content, state.maxStoryAbstractLength);
         post.videoload = (post.content.indexOf('html5video') >= 0);
+        post.content = post.content.replace(
+          /src="\/cockpit\/storage\/uploads?/g,
+          `src="${state.cockpitApi.host}/storage/uploads`
+        );
         if (post.image !== null && typeof post.image === 'object') {
           post.image.path = `${state.cockpitApi.host}/storage/uploads${post.image.path}`;
         } else {
           let img = post.content.match(/<img.*?src="(.*?)"/);
-          if (img) post.image = {
-            path: img[1].replace(
-              /^\/cockpit\/storage\/uploads?/,
-              `${state.cockpitApi.host}/storage/uploads`
-            )
-          }
+          if (img) post.image = { path: img[1] };
         }
         resolve({ post });
       }).catch(err => { reject(err); });
@@ -188,9 +188,16 @@ const actions = {
 
   },
 
+  setCategory({ commit }, category) {
+    commit('setCategory', category);
+    commit('setPage', 1);
+    commit('setMaxPage');
+  },
+
   saveComment({ commit, dispatch }, { comment, cockpit }) {
     return cockpit.saveCollection('comments', { data: comment })
       .then(entry => {
+        console.log('entry:', entry);
         entry.data.selected = false;
         commit('addNewComment', entry.data);
         return dispatch('incPostCounter', { type: 'comments', id: comment.postid, cockpit })

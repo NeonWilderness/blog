@@ -15,7 +15,7 @@
         <v-flex xs12 md8 lg7 offset-lg1 v-if="$store.state.category.length">
           <v-breadcrumbs class="py-2" divider="/" style="position:relative">
             <v-breadcrumbs-item
-              @click="$store.commit('setCategory', item.slug)"
+              @click="$store.dispatch('setCategory', item.slug)"
               v-for="(item, index) in $store.getters.getBreadcrumbs"
               :disabled="index > 0"
               href="/"
@@ -97,11 +97,16 @@ export default {
     }
   },
   methods: {
+    goToTop: function() {
+      let el = document.getElementById('wrapper');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    },
     onScroll(e) {
       let offsetTop = window.pageYOffset || document.documentElement.scrollTop;
       this.$store.commit('setScrollPosition', offsetTop);
     },
     openPreferences() {
+      this.goToTop();
       this.$store.commit('toggleDrawer');
     },
     pageChange(newPage) {

@@ -21,7 +21,7 @@
 export default {
   methods: {
     routeToCategory: function(slug) {
-      this.$store.commit('setCategory', slug);
+      this.$store.dispatch('setCategory', slug);
       if (location.pathname.length > 1) this.$router.push('/');
     }
   }

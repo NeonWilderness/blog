@@ -39,7 +39,11 @@
         <v-icon>fa-heart-o</v-icon>
         <v-subheader class="grey--text pl-2 pr-0" title="gut gefunden">{{post.counter.hearts}}</v-subheader>
         <v-spacer v-if="isSingleStoryView"></v-spacer>
-        <v-subheader class="px-0" v-if="isSingleStoryView">
+        <v-subheader 
+          class="px-0 categoryslug" 
+          @click.stop="switchToCategory"
+          title="Mehr aus dieser Kategorie anzeigen"
+          v-if="isSingleStoryView">
           <v-icon>fa-tags</v-icon>
           <span class="grey--text pl-2">{{post.category.category}}</span>
         </v-subheader>
@@ -254,6 +258,10 @@ export default {
         }
       });
     },
+    switchToCategory: function() {
+      this.$store.dispatch('setCategory', this.post.category.slug);
+      this.$router.push('/');
+    },
     toggleComments: function() {
       if (this.isSingleStoryView) {
         if (this.comments.length > 0) {
@@ -310,6 +318,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.categoryslug {
+  cursor: pointer;
+  &:hover span {
+    color: #757575!important;
+  }
+}
 .posttitle {
   background-color: rgba(227, 4, 37, 0.9); // #e30425 secondary
   line-height: 30px !important;

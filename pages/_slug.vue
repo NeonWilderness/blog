@@ -101,14 +101,6 @@ export default {
         );
       });
     });
-/*
-    setTimeout(() => {
-      this.$vuetify.goTo(
-        '.storywrapper', 
-        {duration:400, offset:0}
-      );
-    }, 200);
-*/
   }
 };
 </script>

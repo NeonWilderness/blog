@@ -74,7 +74,7 @@
     </div>
     <div class="btnSave">
       <v-btn color="secondary" ripple small @click="savePreferences">
-        <v-icon left>fa-save</v-icon>Einstellungen sichern
+        <v-icon left>fa-save</v-icon>Einstellungen sichern&nbsp;
       </v-btn>
     </div>
 
@@ -112,6 +112,7 @@ export default {
         if (this.$store.getters.getRememberGravatar) {
           localStorage.removeItem(this.$store.getters.getCredentialsKey);
         }
+        this.toggleDrawer();
         this.$toast.success('Einstellungen erfolgreich gesichert.', {icon: 'fa-check'});
       }
     },

@@ -13,18 +13,6 @@ class Cockpit {
     this.axios = axios;
   }
 
-  isUserApproved(encryptedEmail) {
-    if (encryptedEmail.length !== 32) // fixme: check mail length also server-side!
-      return Promise.resolve(false);
-    else  
-      return this.readCollection('comments', {
-        filter: { reviewed: true, approved: true, email: encryptedEmail },
-        fields: { _id: true }
-      })
-        .then(entries => (entries.length > 1))
-        .catch(err => false);
-  };
-
   readCollection(collection, options) {
     return this.axios.post(
       `${this.host}/api/collections/get/${collection}`,
@@ -61,12 +49,13 @@ class Cockpit {
   };
 
   saveCollection(collection, options) {
+    if ('dump' in options && options.dump) console.log('options:', JSON.stringify(options, null, 2));
     return this.axios.post(
       `${this.host}/api/collections/save/${collection}`,
       _merge(options, { token: this.token })
     )
       .then(entry => {
-        if ('dump' in options && options.dump) console.log(JSON.stringify(entry, null, 2));
+        if ('dump' in options && options.dump) console.log('entry:', JSON.stringify(entry, null, 2));
         return entry;
       })
       .catch(err => {
