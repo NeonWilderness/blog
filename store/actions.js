@@ -197,7 +197,6 @@ const actions = {
   saveComment({ commit, dispatch }, { comment, cockpit }) {
     return cockpit.saveCollection('comments', { data: comment })
       .then(entry => {
-        console.log('entry:', entry);
         entry.data.selected = false;
         commit('addNewComment', entry.data);
         return dispatch('incPostCounter', { type: 'comments', id: comment.postid, cockpit })

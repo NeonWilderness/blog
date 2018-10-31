@@ -40,7 +40,11 @@ export default {
   data: function() {
     return {};
   },
-  asyncData: function({ app, params, payload, store }) {
+  middleware: ['preload'],
+  validate({ params, query, store }) {
+    return store.getters.isValidBasename(params.slug);
+  },
+  asyncData: function({ app, error, params, payload, store }) {
     // read comments of a specific post and save to store
     const getPostComments = postid =>
       app.$cockpit.readComments({
@@ -58,24 +62,10 @@ export default {
           params
         })
         .then(({ post }) => {
+          if (!post) throw({ statusCode: 404, message: 'Basename nicht gefunden' });
           return getPostComments(post._id).then(() => { return { post }; });
         });
     }
-  },
-  fetch({ store }) {
-    if (store.state.posts.length > 0) return Promise.resolve();
-    else
-      return store
-        .dispatch('establishCounterData')
-        .then(() =>
-          Promise.all([
-            store.dispatch('loadCategories'),
-            store.dispatch('loadMostRecentComments')
-          ])
-        )
-        .catch(err => {
-          console.log(`fetch@_slug.vue ended with error: ${err}.`);
-        });
   },
   methods: {
     getParentByClass(el, targetClass) {
@@ -102,6 +92,7 @@ export default {
       });
     });
   }
+  
 };
 </script>
 

@@ -21,7 +21,7 @@ const mutations = {
   setComments(state, payload) { // array of comments
     state.comments = payload.map(comment => { 
       comment.selected = false;
-      comment.videoload = comment.content.indexOf('html5video' >= 0);
+      comment.videoload = (comment.content.indexOf('html5video') >= 0);
       return comment;
     });
   },

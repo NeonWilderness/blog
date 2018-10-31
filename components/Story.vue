@@ -197,7 +197,7 @@ export default {
       return (!this.post.commentsallowed || this.post.commentsclosed);
     },
     contentTemplate: function() {
-      return `<div class="vContent">${this.post.content}</div>`;
+      return `<div class="vPostContent">${this.post.content}</div>`;
     },
     numberOfCommentsInDB: function() {
       let { comments } = this.$store.getters.getCounterByPostId(this.post._id);
@@ -303,13 +303,14 @@ export default {
     if (this.isSingleStoryView) {
       // update the story's readcounter
       this.updateStoryList('reads');
-      // and check for potential videoload instances in the post and the comments
-      if (this.post.videoload || this.$store.getters.isVideoloadUsedInComments)
+      // and check for potential videoload instances in the post
+      if (this.post.videoload)
         loadScripts('./js/videoload2.js').then(() => {
           video2day.run({
-            contentClass: 'vContent',
+            contentClass: 'vPostContent',
             debug: true,
-            lazyLoad: true
+            lazyLoad: true,
+            selector: '.vPostContent .html5video'
           });
         });
     }

@@ -119,6 +119,12 @@ const getters = {
   isSingleStoryLayout: state => {
     return (state.storyLayout === 'single');
   },
+  isValidBasename: state => (basename) => { // {string} basename = a post's basename
+    for (let post of state.posts) {
+      if (post.basename === basename) return true;
+    }
+    return false;
+  },
   isValidLayoutID: state => (storyLayout) => {
     return (Object.keys(state.layouts).indexOf(storyLayout) >= 0);
   },

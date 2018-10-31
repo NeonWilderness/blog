@@ -87,6 +87,8 @@
 import CommentOrReply from '~/components/CommentOrReply.vue';
 import VRuntimeTemplate from 'v-runtime-template';
 
+import loadScripts from 'load-scripts';
+
 export default {
   components: {
     CommentOrReply,
@@ -120,7 +122,7 @@ export default {
   },
   methods: {
     contentTemplate: function(comment) {
-      return `<div class="vContent">${comment.content}</div>`;
+      return `<div class="vCommentContent">${comment.content}</div>`;
     },
     getTwodayBlogIconUrl: function(comment) {
       let url = comment.authorurl +
@@ -140,9 +142,26 @@ export default {
           .getElementById(`commentform-${index}`)
           .scrollIntoView({ behavior: 'smooth', block: 'end' });
       }, 200);
+    },
+    runVideoload: function() {
+      video2day.run({
+        contentClass: 'vCommentContent',
+        debug: true,
+        lazyLoad: true,
+        selector: '.vCommentContent .html5video'
+      });
     }
   },
   mounted: function() {
+
+    // check for potential videoload instances in the comments
+    if (this.$store.getters.isVideoloadUsedInComments)
+      if (window.video2day) 
+        this.runVideoload()
+      else  
+        loadScripts('./js/videoload2.js').then(() => { this.runVideoload(); });
+
+    // scroll to comments when respective hash is used    
     setTimeout(() => {
       if (location.hash === '#comments') {
         document
@@ -150,6 +169,7 @@ export default {
           .scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }, 200);
+
   }
 };
 </script>
