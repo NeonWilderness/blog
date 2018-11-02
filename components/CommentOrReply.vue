@@ -55,7 +55,18 @@
           </v-card-text> 
           <v-card-actions>
             <v-btn
-              @click="saveReply"
+              @click.stop="showHelp=true"
+              color="accent"
+              dark
+              flat
+              ripple
+              small
+              style="flex:1"
+            >
+              <v-icon>fa-question-circle-o</v-icon> Hilfe
+            </v-btn>
+            <v-btn
+              @click.stop="saveReply"
               color="accent"
               dark
               flat
@@ -66,7 +77,7 @@
               <v-icon>fa-send</v-icon> Kommentar absenden
             </v-btn>
             <v-btn
-              @click="cancelReply"
+              @click.stop="cancelReply"
               color="accent"
               dark
               flat
@@ -80,13 +91,21 @@
         </v-card>
       </v-form>
     </v-flex>
+    <CommentHelp 
+      :active="showHelp"
+      @closeHelp="showHelp=false"
+    ></CommentHelp>
   </v-layout>
 </template>
 
 <script>
+import CommentHelp from "~/components/CommentHelp.vue";
 import md5 from 'md5';
 
 export default {
+  components: {
+    CommentHelp
+  },
   props: { // called from Story: postid and visible, called from Comments: parent
     postid: {
       type: String,
@@ -111,6 +130,7 @@ export default {
       email: this.$store.state.credentials.email,
       hash: '',
       name: this.$store.state.credentials.name,
+      showHelp: false,
       url: this.$store.state.credentials.url,
       valid: true
     };
@@ -152,38 +172,40 @@ export default {
         }));
       }
     },
-    saveReply: function() {
+    saveReply: function(e) {
       if (this.$refs.commentform.validate()) {
 
+        e.currentTarget.disabled = true;
         this.saveCredentials();
 
         let now = new Date().toLocaleString('de-DE');
         let comment = {
-            postid: (this.parent ? this.parent.postid : this.postid),
-            postdate: now.substr(0,10).split('.').reverse().join('-') + now.substr(11,6),
-            author: this.name,
-            authorurl: this.url,
-            email: this.hash,
-            reviewed: false,
-            approved: false,
-            content: this.content,
-            parentid: (this.parent ? (this.parent.parentid ? this.parent.parentid : this.parent._id) : '')
-          };
+          postid: (this.parent ? this.parent.postid : this.postid),
+          postdate: now.substr(0,10).split('.').reverse().join('-') + now.substr(11,6),
+          author: this.name,
+          authorurl: this.url,
+          email: this.hash,
+          reviewed: false,
+          approved: false,
+          content: this.content,
+          parentid: (this.parent ? (this.parent.parentid ? this.parent.parentid : this.parent._id) : '')
+        };
 
-          this.$store.dispatch('saveComment', {
-              comment,
-              cockpit: this.$cockpit
-            })
-            .then(() => {
-              let msg = (
-                this.$store.getters.wasLastCommentAutoApproved ? 
-                'Er wurde sofort freigeschaltet' : 
-                'Sobald er freigeschaltet ist, wird er hier angezeigt'
-              );
-              this.content = '';
-              return this.$toast.success(`Vielen Dank für deinen Kommentar! ${msg}.`, {icon: 'fa-check'});
-            });
+        this.$store.dispatch('saveComment', {
+            comment,
+            cockpit: this.$cockpit
+          })
+          .then(() => {
+            let msg = (
+              this.$store.getters.wasLastCommentAutoApproved ? 
+              'Er wurde sofort freigeschaltet' : 
+              'Sobald er freigeschaltet ist, wird er hier angezeigt'
+            );
+            this.content = '';
+            return this.$toast.success(`Vielen Dank für deinen Kommentar! ${msg}.`, {icon: 'fa-check'});
+          });
 
+        e.currentTarget.disabled = false;
         this.$emit('closeComment');
       }
     }

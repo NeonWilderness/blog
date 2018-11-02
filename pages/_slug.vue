@@ -8,6 +8,21 @@
         class="contentwrapper pt-2"
         v-scroll="onScroll"
       >
+        <v-flex xs12 md8 lg7 offset-lg1>
+          <v-breadcrumbs class="py-2" divider="/" style="position:relative">
+            <v-breadcrumbs-item
+              v-for="(item, index) in $store.getters.getBreadcrumbs(false)"
+              @click="$store.dispatch('setCategory', item.slug)"
+              :disabled="index > 0"
+              href="/"
+              :key="item.text"
+              ripple
+            >
+              <v-icon>{{item.icon}}</v-icon>
+              {{ item.text }}
+            </v-breadcrumbs-item>        
+          </v-breadcrumbs>
+        </v-flex>
         <v-flex xs12 md8 lg7 offset-lg1 class="storywrapper">
           <Story :post="post" view="full" />
         </v-flex>

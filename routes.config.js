@@ -22,7 +22,7 @@ module.exports = () => {
     .then(categories => {
       return allRoutes.concat(categories.map(category => {
         return {
-          route: `/topic/${category.slug}`,
+          route: `/?topic=${category.slug}`,
           payload: allPosts.filter(post => post.category.slug === category.slug)
         };
       }))

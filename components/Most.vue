@@ -65,7 +65,6 @@ export default {
 }
 </script>
 
-
 <style lang="less" scoped>
 .mostTitle {
   line-height: 1.3;
@@ -75,4 +74,3 @@ export default {
   line-height: 1.1!important;
 }
 </style>
-

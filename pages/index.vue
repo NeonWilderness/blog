@@ -16,7 +16,7 @@
           <v-breadcrumbs class="py-2" divider="/" style="position:relative">
             <v-breadcrumbs-item
               @click="$store.dispatch('setCategory', item.slug)"
-              v-for="(item, index) in $store.getters.getBreadcrumbs"
+              v-for="(item, index) in $store.getters.getBreadcrumbs(true)"
               :disabled="index > 0"
               href="/"
               :key="item.text"
@@ -119,8 +119,12 @@ export default {
     }
   },
   middleware: ['preload'],  
-  asyncData: function({ app, store }) {
-    return store.dispatch('readPostsSlice', app.$cockpit);
+  asyncData: function({ app, query, store }) {
+    if (query.topic) {
+      store.commit('setCategory', query.topic);
+      return store.dispatch('filterForCategory', app.$cockpit);
+    } else
+      return store.dispatch('readPostsSlice', app.$cockpit);
   }
 };
 </script>
@@ -167,23 +171,5 @@ export default {
 .storywrapper,
 .sidebar {
   width: 100%;
-}
-.v-breadcrumbs li .v-icon {
-  color: #757575;
-  line-height: 1.1;
-  margin-right: .5rem;
-}
-.v-breadcrumbs__divider {
-  color: #f04124!important;
-}
-.v-breadcrumbs__item {
-  color: #BDBDBD;
-  font-size: .8rem;
-  &:hover {
-    color: #f04124;
-  }
-}
-.v-breadcrumbs__item--disabled {
-  color: #757575!important;
 }
 </style>

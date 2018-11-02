@@ -11,6 +11,7 @@
           <div style="margin:0 auto">
             <h3 class="headline mb-2">Houston, we have a problem...</h3>
             <div v-if="error.statusCode === 404">Oups!! Sorry, aber die gesuchte Seite existiert leider nicht (mehr)!</div>
+            <div v-if="error.statusCode === 423">Achtung!! Die Kommentarfunktion wurde temporär ausgesetzt, da sich zu viele "unmoderierte" Kommentare in der Datenbank befinden!</div>
             <div v-else>Verflixt, da muss etwas mächtig schief gegangen sein!</div>
           </div>
         </v-card-title>

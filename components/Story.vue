@@ -79,7 +79,7 @@
             :xs6="!isSingleStoryView"
             class="text-xs-left"
           >
-            <v-btn flat small @click.prevent="toggleComments">
+            <v-btn flat small @click.prevent.stop="toggleComments">
               <v-icon>fa-comments-o</v-icon>
               <v-subheader class="grey--text pl-2">{{commentString}}</v-subheader>
             </v-btn>
@@ -90,7 +90,7 @@
             xs4
             class="text-xs-center"
           >
-            <v-btn flat small  @click.prevent="addComment">
+            <v-btn flat small  @click.prevent.stop="addComment">
               <v-icon>fa-pencil</v-icon>
               <v-subheader class="grey--text pl-2">Kommentar verfassen</v-subheader>
             </v-btn>
@@ -111,7 +111,7 @@
             :xs6="!isSingleStoryView"
             class="text-xs-right"
           >
-            <v-btn icon title="Gefällt mir" @click.prevent="heartStory">
+            <v-btn icon title="Gefällt mir" @click.prevent.stop="heartStory">
               <v-icon color="red">fa-heart</v-icon>
             </v-btn>
           </v-flex>
@@ -134,7 +134,8 @@
         <v-icon dark>fa-chevron-right fa-lg</v-icon>
       </v-btn>      
     </v-toolbar>
-    <CommentOrReply 
+    <CommentOrReply
+      id="commentform"
       :postid="post._id" 
       :visible="isAddCommentVisible"
       v-if="isSingleStoryView"
@@ -228,10 +229,18 @@ export default {
   },
   methods: {
     addComment: function(e) {
+      e.currentTarget.disabled = true;
       if (e.ctrlKey && e.shiftKey)
         window.open(`${process.env.BASEURL}/cockpit/collections/entry/posts/${this.post._id}`, '_blank');
-      else  
+      else {  
         this.isAddCommentVisible = true;
+        setTimeout(() => {
+          document
+            .getElementById('commentform')
+            .scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }, 200);
+      }
+      e.currentTarget.disabled = false;
     },
     collapseComments: function() {
       this.toggleComments();
@@ -262,8 +271,9 @@ export default {
       this.$store.dispatch('setCategory', this.post.category.slug);
       this.$router.push('/');
     },
-    toggleComments: function() {
+    toggleComments: function(e) {
       if (this.isSingleStoryView) {
+        if (e) e.currentTarget.disabled = true;
         if (this.comments.length > 0) {
           this.isCommentListVisible = !this.isCommentListVisible;
           if (this.isCommentListVisible) {
@@ -275,6 +285,7 @@ export default {
             }, 200);
           }
         }
+        if (e) e.currentTarget.disabled = false;
       } else {
         this.goToPost('#comments');
       }
@@ -360,4 +371,3 @@ export default {
   height: auto;
 }
 </style>
-
