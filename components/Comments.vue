@@ -26,6 +26,7 @@
             <v-layout row d-flex>
               <v-flex class="avatar ml-3 pt-4">
                 <img v-if="comment.email" class="authoricon" :src="`https://www.gravatar.com/avatar/${comment.email}?s=48&d=mp`" width="48">
+                <img v-else-if="comment.author in $store.state.tdCommentators" class="authoricon" :src="$store.getters.getTdCommentatorAlias(comment.author)" width="48">
                 <img v-else-if="isTwodayBlog(comment)" class="authoricon" :src="getTwodayBlogIconUrl(comment)" width="48" onerror="this.onerror=null;this.src='/img/user.png';">
                 <img v-else class="authoricon opaque" src="/img/user.png" width="48">
               </v-flex>
@@ -124,11 +125,19 @@ export default {
     contentTemplate: function(comment) {
       return `<div class="vCommentContent">${comment.content}</div>`;
     },
+    getKnownBlogIconUrl: function(comment) {
+      const url = (this.$state.getters.getTdCommentatorAlias(comment.author));
+      return (url.length ? url : '/img/user.png');
+    },
     getTwodayBlogIconUrl: function(comment) {
-      let url = comment.authorurl +
+      const url = (this.$state.getters.getTdCommentatorAlias(comment.author));
+      return (
+        url.length ?
+        url :
+        comment.authorurl +
         (comment.authorurl[comment.authorurl.length - 1] === '/' ? '' : '/') +
-        'images/icon';
-      return url;
+        'images/icon'
+      );
     },
     isTwodayBlog: function(comment) {
       return !!comment.authorurl.match(/\.twoday\.net/);

@@ -6,9 +6,11 @@
 *.php
 cert
 dist
+user
 data/*.txt
 data/authors.*
 data/log*.html
+commentator2*.*
 fix*.js
 hook*.js
 node_modules

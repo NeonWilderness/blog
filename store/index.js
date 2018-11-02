@@ -51,7 +51,8 @@ const Store = () => {
         { text: 'vollständig', value: 'F' } // Full
       ],
       selectedPeriod: 'F',
-      storyLayout: 'double'
+      storyLayout: 'double',
+      tdCommentators: require('../data/commentator2alias.json')
     },
     getters,
     actions,

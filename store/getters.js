@@ -98,6 +98,13 @@ const getters = {
   getStoryLayout: state => {
     return state.storyLayout;
   },
+  getTdCommentatorAlias: state => (author) => { // {string} author
+    return (
+      state.tdCommentators.hasOwnProperty(author) ? 
+      `/img/icons/user/${state.tdCommentators[author]}.jpg` : 
+      ''
+    );
+  },
   getThumbsImages: state => {
     return state.bgImages.map(img => {
       return `/img/bg/thumbs/${img}`;
