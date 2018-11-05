@@ -10,6 +10,10 @@ const Store = () => {
       bgImage: '/img/px1.png',
       bgImages: [],
       bgIndex: -1,
+      breadcrumbs: [
+        { text: 'Home', icon: 'fa-home', slug: '/' },
+        { text: '', icon: 'fa-tags', slug: ''}
+      ],
       category: '',
       categories: [],
       cockpitApi: null,

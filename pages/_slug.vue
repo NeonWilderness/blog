@@ -12,7 +12,7 @@
           <v-breadcrumbs class="py-2" divider="/" style="position:relative">
             <v-breadcrumbs-item
               v-for="(item, index) in $store.getters.getBreadcrumbs(false)"
-              @click="$store.dispatch('setCategory', item.slug)"
+              @click.stop="$store.dispatch('setCategory', item.slug)"
               :disabled="index > 0"
               href="/"
               :key="item.text"

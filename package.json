@@ -11,7 +11,7 @@
     "cp:initialize": "node ./cockpit/initialize",
     "dev": "nuxt",
     "dev:debug": "node --inspect node_modules/nuxt/bin/nuxt",
-    "build": "nuxt build",
+    "build": "nuxt build --analyze",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "deploy": "npm run generate && npm run sync",

@@ -66,14 +66,14 @@
             <div class="bgImage"
               :class="{'selected': isImageSelected(image, index)}" 
               :style="{backgroundImage: `url(${image})`}" 
-              @click="setCurrentBackgroundImage(index)">
+              @click.stop="setCurrentBackgroundImage(index)">
             </div>
           </div>
         </v-flex>
       </v-layout>
     </div>
     <div class="btnSave">
-      <v-btn color="secondary" ripple small @click="savePreferences">
+      <v-btn color="secondary" ripple small @click.stop="savePreferences">
         <v-icon left>fa-save</v-icon>Einstellungen sichern&nbsp;
       </v-btn>
     </div>
@@ -101,8 +101,9 @@ export default {
         return bgIndex === index;
       }
     },
-    savePreferences() {
+    savePreferences(e) {
       if (process.browser) {
+        e.currentTarget.disabled = true;
         localStorage.setItem(this.$store.getters.getPreferencesKey, JSON.stringify({
           bgImage: (this.$store.getters.getBgIndex === 0 ? 0 : this.$store.getters.getCurrentBackgroundImage),
           postsPerPage: this.$store.getters.getPostsPerPage,
@@ -114,6 +115,7 @@ export default {
         }
         this.toggleDrawer();
         this.$toast.success('Einstellungen erfolgreich gesichert.', {icon: 'fa-check'});
+        e.currentTarget.disabled = false;
       }
     },
     setCurrentBackgroundImage(index) {

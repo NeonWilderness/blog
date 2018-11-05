@@ -13,7 +13,11 @@ const mutations = {
     state.bgIndex = payload;
   },
   setCategory(state, payload) { // category slug {string}
-  if (payload !== state.category) state.category = payload;
+    if (payload !== state.category) {
+      state.category = payload;
+      state.breadcrumbs[1].text = state.categories[payload].category;
+      state.breadcrumbs[1].slug = payload;
+    }
   },
   setCategories(state, payload) { // array of categories {array} of { category, count, slug, _id }
     state.categories = payload;

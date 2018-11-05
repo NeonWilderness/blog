@@ -2,6 +2,8 @@ if (process.server) require('dotenv-safe').load();
 
 const fs = require('fs');
 const path = require('path');
+
+const feed = require('./feed.config');
 const routes = require('./routes.config');
 
 /**
@@ -82,14 +84,7 @@ module.exports = {
   axios: {
     baseURL: baseUrl
   },
-  /*  feed: [
-      {
-        path: '/feed.xml',
-        async create (feed) {},
-        cacheTime: 1000 * 60 * 15,
-        type: 'rss2' // rss2 | atom1 | json1
-      }
-    ], */
+  feed,
   sitemap: {
       cacheTime: 1000 * 60 * 15,
       exclude: [],
@@ -97,7 +92,8 @@ module.exports = {
       gzip: true,
       hostname: baseUrl,
       path: '/sitemap.xml',
-      routes
+      routes: () => routes()
+        .then(routesWithPayload => routesWithPayload.map(routeWithPayload => routeWithPayload.route))
   },
   toast: {
     duration: 4000,
@@ -106,7 +102,9 @@ module.exports = {
     theme: 'primary'
   },
   generate: {
-    routes
+    interval: 500,
+    routes: () => routes()
+      .then(all => all.slice(0,10))
   },
   build: {
     vendor: [

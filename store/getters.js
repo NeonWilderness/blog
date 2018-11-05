@@ -16,14 +16,7 @@ const getters = {
   },
   getBreadcrumbs: state => (homePage) => {
     if (homePage && !state.category.length) return;
-
-    let crumbs = [{ text: 'Home', icon: 'fa-home', slug: '/' }];
-    if (state.category.length) { 
-      let topic = state.categories[state.category];
-      crumbs.push({text: topic.category, icon: 'fa-tags', slug: ''});
-    }
-
-    return crumbs;
+    return state.breadcrumbs.slice(0, 1 + Number(!!state.category));
   },
   getCategories: state => {
     return Object.keys(state.categories)

@@ -55,7 +55,7 @@
                 </v-card-text>
                 <v-card-actions class="mb-1">
                   <v-btn 
-                    @click.prevent="openReplyForm(index)"
+                    @click.stop="openReplyForm(index, $event)"
                     color="accent" 
                     dark
                     flat
@@ -126,11 +126,11 @@ export default {
       return `<div class="vCommentContent">${comment.content}</div>`;
     },
     getKnownBlogIconUrl: function(comment) {
-      const url = (this.$state.getters.getTdCommentatorAlias(comment.author));
+      const url = (this.$store.getters.getTdCommentatorAlias(comment.author));
       return (url.length ? url : '/img/user.png');
     },
     getTwodayBlogIconUrl: function(comment) {
-      const url = (this.$state.getters.getTdCommentatorAlias(comment.author));
+      const url = (this.$store.getters.getTdCommentatorAlias(comment.author));
       return (
         url.length ?
         url :
@@ -142,15 +142,21 @@ export default {
     isTwodayBlog: function(comment) {
       return !!comment.authorurl.match(/\.twoday\.net/);
     },
-    openReplyForm: function(index) {
-      this.comments.forEach((comment, idx) => {
-        comment.selected = (idx == index);
-      });
-      setTimeout(() => {
-        document
-          .getElementById(`commentform-${index}`)
-          .scrollIntoView({ behavior: 'smooth', block: 'end' });
-      }, 200);
+    openReplyForm: function(index, e) {
+      e.currentTarget.disabled = true;
+      if (e.ctrlKey && e.shiftKey)
+        window.open(`${process.env.BASEURL}/cockpit/collections/entry/comments/${this.comments[index]._id}`, '_blank');
+      else {  
+        this.comments.forEach((comment, idx) => {
+          comment.selected = (idx == index);
+        });
+        setTimeout(() => {
+          document
+            .getElementById(`commentform-${index}`)
+            .scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }, 200);
+      }
+      e.currentTarget.disabled = false;
     },
     runVideoload: function() {
       video2day.run({
