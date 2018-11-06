@@ -106,6 +106,10 @@ const actions = {
         };
       }));
 
+    })
+    .catch(err => {
+      console.log(`loadMostRecentComments Error: ${err}.`);
+      commit('setMostRecentComments', []);
     });
   },
 
