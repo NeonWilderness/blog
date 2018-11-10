@@ -96,7 +96,7 @@ export default {
     isImageSelected(image, index) {
       let bgIndex = this.$store.getters.getBgIndex;
       if (bgIndex < 0) { // no image has been clicked yet (image is a default or based on preferences)
-        return this.$store.getters.isCurrentBackgroundImage(image);
+        return index === 0;
       } else { // an image was selected
         return bgIndex === index;
       }

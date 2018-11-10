@@ -96,7 +96,7 @@
             </v-btn>
           </v-flex>
           <v-flex
-            v-if="commentsDisabled"
+            v-if="isSingleStoryView && commentsDisabled"
             xs4
             class="text-xs-center"
           >
@@ -126,11 +126,23 @@
       style="box-shadow:none" 
       v-if="isSingleStoryView"
     >
-      <v-btn color="grey darken-4" dark :disabled="!hasYoungerPost" fab :to="'/' + basenameYoungerPost">
+      <v-btn
+        @click="goAdjacent(basenameYoungerPost)"
+        color="grey darken-4" 
+        dark 
+        :disabled="!hasYoungerPost" 
+        fab 
+      >
         <v-icon dark>fa-chevron-left fa-lg</v-icon>
       </v-btn>
       <v-spacer/>      
-      <v-btn color="grey darken-4" dark :disabled="!hasOlderPost" fab :to="'/' + basenameOlderPost">
+      <v-btn
+        @click="goAdjacent(basenameOlderPost)" 
+        color="grey darken-4" 
+        dark 
+        :disabled="!hasOlderPost" 
+        fab 
+      >
         <v-icon dark>fa-chevron-right fa-lg</v-icon>
       </v-btn>      
     </v-toolbar>
@@ -248,6 +260,10 @@ export default {
         behavior: 'smooth',
         block: 'end'
       });
+    },
+    goAdjacent: function(basename) {
+      if (this.isCommentListVisible) this.toggleComments();
+      this.$router.push(`/${basename}`);
     },
     goToPost: function(hash) {
       this.$router.push(`/${this.post.basename}${hash || ''}`);

@@ -113,9 +113,6 @@ const getters = {
       url !== state.credentials.url
     );
   },
-  isCurrentBackgroundImage: state => (img) => {
-    return (state.bgImage === img.replace('thumbs/', ''));
-  },
   isGoToTopButtonVisible: state => {
     return (state.scrollPosition > 500);
   },

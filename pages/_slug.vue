@@ -100,10 +100,21 @@ export default {
     let expansionItems = document.querySelectorAll('.storywrapper .v-expansion-panel__header');
     expansionItems.forEach(item => {
       item.addEventListener('click', e => {
-        this.$vuetify.goTo(
-          this.getParentByClass(e.target, 'v-expansion-panel'), 
-          {duration:400, offset:-10}
-        );
+        // workaround for vuetify bug: repaint v-tabs within a now open v-expansion-panel
+        setTimeout(() => { // wait for content lazyload to finish
+          let embeddedTabs = item.parentNode.querySelectorAll('.v-tabs');
+          embeddedTabs.forEach(tab => {
+            if ('__vue__' in tab) {
+              tab.__vue__.setWidths();
+              tab.__vue__.updateTabsView();
+            }
+          });
+          // position opened v-expansion-panel to top of screen
+          this.$vuetify.goTo(
+            this.getParentByClass(e.target, 'v-expansion-panel'), 
+            {duration:200, offset:-10}
+          );
+        }, 200);
       });
     });
   }
