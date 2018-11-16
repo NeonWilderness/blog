@@ -155,7 +155,7 @@
     />
     <Comments 
       :enabled="!commentsDisabled"
-      :title="post.title"
+      :title="post.title.toString()"
       :unapproved="unapprovedComments" 
       :visible="isCommentListVisible"
       v-if="isSingleStoryView"

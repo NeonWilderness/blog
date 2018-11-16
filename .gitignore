@@ -14,5 +14,6 @@ commentator2*.*
 fix*.js
 hook*.js
 node_modules
+sitemap*.*
 test*.js
 to*.md
