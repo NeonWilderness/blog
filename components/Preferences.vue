@@ -102,21 +102,20 @@ export default {
       }
     },
     savePreferences(e) {
-      if (process.browser) {
-        e.currentTarget.disabled = true;
-        localStorage.setItem(this.$store.getters.getPreferencesKey, JSON.stringify({
-          bgImage: (this.$store.getters.getBgIndex === 0 ? 0 : this.$store.getters.getCurrentBackgroundImage),
-          postsPerPage: this.$store.getters.getPostsPerPage,
-          storyLayout: this.$store.getters.getStoryLayout,
-          rememberGravatar: this.$store.getters.getRememberGravatar
-        }));
-        if (this.$store.getters.getRememberGravatar) {
-          localStorage.removeItem(this.$store.getters.getCredentialsKey);
-        }
-        this.toggleDrawer();
-        this.$toast.success('Einstellungen erfolgreich gesichert.', {icon: 'fa-check'});
-        e.currentTarget.disabled = false;
+      e.currentTarget.disabled = true;
+      localStorage.setItem(this.$store.getters.getPreferencesKey, JSON.stringify({
+        bgImage: (this.$store.getters.getBgIndex === 0 ? 0 : this.$store.getters.getCurrentBackgroundImage),
+        postsPerPage: this.$store.getters.getPostsPerPage,
+        storyLayout: this.$store.getters.getStoryLayout,
+        rememberGravatar: this.$store.getters.getRememberGravatar
+      }));
+      if (!this.$store.getters.getRememberGravatar) {
+        localStorage.removeItem(this.$store.getters.getCredentialsKey);
+        this.$store.commit('setCredentials', { email: '', name: '', url: '' });
       }
+      this.toggleDrawer();
+      this.$toast.success('Einstellungen erfolgreich gesichert.', {icon: 'fa-check'});
+      e.currentTarget.disabled = false;
     },
     setCurrentBackgroundImage(index) {
       this.$store.dispatch('setCurrentBackgroundImage', index);

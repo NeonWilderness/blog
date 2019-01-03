@@ -15,7 +15,7 @@
         <v-flex xs12 md8 lg7 offset-lg1 v-if="$store.state.category.length">
           <v-breadcrumbs class="py-2" divider="/" style="position:relative">
             <v-breadcrumbs-item
-              @click="$store.dispatch('setCategory', item.slug)"
+              @click.prevent.stop="$store.dispatch('setCategory', item.slug)"
               v-for="(item, index) in $store.getters.getBreadcrumbs(true)"
               :disabled="index > 0"
               href="/"
@@ -130,6 +130,27 @@ export default {
 </script>
 
 <style lang="less">
+.btnPreferences {
+  background-color: #222;
+  border-radius: 3px;
+  color: #eaeaea;
+  height: 48px;
+  line-height: 48px;
+  opacity: 0.9;
+  padding: 0;
+  position: fixed;
+  right: -25px;
+  text-align: center;
+  top: 20%;
+  transition: right 0.5s ease-in-out;
+  width: 48px;
+  z-index: 1;
+  &:hover,
+  &:focus {
+    outline: none;
+    right: -2px;
+  }
+}
 .content {
   color: #fff;
   margin-top: -5em;
@@ -138,32 +159,6 @@ export default {
 .contentwrapper {
   background-color: rgba(33, 33, 33, 0.95);
   margin-bottom: 0 !important;
-}
-.hero {
-  min-height: 100vh;
-  overflow-x: hidden;
-  position: relative;
-  .btnPreferences {
-    background-color: #222;
-    border-radius: 3px;
-    color: #eaeaea;
-    height: 48px;
-    line-height: 48px;
-    opacity: 0.9;
-    padding: 0;
-    position: fixed;
-    right: -25px;
-    text-align: center;
-    top: 20%;
-    transition: right 0.5s ease-in-out;
-    width: 48px;
-    z-index: 1;
-    &:hover,
-    &:focus {
-      outline: none;
-      right: -2px;
-    }
-  }
 }
 .storyfooter .v-toolbar__content {
   padding: 0 8px;

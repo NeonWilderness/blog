@@ -31,11 +31,22 @@
       </v-toolbar>    
       <v-toolbar color="grey lighten-4 body-1" flat height="42">
         <v-icon>fa-calendar-o</v-icon>
-        <v-subheader class="grey--text pl-2 pr-4" :title="post.date">{{post.date}}
+        <v-subheader 
+          class="grey--text pl-2" 
+          :class="`pr-${$vuetify.breakpoint.smAndUp ? 4 : 3}`" 
+          :title="post.date"
+        >
+          <span v-if="$vuetify.breakpoint.smAndUp">{{post.date}}</span>
+          <span v-else>{{post.date.substr(0, 10)}}</span>
         </v-subheader>
         <v-spacer v-if="!isSingleStoryView"></v-spacer>
         <v-icon>fa-eye</v-icon>
-        <v-subheader class="grey--text pl-2 pr-4" title="gelesen">{{post.counter.reads}}</v-subheader>
+        <v-subheader 
+          class="grey--text pl-2 pr-3" 
+          :class="`pr-${$vuetify.breakpoint.smAndUp ? 4 : 3}`" 
+          title="gelesen"
+        >{{post.counter.reads}}
+        </v-subheader>
         <v-icon>fa-heart-o</v-icon>
         <v-subheader class="grey--text pl-2 pr-0" title="gut gefunden">{{post.counter.hearts}}</v-subheader>
         <v-spacer v-if="isSingleStoryView"></v-spacer>
@@ -49,7 +60,7 @@
         </v-subheader>
       </v-toolbar>
       <v-card-text v-if="isSingleStoryView">
-        <v-runtime-template :template="contentTemplate"></v-runtime-template>
+        <Content :embed="post.content" type="Post" v-if="$store.state.dataReady" />
       </v-card-text>
       <v-card-text 
         class="storyabstract px-3" 
@@ -71,7 +82,12 @@
           <v-icon>fa-chevron-right</v-icon>
         </v-btn>
       </v-card-text>
-      <v-toolbar color="grey lighten-4 body-1" flat height="42" class="storyfooter">
+      <v-toolbar 
+        class="storyfooter"
+        color="grey lighten-4 body-1" 
+        flat 
+        height="42"
+      >
         <v-layout align-center justify-space-around row>
 
           <v-flex 
@@ -92,7 +108,10 @@
           >
             <v-btn flat small  @click.prevent.stop="addComment">
               <v-icon>fa-pencil</v-icon>
-              <v-subheader class="grey--text pl-2">Kommentar verfassen</v-subheader>
+              <v-subheader 
+                class="grey--text pl-2"
+                v-if="$vuetify.breakpoint.smAndUp"
+              >Kommentar verfassen</v-subheader>
             </v-btn>
           </v-flex>
           <v-flex
@@ -167,7 +186,7 @@
 <script>
 import Comments from '~/components/Comments.vue';
 import CommentOrReply from '~/components/CommentOrReply.vue';
-import VRuntimeTemplate from 'v-runtime-template';
+import Content from '~/components/Content.vue';
 
 import loadScripts from 'load-scripts';
 
@@ -175,7 +194,7 @@ export default {
   components: {
     Comments,
     CommentOrReply,
-    VRuntimeTemplate
+    Content
   },
   props: {
     post: {
@@ -209,16 +228,14 @@ export default {
     commentsDisabled: function() {
       return (!this.post.commentsallowed || this.post.commentsclosed);
     },
-    contentTemplate: function() {
-      return `<div class="vPostContent">${this.post.content}</div>`;
-    },
     numberOfCommentsInDB: function() {
       let { comments } = this.$store.getters.getCounterByPostId(this.post._id);
       return comments;
     },
     commentString: function() {
       let n = this.numberOfCommentsInDB;
-      return `${n} Kommentar${n === 1 ? '' : 'e'}`;
+      let s = (this.$vuetify.breakpoint.xs ? '' : ` Kommentar${n === 1 ? '' : 'e'}`);
+      return `${n}${s}`;
     },
     hasOlderPost: function() {
       return !!this.basenameOlderPost;
@@ -255,6 +272,7 @@ export default {
       e.currentTarget.disabled = false;
     },
     collapseComments: function() {
+      this.isAddCommentVisible = false;
       this.toggleComments();
       document.getElementById('pagingBar').scrollIntoView({
         behavior: 'smooth',
@@ -290,16 +308,14 @@ export default {
     toggleComments: function(e) {
       if (this.isSingleStoryView) {
         if (e) e.currentTarget.disabled = true;
-        if (this.comments.length > 0) {
-          this.isCommentListVisible = !this.isCommentListVisible;
-          if (this.isCommentListVisible) {
-            setTimeout(() => {
-              this.$vuetify.goTo(
-                '.storyfooter', 
-                {duration:400, offset:0}
-              );
-            }, 200);
-          }
+        this.isCommentListVisible = !this.isCommentListVisible;
+        if (this.isCommentListVisible) {
+          setTimeout(() => {
+            this.$vuetify.goTo(
+              '.storyfooter', 
+              {duration:400, offset:0}
+            );
+          }, 200);
         }
         if (e) e.currentTarget.disabled = false;
       } else {
@@ -326,13 +342,14 @@ export default {
     }
   },
   mounted: function() {
+
     // only when in full view mode
     if (this.isSingleStoryView) {
       // update the story's readcounter
       this.updateStoryList('reads');
       // and check for potential videoload instances in the post
       if (this.post.videoload)
-        loadScripts('./js/videoload2.js').then(() => {
+        loadScripts('/js/videoload2.js').then(() => {
           video2day.run({
             contentClass: 'vPostContent',
             debug: true,

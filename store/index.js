@@ -11,7 +11,7 @@ const Store = () => {
       bgImages: [],
       bgIndex: -1,
       breadcrumbs: [
-        { text: 'Home', icon: 'fa-home', slug: '/' },
+        { text: 'Home', icon: 'fa-home', slug: '' },
         { text: '', icon: 'fa-tags', slug: ''}
       ],
       category: '',
@@ -24,6 +24,7 @@ const Store = () => {
       },
       comments: [],
       credentialsKey: 'credentials@NeonWilderness',
+      dataReady: false,
       firstStoryDate: '2006-10-24 03:16',
       isDrawerVisible: false,
       isImgLoading: true,

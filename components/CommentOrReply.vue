@@ -74,7 +74,9 @@
               small
               style="flex:1"
             >
-              <v-icon>fa-send</v-icon> Kommentar absenden
+              <v-icon>fa-send</v-icon> 
+              <span v-if="$vuetify.breakpoint.smAndUp">Kommentar absenden</span>
+              <span v-else>Senden</span>
             </v-btn>
             <v-btn
               @click.stop="cancelReply"
@@ -92,6 +94,7 @@
       </v-form>
     </v-flex>
     <CommentHelp 
+      v-if="showHelp"
       :active="showHelp"
       @closeHelp="showHelp=false"
     ></CommentHelp>

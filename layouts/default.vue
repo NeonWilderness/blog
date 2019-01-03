@@ -1,11 +1,11 @@
 <template>
   <v-app>
-    <div id="wrapper" 
+    <div id="wrapper" class="overflow-hidden" 
       :class="{faded: $store.state.isImgLoading}" 
       :style="{backgroundImage: 'url('+ $store.state.bgImage +')'}"
     >
       <h1 class="sitetitle">In a neon wilderness <span>he was restless</span></h1>
-      <h3 class="reborn">Redesigned.<br>Redefined.<br>Reborn.</h3>
+      <h3 class="reborn hidden-sm-and-down">Redesigned.<br>Redefined.<br>Reborn.</h3>
       <v-container fluid grid-list-md style="padding:0">
         <nuxt/>
         <transition name="goTopBtn-fade">
@@ -30,6 +30,7 @@
 
 <script>
 import { escape } from 'escape-goat';
+//import backgrounds from '../static/json/allBackgrounds.json';
 
 const prefDefaults = {
   bgImage: 0,
@@ -79,6 +80,7 @@ export default {
   mounted: function() {
     this.$axios.get('/json/allBackgrounds.json').then(res => {
       this.$store.commit('setBackgroundImages', res.data);
+      //this.$store.commit('setBackgroundImages', require('../static/json/allBackgrounds.json'));
 
       let preferences = localStorage.getItem(this.$store.getters.getPreferencesKey);
       this.$store.dispatch(

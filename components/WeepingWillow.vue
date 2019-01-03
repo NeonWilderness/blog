@@ -10,7 +10,9 @@
             <template v-for="(comment, index) in $store.state.mostRecentComments">
               <v-divider :inset="true" :key="index" v-if="index>0"></v-divider>
               <v-list-tile avatar :key="comment._id">
-                <v-list-tile-avatar><img src="/img/user.png"></v-list-tile-avatar>
+                <v-list-tile-avatar>
+                  <Avatar :comment="comment" />
+                </v-list-tile-avatar>
                 <v-list-tile-content>
                   <a class="commentlink" :href="'/' + comment.basename + '#comments'">
                     <div class="comment mb-2">{{comment.content}}</div>
@@ -42,6 +44,16 @@
     </v-card>    
   </v-flex>
 </template>
+
+<script>
+import Avatar from '~/components/Avatar.vue';
+
+export default {
+  components: {
+    Avatar
+  }
+}
+</script>
 
 <style lang="less" scoped>
 .authorlink {

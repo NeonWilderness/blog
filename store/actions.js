@@ -93,7 +93,7 @@ const actions = {
   loadMostRecentComments({ commit, state, getters }) {
     return state.cockpitApi.readComments({
       dump: false,
-      fields: { 'postid': 1, 'postdate': 1, 'author': 1, 'authorurl': 1, 'content': 1, 'parentid': 1 },
+      fields: { 'postid': 1, 'postdate': 1, 'author': 1, 'authorurl': 1, 'email': 1, 'content': 1, 'parentid': 1 },
       limit: state.maxMostRecentComments,
       skip: 0
     }).then(comments => {

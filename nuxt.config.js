@@ -40,11 +40,15 @@ let prodScripts = [
 const baseUrl = (process.env.npm_lifecycle_event !== 'dev' ? process.env.BASEURL : 'http://localhost:3000');
 
 module.exports = {
+  mode: 'universal',
   css: [
     '~/assets/styles.less'
   ],
   head: {
     title: 'In a neon wilderness',
+    htmlAttrs: {
+      lang: 'de-DE'
+    },    
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -96,15 +100,16 @@ module.exports = {
         .then(routesWithPayload => routesWithPayload.map(routeWithPayload => routeWithPayload.route))
   },
   toast: {
+    className: 'text--white',
     duration: 4000,
     iconPack: 'fontawesome',
-    position: 'top-center',
-    theme: 'primary'
+    position: 'top-center'
   },
   generate: {
-    interval: 500,
+    fallback: true,
+    interval: 2000,
     routes: () => routes()
-      .then(all => all.slice(0,10))
+      .then(all => all.slice(0,50))
   },
   build: {
     vendor: [
@@ -112,8 +117,8 @@ module.exports = {
     ],
     extractCSS: true,
     extend(config, { isDev, isClient }) {
+      config.resolve.alias['vue'] = 'vue/dist/vue.esm.js'; // enable with-compiler Vue.js version
       if (isDev && isClient) {
-        config.resolve.alias["vue"] = "vue/dist/vue.common"; // enable with-compiler Vue.js version
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,

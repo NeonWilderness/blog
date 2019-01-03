@@ -15,7 +15,8 @@
         </v-btn>
       </v-toolbar>
       <v-layout row wrap>
-        <v-flex xs12>
+        <v-subheader v-if="!comments.length">Noch kein Kommentar vorhanden.</v-subheader>
+        <v-flex xs12 v-else>
           <v-card 
             v-for="(comment, index) in comments" 
             :class="comment.parentid.length ? 'reply' : 'comment'"
@@ -25,10 +26,7 @@
             <v-divider v-if="index > 0" />
             <v-layout row d-flex>
               <v-flex class="avatar ml-3 pt-4">
-                <img v-if="comment.email" class="authoricon" :src="`https://www.gravatar.com/avatar/${comment.email}?s=48&d=mp`" width="48">
-                <img v-else-if="comment.author in $store.state.tdCommentators" class="authoricon" :src="$store.getters.getTdCommentatorAlias(comment.author)" width="48">
-                <img v-else-if="isTwodayBlog(comment)" class="authoricon" :src="getTwodayBlogIconUrl(comment)" width="48" onerror="this.onerror=null;this.src='/img/user.png';">
-                <img v-else class="authoricon opaque" src="/img/user.png" width="48">
+                <Avatar :comment="comment" />
               </v-flex>
               <v-flex>
                 <v-card-title class="subheading d-flex">
@@ -51,7 +49,7 @@
                   />
                 </v-card-title>
                 <v-card-text class="pt-0">
-                  <v-runtime-template :template="contentTemplate(comment)"></v-runtime-template>
+                  <Content :embed="comment.content" type="Comment" v-if="$store.state.dataReady" />
                 </v-card-text>
                 <v-card-actions class="mb-1">
                   <v-btn 
@@ -85,15 +83,17 @@
 </template>
 
 <script>
+import Avatar from '~/components/Avatar.vue';
 import CommentOrReply from '~/components/CommentOrReply.vue';
-import VRuntimeTemplate from 'v-runtime-template';
+import Content from '~/components/Content.vue';
 
 import loadScripts from 'load-scripts';
 
 export default {
   components: {
+    Avatar,
     CommentOrReply,
-    VRuntimeTemplate
+    Content
   },
   props: {
     enabled: { // TRUE=commenting is allowed and not closed
@@ -113,6 +113,9 @@ export default {
       required: true
     }
   },
+  data: function() {
+    return {};
+  },
   computed: {
     comments: function() {
       return this.$store.getters.getSortedComments;
@@ -122,26 +125,6 @@ export default {
     }
   },
   methods: {
-    contentTemplate: function(comment) {
-      return `<div class="vCommentContent">${comment.content}</div>`;
-    },
-    getKnownBlogIconUrl: function(comment) {
-      const url = (this.$store.getters.getTdCommentatorAlias(comment.author));
-      return (url.length ? url : '/img/user.png');
-    },
-    getTwodayBlogIconUrl: function(comment) {
-      const url = (this.$store.getters.getTdCommentatorAlias(comment.author));
-      return (
-        url.length ?
-        url :
-        comment.authorurl +
-        (comment.authorurl[comment.authorurl.length - 1] === '/' ? '' : '/') +
-        'images/icon'
-      );
-    },
-    isTwodayBlog: function(comment) {
-      return !!comment.authorurl.match(/\.twoday\.net/);
-    },
     openReplyForm: function(index, e) {
       e.currentTarget.disabled = true;
       if (e.ctrlKey && e.shiftKey)
@@ -174,7 +157,7 @@ export default {
       if (window.video2day) 
         this.runVideoload()
       else  
-        loadScripts('./js/videoload2.js').then(() => { this.runVideoload(); });
+        loadScripts('/js/videoload2.js').then(() => { this.runVideoload(); });
 
     // scroll to comments when respective hash is used    
     setTimeout(() => {
@@ -194,12 +177,6 @@ export default {
   max-width: 64px;
   min-width: 64px;
   text-align: center;
-}
-.authoricon {
-  border-radius: 50%;
-  &.opaque {
-    opacity: 0.2;
-  }
 }
 .authorlink {
   text-decoration: none;

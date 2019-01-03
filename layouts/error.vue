@@ -10,8 +10,8 @@
         <v-card-title primary-title>
           <div style="margin:0 auto">
             <h3 class="headline mb-2">Houston, we have a problem...</h3>
-            <div v-if="error.statusCode === 404">Oups!! Sorry, aber die gesuchte Seite existiert leider nicht (mehr)!</div>
-            <div v-if="error.statusCode === 423">Achtung!! Die Kommentarfunktion wurde temporär ausgesetzt, da sich zu viele "unmoderierte" Kommentare in der Datenbank befinden!</div>
+            <div v-if="error.statusCode === 404">Oups!! Sorry, aber die gesuchte Seite existiert leider nicht (mehr)!<div class="body-2 mt-2 teal--text">{{error.path}}</div></div>
+            <div v-else-if="error.statusCode === 423">Achtung!! Die Kommentarfunktion wurde temporär ausgesetzt, da sich zu viele "unmoderierte" Kommentare in der Datenbank befinden!</div>
             <div v-else>Verflixt, da muss etwas mächtig schief gegangen sein!</div>
           </div>
         </v-card-title>
@@ -29,6 +29,9 @@
 <script>
 export default {
   props: ['error'],
-  layout: 'default'
+  layout: 'default',
+  mounted: function() {
+    console.log('ErrorPage:', this.error.statusCode, JSON.stringify(this.error));
+  }
 }
 </script>

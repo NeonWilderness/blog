@@ -4,7 +4,7 @@
         <title>In A Neon Wilderness</title>
         <link>http://neonwilderness.blogroll.me</link>
         <description>Blogging about urban hymns and bitter-sweet symphonies</description>
-        <lastBuildDate>Thu, 15 Nov 2018 16:04:46 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 23 Dec 2018 16:18:56 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>@nuxtjs/feed</generator>
         <image>
@@ -18,7 +18,7 @@
             <title><![CDATA[Das dreckige Dutzend - 12 Jahre NeonWilderness]]></title>
             <link>http://neonwilderness.blogroll.me/dirtydozen</link>
             <guid>http://neonwilderness.blogroll.me/dirtydozen</guid>
-            <pubDate>Wed, 24 Oct 2018 16:14:00 GMT</pubDate>
+            <pubDate>Wed, 24 Oct 2018 17:14:00 GMT</pubDate>
             <description><![CDATA[
   
 
@@ -37,7 +37,7 @@ Vor gar nicht so langer Zeit habe ich an dieser Stelle das Zehnjährige gefeiert
             <title><![CDATA[Cheers]]></title>
             <link>http://neonwilderness.blogroll.me/cheers-1022653683</link>
             <guid>http://neonwilderness.blogroll.me/cheers-1022653683</guid>
-            <pubDate>Sat, 30 Jun 2018 17:57:00 GMT</pubDate>
+            <pubDate>Sat, 30 Jun 2018 18:57:00 GMT</pubDate>
             <description><![CDATA[
   
   Cheers, Twoday!
@@ -54,28 +54,24 @@ Vor gar nicht so langer Zeit habe ich an dieser Stelle das Zehnjährige gefeiert
             <title><![CDATA[The very last and very final reminder]]></title>
             <link>http://neonwilderness.blogroll.me/the-very-last-and-very-final-reminder-1022653507</link>
             <guid>http://neonwilderness.blogroll.me/the-very-last-and-very-final-reminder-1022653507</guid>
-            <pubDate>Tue, 26 Jun 2018 12:59:00 GMT</pubDate>
+            <pubDate>Tue, 26 Jun 2018 13:59:00 GMT</pubDate>
             <description><![CDATA[
   
 
 
   Wirklich letzter Hinweis
-  Und weil's so schön ist, hier noch mal ein allerletzter Reminder. Twoday wird am 30.06.2018 (wahrscheinlich) endgültig abgeschaltet. Da der offizielle Twoday-Export in den allermeisten Fällen nicht funktioniert, außerdem ein unbrauchbares
-    Format liefert und…]]></description>
+  Und weil's so schön ist, hier noch mal ein allerletzter Reminder. Twoday wird am 30.06.2018 (wahrscheinlich) endgültig abgeschaltet. Da der offizielle Twoday-Export in den allermeisten Fällen nicht funktioniert, außerdem ein unbrauchbares Format liefert und Offline…]]></description>
             <content:encoded><![CDATA[<p>
   <img alt="finalreminder.jpg" src="//neonwilderness.blogroll.me/cockpit/storage/uploads/images/finalreminder.jpg" width="100%" />
 </p>
 <v-alert class="radius" color="error" :value="true">
   <h4 style="color:yellow" class="title font-weight-light my-2">Wirklich letzter Hinweis</h4>
-  <p>Und weil's so schön ist, hier noch mal ein allerletzter Reminder. Twoday wird am 30.06.2018 <strong>(wahrscheinlich) endgültig abgeschaltet</strong>. Da der offizielle Twoday-Export in den allermeisten Fällen nicht funktioniert, außerdem ein unbrauchbares
-    Format liefert und Offline-Beiträge nicht berücksichtigt, ist das</p>
-  <p class="text-xs-center">
+  <p>Und weil's so schön ist, hier noch mal ein allerletzter Reminder. Twoday wird am 30.06.2018 <strong>(wahrscheinlich) endgültig abgeschaltet</strong>. Da der offizielle Twoday-Export in den allermeisten Fällen nicht funktioniert, außerdem ein unbrauchbares Format liefert und Offline-Beiträge nicht berücksichtigt, ist das</p>
+  <div class="text-xs-center mb-3">
     <v-btn target="_blank" href="/blog-export-on-steroids-1022222314" color="success" :ripple="true">Blog-Export-Tool</v-btn>
-  </p>
-  <p>die einzige maschinelle Möglichkeit, Ihre wertvolle Bloghistorie vollständig in einem validen Format zu sichern und ggf. auf einen neuen Blog zu übertragen. Warten Sie nicht, sondern nutzen Sie die noch verbliebenen, wenigen Tage! Die Nutzung des Tools
-    ist absolut kostenfrei!</p>
-  <p>Falls Sie Unterstützung z.B. nur für den Export benötigen oder gar die Gesamtaufgabe der Blogübertragung lieber als Dienstleistung delegieren möchten, sprechen Sie mich an oder senden ein Mail an <strong>neonwilderness@ymail.com</strong>. Nach dem 30.06.
-    ist (wahrscheinlich) kein Export mehr möglich &mdash; Sie müssen jetzt handeln (or probably kiss your blog "Goodbye")!</p>
+  </div>
+  <p>die einzige maschinelle Möglichkeit, Ihre wertvolle Bloghistorie vollständig in einem validen Format zu sichern und ggf. auf einen neuen Blog zu übertragen. Warten Sie nicht, sondern nutzen Sie die noch verbliebenen, wenigen Tage! Die Nutzung des Tools ist absolut kostenfrei!</p>
+  <p>Falls Sie Unterstützung z.B. nur für den Export benötigen oder gar die Gesamtaufgabe der Blogübertragung lieber als Dienstleistung delegieren möchten, sprechen Sie mich an oder senden ein Mail an <strong>neonwilderness@ymail.com</strong>. Nach dem 30.06. ist (wahrscheinlich) kein Export mehr möglich &mdash; Sie müssen jetzt handeln (or probably kiss your blog "Goodbye")!</p>
 </v-alert>]]></content:encoded>
             <category><![CDATA[Twoday]]></category>
             <comments>http://neonwilderness.blogroll.me/the-very-last-and-very-final-reminder-1022653507#comments</comments>
@@ -85,28 +81,20 @@ Vor gar nicht so langer Zeit habe ich an dieser Stelle das Zehnjährige gefeiert
             <title><![CDATA[Alien inside Twoday]]></title>
             <link>http://neonwilderness.blogroll.me/alien-inside-twoday-1022653371</link>
             <guid>http://neonwilderness.blogroll.me/alien-inside-twoday-1022653371</guid>
-            <pubDate>Thu, 21 Jun 2018 17:50:00 GMT</pubDate>
+            <pubDate>Thu, 21 Jun 2018 18:50:00 GMT</pubDate>
             <description><![CDATA[
   
 
-Im Grunde ist das Tool, das ich hiermit vorstelle, eine professionalisierte Weiterentwicklung der ehemaligen
-  "Wordpress heiratet Twoday"-Lösung &mdash; und evtl. hat es nur noch eine sehr maue Lebensspanne von gerade mal 7 Tagen, eben bis dann auch der Juni abgelaufen sein wird, jener Monat,…]]></description>
+Im Grunde ist das Tool, das ich hiermit vorstelle, eine professionalisierte Weiterentwicklung der ehemaligen "Wordpress heiratet Twoday"-Lösung &mdash; und evtl. hat es nur noch eine sehr maue Lebensspanne von gerade mal 7 Tagen, eben bis dann auch der Juni abgelaufen sein wird, jener Monat, in…]]></description>
             <content:encoded><![CDATA[<p>
   <img alt="alien.jpg" src="//neonwilderness.blogroll.me/cockpit/storage/uploads/images/alien.jpg" width="100%" />
 </p>
-<p class="dropcaps">Im Grunde ist das Tool, das ich hiermit vorstelle, eine professionalisierte Weiterentwicklung der ehemaligen
-  <a target="_blank" href="/wordpress-heiratet-twoday-1017101282">"Wordpress heiratet Twoday"</a>-Lösung &mdash; und evtl. hat es nur noch eine sehr maue Lebensspanne von gerade mal 7 Tagen, eben bis dann auch der Juni abgelaufen sein wird, jener Monat, in welchem Twoday nun endgültig sterben soll. So ist das zumindest
-  avisiert.</p>
+<p class="dropcaps">Im Grunde ist das Tool, das ich hiermit vorstelle, eine professionalisierte Weiterentwicklung der ehemaligen <a target="_blank" href="/wordpress-heiratet-twoday-1017101282">"Wordpress heiratet Twoday"</a>-Lösung &mdash; und evtl. hat es nur noch eine sehr maue Lebensspanne von gerade mal 7 Tagen, eben bis dann auch der Juni abgelaufen sein wird, jener Monat, in welchem Twoday nun endgültig sterben soll. So ist das zumindest avisiert.</p>
 <p>Aber wer weiß das schon alles so genau. Todgeweihte leben hierorts ja überraschend lange jenseits ihres Planexekutionstermins. Und vielleicht geht es ja ganz unbemerkt und friedlich in den Juli weiter. Ecco! ;)</p>
-<p>Ich hätte das Tool auch "<em>An Englishman in New York</em>" taufen können, aber "<em>Alien inside Twoday</em>" war doch irgendwie wirklichkeitsnäher und infamer. Wer nämlich schon ein neues Blog sein eigen nennt, kann dieses jetzt in Twoday einplanzen,
-  quasi implantieren, und Twoday zeigt fortan nur diesen neuen (externen) Blog an. So wie ein Alien die menschliche Hülle nutzt, so nutzt das Tool Twoday, um mittels <code>&lt;iframe&gt;</code> den neuen Blog vollflächig im gesamten Fenster anzuzeigen.
-  Das ist durchaus sehr angenehm, weil man fortan Beiträge und Kommentare nur noch an einem zentralen Ort hat &mdash; nämlich dem neuen Blog.</p>
-<p>Das war in der Tat auch schon mit dem alten Wordpress-Heiratstool möglich, jedoch hatte dies damals den Nachteil, dass die Twoday Blogroll nicht mehr aktualisiert wurde, da die simple Einbindung nichts von Aktualisierungen auf der Wordpress-Seite (z.B.
-  neue Beiträge oder neue Kommentare) mitbekam.</p>
-<p>Vor 3 Tagen blitzten meine Synapsen mal wieder (leider nur) kurz auf und dann war auch dieses letzte Problem gelöst. Nun prüft das Tool zusätzlich, ob sich im neuen Blog relevante Veränderungen ergeben haben und spielt diese selbsttätig in Twoday ein,
-  sobald man als eingeloggter Admin seinen eigenen Blog besucht. Das Alien pulsiert sozusagen und hält die Hülle am Leben.</p>
-<p>Primär ist das Tool für Wordpress konfiguriert, jedoch können es tatsächlich
-  <u>alle</u> Blogsysteme nutzen, die einen sog.
+<p>Ich hätte das Tool auch "<em>An Englishman in New York</em>" taufen können, aber "<em>Alien inside Twoday</em>" war doch irgendwie wirklichkeitsnäher und infamer. Wer nämlich schon ein neues Blog sein eigen nennt, kann dieses jetzt in Twoday einplanzen, quasi implantieren, und Twoday zeigt fortan nur diesen neuen (externen) Blog an. So wie ein Alien die menschliche Hülle nutzt, so nutzt das Tool Twoday, um mittels <code>&lt;iframe&gt;</code> den neuen Blog vollflächig im gesamten Fenster anzuzeigen. Das ist durchaus sehr angenehm, weil man fortan Beiträge und Kommentare nur noch an einem zentralen Ort hat &mdash; nämlich dem neuen Blog.</p>
+<p>Das war in der Tat auch schon mit dem alten Wordpress-Heiratstool möglich, jedoch hatte dies damals den Nachteil, dass die Twoday Blogroll nicht mehr aktualisiert wurde, da die simple Einbindung nichts von Aktualisierungen auf der Wordpress-Seite (z.B. neue Beiträge oder neue Kommentare) mitbekam.</p>
+<p>Vor 3 Tagen blitzten meine Synapsen mal wieder (leider nur) kurz auf und dann war auch dieses letzte Problem gelöst. Nun prüft das Tool zusätzlich, ob sich im neuen Blog relevante Veränderungen ergeben haben und spielt diese selbsttätig in Twoday ein, sobald man als eingeloggter Admin seinen eigenen Blog besucht. Das Alien pulsiert sozusagen und hält die Hülle am Leben.</p>
+<p>Primär ist das Tool für Wordpress konfiguriert, jedoch können es tatsächlich <u>alle</u> Blogsysteme nutzen, die einen sog.
   <a target="_blank" href="https://de.wikipedia.org/wiki/RSS_(Web-Feed)">RSS Feed</a> bereitstellen &mdash; und diesen liefern beinahe alle, u.a. auch
   <a target="_blank" href="https://www.blogger.com">Blogspot (blogger.com)</a> und
   <a target="_blank" href="https://www.tumblr.com/">Tumblr</a>.</p>
@@ -115,47 +103,45 @@ Im Grunde ist das Tool, das ich hiermit vorstelle, eine professionalisierte Weit
     <div slot="header">Installation</div>
     <v-card>
       <v-card-text>
-        <p>
-          <v-btn class="number left" fab="" dark="" color="red lighten-2">1</v-btn>&ensp;Das Alien-Template ist komplett in einem eigenen Layout gekapselt. Wer schon das Export-Tool installiert und genutzt hat, kann sein Wissen analog anwenden, denn das Alien-Layout wird exakt genauso importiert. Wer das nochmal nachlesen
+        <div class="mb-3">
+          <v-btn class="number left" fab dark color="red lighten-2">1</v-btn>&ensp;Das Alien-Template ist komplett in einem eigenen Layout gekapselt. Wer schon das Export-Tool installiert und genutzt hat, kann sein Wissen analog anwenden, denn das Alien-Layout wird exakt genauso importiert. Wer das nochmal nachlesen
           möchte, kann das unter
-          <a target="_blank" href="/blog-export-on-steroids-1022222314">Blog Export (Die Exportlösung installieren)</a> tun. Zu importieren ist diese Layout-Datei:</p>
-        <p class="text-xs-center">
+          <a target="_blank" href="/blog-export-on-steroids-1022222314">Blog Export (Die Exportlösung installieren)</a> tun. Zu importieren ist diese Layout-Datei:</div>
+        <div class="mb-3 text-xs-center">
           <v-btn target="_blank" href="https://github.com/NeonWilderness/tdalien/raw/master/dist/alien-layout.zip" color="success" :ripple="true">
             <v-icon>fa-download</v-icon>Alien-Layout (Zip-Datei) herunterladen</v-btn>
-        </p>
-        <p>
-          <v-btn class="number left" fab="" dark="" color="red lighten-2">2</v-btn>&ensp;Im Gegensatz zum Export-Layout muss das Alien-Inside-Twoday-Layout nach seinem Import <strong>aktiviert</strong> werden.</p>
-        <p>Wählen Sie im Topmenü
-          <v-chip color="info" text-color="white" small="">Admin</v-chip> &rarr;
-          <v-chip color="info" text-color="white" small="">Layout</v-chip> &rarr;
-          <v-chip color="info" text-color="white" small="">Meine Layouts</v-chip> und dann neben dem <em>AlienInsideTwoday</em>-Layout auf "aktivieren" klicken.</p>
+        </div>
+        <div class="mb-3">
+          <v-btn class="number left" fab dark color="red lighten-2">2</v-btn>&ensp;Im Gegensatz zum Export-Layout muss das Alien-Inside-Twoday-Layout nach seinem Import <strong>aktiviert</strong> werden.</div>
+        <div class="mb-3">Wählen Sie im Topmenü
+          <v-chip color="info" text-color="white" small>Admin</v-chip> &rarr;
+          <v-chip color="info" text-color="white" small>Layout</v-chip> &rarr;
+          <v-chip color="info" text-color="white" small>Meine Layouts</v-chip> und dann neben dem <em>AlienInsideTwoday</em>-Layout auf "aktivieren" klicken.</div>
         <div class="clearfix">
           <img alt="alien01.jpg" src="//neonwilderness.blogroll.me/cockpit/storage/uploads/images/alien/alien01.jpg" />
         </div>
-        <p>
-          <v-btn class="number left" fab="" dark="" color="red lighten-2">3</v-btn>&ensp;Rufen Sie nun Ihren Blog durch Klick auf
-          <v-chip color="info" text-color="white" small="">Weblog ansehen</v-chip> auf. Sie sehen einen Platzhalterblog "die-netzialisten.de" und eine gelbe Hinweisnachricht, dass Sie im Menü noch die Parameter/Einstellungen auf Ihre Daten anpassen müssen.</p>
+        <div class="mb-3">
+          <v-btn class="number left" fab dark color="red lighten-2">3</v-btn>&ensp;Rufen Sie nun Ihren Blog durch Klick auf
+          <v-chip color="info" text-color="white" small>Weblog ansehen</v-chip> auf. Sie sehen einen Platzhalterblog "die-netzialisten.de" und eine gelbe Hinweisnachricht, dass Sie im Menü noch die Parameter/Einstellungen auf Ihre Daten anpassen müssen.</div>
         <div class="clearfix">
           <img alt="alien02.jpg" src="//neonwilderness.blogroll.me/cockpit/storage/uploads/images/alien/alien02.jpg" width="100%" />
         </div>
-        <p>
-          <v-btn class="number left" fab="" dark="" color="red lighten-2">4</v-btn>&ensp;Klicken Sie nun oben rechts auf das Menü-Symbol ("Hamburger-Icon"), um das versteckte Menü zu öffnen:</p>
+        <div class="mb-3">
+          <v-btn class="number left" fab dark color="red lighten-2">4</v-btn>&ensp;Klicken Sie nun oben rechts auf das Menü-Symbol ("Hamburger-Icon"), um das versteckte Menü zu öffnen:</div>
         <div class="clearfix">
           <img alt="alien03.jpg" src="//neonwilderness.blogroll.me/cockpit/storage/uploads/images/alien/alien03.jpg" />
         </div>
-        <p>
-          <v-btn class="number left" fab="" dark="" color="red lighten-2">5</v-btn>&ensp;Klicken Sie im Menü links auf den Eintrag Parameter/Einstellungen, um zu den Einstellwerten zu gelangen.</p>
+        <div class="mb-3">
+          <v-btn class="number left" fab dark color="red lighten-2">5</v-btn>&ensp;Klicken Sie im Menü links auf den Eintrag Parameter/Einstellungen, um zu den Einstellwerten zu gelangen.</div>
         <div class="clearfix">
           <img alt="alien04.jpg" src="//neonwilderness.blogroll.me/cockpit/storage/uploads/images/alien/alien04.jpg" />
         </div>
-        <p>
-          <v-btn class="number left" fab="" dark="" color="red lighten-2">6</v-btn>&ensp;Sie befinden sich nun im Edit-Modus zum Skin Site.implant, der alle Einstellparameter enthält:</p>
+        <div class="mb-3">
+          <v-btn class="number left" fab dark color="red lighten-2">6</v-btn>&ensp;Sie befinden sich nun im Edit-Modus zum Skin Site.implant, der alle Einstellparameter enthält:</div>
         <div class="clearfix">
           <img alt="alien05.jpg" src="//neonwilderness.blogroll.me/cockpit/storage/uploads/images/alien/alien05.jpg" width="100%" />
         </div>
-        <p>In der nachstehenden Tabelle finden Sie die Informationen zu den jeweiligen Einstellparametern und welche Inhalte Sie dort eingeben können. Passen Sie die Parameterwerte nach Ihren Wünschen an und sichern Sie dann Ihre Änderungen! Sie müssen
-          <u>auf jeden Fall die Adresse Ihres neuen externen Blogs</u> unter <em>targetUrl</em> sowie evtl. die <em>rssFeedUrl</em> und das <em>commentsField</em> (wenn Sie keinen Wordpress-Blog haben) abändern &mdash; alles andere können Sie zunächst so
-          belassen und bei Bedarf auch später noch anpassen (z.B. die Farben).</p>
+        <p>In der nachstehenden Tabelle finden Sie die Informationen zu den jeweiligen Einstellparametern und welche Inhalte Sie dort eingeben können. Passen Sie die Parameterwerte nach Ihren Wünschen an und sichern Sie dann Ihre Änderungen! Sie müssen <u>auf jeden Fall die Adresse Ihres neuen externen Blogs</u> unter <em>targetUrl</em> sowie evtl. die <em>rssFeedUrl</em> und das <em>commentsField</em> (wenn Sie keinen Wordpress-Blog haben) abändern &mdash; alles andere können Sie zunächst so belassen und bei Bedarf auch später noch anpassen (z.B. die Farben).</p>
         <table>
           <thead>
             <tr>
@@ -273,15 +259,14 @@ Im Grunde ist das Tool, das ich hiermit vorstelle, eine professionalisierte Weit
             <v-icon>fa-li fa-check-circle</v-icon>bei einem neuen Kommentar wird ein Update auf den bestehenden Beitrag in Twoday gemacht (Veränderung der Metadaten).</li>
         </ul>
         <v-alert class="radius" :value="true" color="grey">
-          <p><strong>Hinweis:</strong> Um herauszufinden, ob ein Beitrag in Twoday neu angelegt oder nur aktualisiert werden muss, prüft das Tool, ob ein Beitrag bereits in Twoday vorhanden ist. Da <em>Publikationsdatum/-uhrzeit</em> keine verlässliche Information
-            ist, um die Gleichheitsprüfung durchzuführen (z.B. wenn man den Artikel zeitverzögert auf beiden Blogs gepostet hat), verwendet das Tool ausschließlich den Titeltext. Es ist also hilfreich, stets eineindeutige Titeltexte für Beiträge zu verwenden.</p>
+          <p><strong>Hinweis:</strong> Um herauszufinden, ob ein Beitrag in Twoday neu angelegt oder nur aktualisiert werden muss, prüft das Tool, ob ein Beitrag bereits in Twoday vorhanden ist. Da <em>Publikationsdatum/-uhrzeit</em> keine verlässliche Information ist, um die Gleichheitsprüfung durchzuführen (z.B. wenn man den Artikel zeitverzögert auf beiden Blogs gepostet hat), verwendet das Tool ausschließlich den Titeltext. Es ist also hilfreich, stets eineindeutige Titeltexte für Beiträge zu verwenden.</p>
         </v-alert>
         <p class="mt-3">Jede Neuanlage oder Veränderung eines Beitrags wird durch entsprechende Nachrichten auf dem Bildschirm angezeigt. Es wird auch eine Infonachricht gezeigt, wenn keine Neuerungen gefunden wurden.</p>
       </v-card-text>
     </v-card>
   </v-expansion-panel-content>
 </v-expansion-panel>
-<p class="mt-3">Natürlich kann man jederzeit zurück auf sein altes Layout wechseln, sollte es überraschend doch noch 10 Jahre weitergehen hier bei Twoday. ;)</p>
+<div class="mt-3 mb-4">Natürlich kann man jederzeit zurück auf sein altes Layout wechseln, sollte es überraschend doch noch 10 Jahre weitergehen hier bei Twoday. ;)</div>
 <p class="text-xs-center" style="font-size:.85em;color:#888">Dieses Tool ist Open Source — Lizenz
   <a target="_blank" href="https://opensource.org/licenses/MIT">MIT</a> — Code
   <a target="_blank" href="https://github.com/NeonWilderness/tdalien">Github</a>
@@ -294,7 +279,7 @@ Im Grunde ist das Tool, das ich hiermit vorstelle, eine professionalisierte Weit
             <title><![CDATA[Bloglust vs. Twoday-Existenz]]></title>
             <link>http://neonwilderness.blogroll.me/bloglust-vs-twoday-existenz-1022652927</link>
             <guid>http://neonwilderness.blogroll.me/bloglust-vs-twoday-existenz-1022652927</guid>
-            <pubDate>Sat, 09 Jun 2018 14:54:00 GMT</pubDate>
+            <pubDate>Sat, 09 Jun 2018 15:54:00 GMT</pubDate>
             <description><![CDATA[
   
 
@@ -314,7 +299,7 @@ Zwei…]]></description>
             <title><![CDATA[Statistik der puren Panik]]></title>
             <link>http://neonwilderness.blogroll.me/statistik-der-puren-panik-1022652806</link>
             <guid>http://neonwilderness.blogroll.me/statistik-der-puren-panik-1022652806</guid>
-            <pubDate>Thu, 07 Jun 2018 14:05:00 GMT</pubDate>
+            <pubDate>Thu, 07 Jun 2018 15:05:00 GMT</pubDate>
             <description><![CDATA[
   
 
@@ -331,7 +316,7 @@ Ohne Worte. Zugriffszahlen vor und nach dem "Abschalttermin".]]></description>
             <title><![CDATA[Dilettantenstadl]]></title>
             <link>http://neonwilderness.blogroll.me/tag-x-dilettantenstadl-1022652794</link>
             <guid>http://neonwilderness.blogroll.me/tag-x-dilettantenstadl-1022652794</guid>
-            <pubDate>Thu, 07 Jun 2018 11:08:00 GMT</pubDate>
+            <pubDate>Thu, 07 Jun 2018 12:08:00 GMT</pubDate>
             <description><![CDATA[
   
 
@@ -370,7 +355,7 @@ Ist denn die Frage erlaubt, welches Stück hier wohl aufgeführt wird? Womöglic
             <title><![CDATA[Tag Minus1 - Frischer Wind]]></title>
             <link>http://neonwilderness.blogroll.me/tag-1-frischer-wind-1022652439</link>
             <guid>http://neonwilderness.blogroll.me/tag-1-frischer-wind-1022652439</guid>
-            <pubDate>Fri, 01 Jun 2018 15:59:00 GMT</pubDate>
+            <pubDate>Fri, 01 Jun 2018 16:59:00 GMT</pubDate>
             <description><![CDATA[Mal'n bißchen frischen Wind und Höhenluft hier reinbringen für die letzten Stunden/Tage. Wie soll man auch wissen, was exakt die VI-Leute unter 31.05.2018 verstehen/werden. Besser, man bleibt da nüchtern und reißt nicht gleich seinen halben Blog ab wie Frau Araxe. ;)]]></description>
             <content:encoded><![CDATA[<p class="dropcaps mb-0">Mal'n bißchen frischen Wind und Höhenluft hier reinbringen für die letzten Stunden/Tage. Wie soll man auch wissen, was exakt die VI-Leute unter 31.05.2018 verstehen/werden. Besser, man bleibt da nüchtern und reißt nicht gleich seinen halben Blog ab wie Frau Araxe. ;)</p>]]></content:encoded>
             <category><![CDATA[Twoday]]></category>
@@ -381,7 +366,7 @@ Ist denn die Frage erlaubt, welches Stück hier wohl aufgeführt wird? Womöglic
             <title><![CDATA[Tag 0 - The fat lady has sung]]></title>
             <link>http://neonwilderness.blogroll.me/tag-0-the-fat-lady-has-sung-1022652142</link>
             <guid>http://neonwilderness.blogroll.me/tag-0-the-fat-lady-has-sung-1022652142</guid>
-            <pubDate>Thu, 31 May 2018 10:47:00 GMT</pubDate>
+            <pubDate>Thu, 31 May 2018 11:47:00 GMT</pubDate>
             <description><![CDATA[and now...
 
   
@@ -414,7 +399,7 @@ and watch The End...
             <title><![CDATA[Tag 1 - Like tears in the rain]]></title>
             <link>http://neonwilderness.blogroll.me/tag-1-like-tears-in-the-rain-1022651954</link>
             <guid>http://neonwilderness.blogroll.me/tag-1-like-tears-in-the-rain-1022651954</guid>
-            <pubDate>Wed, 30 May 2018 11:13:00 GMT</pubDate>
+            <pubDate>Wed, 30 May 2018 12:13:00 GMT</pubDate>
             <description><![CDATA[
 
   
@@ -441,7 +426,7 @@ and watch The End...
             <title><![CDATA[Tag 4 - Last and final reminder]]></title>
             <link>http://neonwilderness.blogroll.me/tag-4-last-and-final-reminder-1022651804</link>
             <guid>http://neonwilderness.blogroll.me/tag-4-last-and-final-reminder-1022651804</guid>
-            <pubDate>Sun, 27 May 2018 15:07:00 GMT</pubDate>
+            <pubDate>Sun, 27 May 2018 16:07:00 GMT</pubDate>
             <description><![CDATA[
   
 
@@ -472,7 +457,7 @@ and watch The End...
             <title><![CDATA[Tag 7 - Seven days of falling]]></title>
             <link>http://neonwilderness.blogroll.me/tag-7-seven-days-of-falling-1022651647</link>
             <guid>http://neonwilderness.blogroll.me/tag-7-seven-days-of-falling-1022651647</guid>
-            <pubDate>Thu, 24 May 2018 15:45:00 GMT</pubDate>
+            <pubDate>Thu, 24 May 2018 16:45:00 GMT</pubDate>
             <description><![CDATA[
   
 
@@ -504,7 +489,7 @@ Verrückt, wie manche mit Technik und Plattformen umgehen. Mit knapp 12 Jahren B
             <title><![CDATA[Tag 13 - Schließungsankündigung]]></title>
             <link>http://neonwilderness.blogroll.me/tag-13-schliessungsankuendigung-1022651362</link>
             <guid>http://neonwilderness.blogroll.me/tag-13-schliessungsankuendigung-1022651362</guid>
-            <pubDate>Fri, 18 May 2018 17:16:00 GMT</pubDate>
+            <pubDate>Fri, 18 May 2018 18:16:00 GMT</pubDate>
             <description><![CDATA[
   
 
@@ -524,7 +509,7 @@ Wie bereits an anderer Stelle definiert, ist das DSGVO ein "awful clusterfuck of
             <title><![CDATA[Tag 15 - Blognamenkurzromane]]></title>
             <link>http://neonwilderness.blogroll.me/tag-15-blognamenroman-1022651253</link>
             <guid>http://neonwilderness.blogroll.me/tag-15-blognamenroman-1022651253</guid>
-            <pubDate>Wed, 16 May 2018 20:19:00 GMT</pubDate>
+            <pubDate>Wed, 16 May 2018 21:19:00 GMT</pubDate>
             <description><![CDATA[
   
 
@@ -620,7 +605,7 @@ Heute musste ich wieder an Eugene denken und was sie wohl aus den letzten Twoday
             <title><![CDATA[Tag 16 - Blogzukunft / Standortbestimmung]]></title>
             <link>http://neonwilderness.blogroll.me/tag-16-blogzukunft-standortbestimmung-1022651186</link>
             <guid>http://neonwilderness.blogroll.me/tag-16-blogzukunft-standortbestimmung-1022651186</guid>
-            <pubDate>Tue, 15 May 2018 13:10:00 GMT</pubDate>
+            <pubDate>Tue, 15 May 2018 14:10:00 GMT</pubDate>
             <description><![CDATA[
   
 
@@ -645,7 +630,7 @@ Zeit für eine Standortbestimmung zur individuellen Blogzukunft und deren Planun
             <title><![CDATA[Tag 17 - Die längsten und kürzesten Blognamen]]></title>
             <link>http://neonwilderness.blogroll.me/tag-17-twoday-long-short-1022651130</link>
             <guid>http://neonwilderness.blogroll.me/tag-17-twoday-long-short-1022651130</guid>
-            <pubDate>Mon, 14 May 2018 17:50:00 GMT</pubDate>
+            <pubDate>Mon, 14 May 2018 18:50:00 GMT</pubDate>
             <description><![CDATA[
   
 
@@ -697,7 +682,7 @@ Bei der Wahl eines Blognamens gibt es eigentlich nur drei Lager: 1.
             <title><![CDATA[Tag 18 - Die ältesten, aktiven Blogs]]></title>
             <link>http://neonwilderness.blogroll.me/tag-18-twoday-blog-rank-1022651073</link>
             <guid>http://neonwilderness.blogroll.me/tag-18-twoday-blog-rank-1022651073</guid>
-            <pubDate>Sun, 13 May 2018 15:44:00 GMT</pubDate>
+            <pubDate>Sun, 13 May 2018 16:44:00 GMT</pubDate>
             <description><![CDATA[
   
 
@@ -778,7 +763,7 @@ Als Kriterium für einen noch aktiven Blog…]]></description>
             <title><![CDATA[Tag 20 - Boomerang rocks!]]></title>
             <link>http://neonwilderness.blogroll.me/tag-20-boomerang-rocks-1022650944</link>
             <guid>http://neonwilderness.blogroll.me/tag-20-boomerang-rocks-1022650944</guid>
-            <pubDate>Fri, 11 May 2018 17:23:00 GMT</pubDate>
+            <pubDate>Fri, 11 May 2018 18:23:00 GMT</pubDate>
             <description><![CDATA[Aus unserer bewegenden Serie
   
     fa-heartLetzte Tage bei Twoday&ensp;
@@ -821,7 +806,7 @@ Meine Präservations- und Sicherungsarbeiten rundum Twoday enthüllen manchmal i
             <title><![CDATA[Tag 23 - Kräuterwissen-Fail]]></title>
             <link>http://neonwilderness.blogroll.me/tag-23-kraeuterwissen-fail-1022650753</link>
             <guid>http://neonwilderness.blogroll.me/tag-23-kraeuterwissen-fail-1022650753</guid>
-            <pubDate>Tue, 08 May 2018 16:19:00 GMT</pubDate>
+            <pubDate>Tue, 08 May 2018 17:19:00 GMT</pubDate>
             <description><![CDATA[
   
 
@@ -846,7 +831,7 @@ Meine Präservations- und Sicherungsarbeiten rundum Twoday enthüllen manchmal i
             <title><![CDATA[Tag 24 - Bad Blog Performance]]></title>
             <link>http://neonwilderness.blogroll.me/tag-24-story-performance-1022650701</link>
             <guid>http://neonwilderness.blogroll.me/tag-24-story-performance-1022650701</guid>
-            <pubDate>Mon, 07 May 2018 15:45:00 GMT</pubDate>
+            <pubDate>Mon, 07 May 2018 16:45:00 GMT</pubDate>
             <description><![CDATA[Aus unserer bewegenden Serie
   
     fa-heartLetzte Tage bei Twoday

@@ -55,6 +55,12 @@ export default {
   data: function() {
     return {};
   },
+  head() {
+    return {
+      title: this.post.title,
+      titleTemplate: '%s [In a neon wilderness]'
+    }
+  },
   middleware: ['preload'],
   validate({ params, query, store }) {
     return store.getters.isValidBasename(params.slug);
@@ -69,16 +75,28 @@ export default {
         })
         .then(comments => store.commit('setComments', comments));
 
+    store.commit('setDataReady', false);
     if (payload) {
-      return getPostComments(payload._id).then(() => { return { post: payload }; });
+      return getPostComments(payload._id)
+        .then(() => {
+          store.commit('setDataReady', true);
+          return { post: payload };
+        });
     } else {
       return store.dispatch('readPostBasename', {
           cockpit: app.$cockpit,
           params
         })
         .then(({ post }) => {
-          if (!post) throw({ statusCode: 404, message: 'Basename nicht gefunden' });
-          return getPostComments(post._id).then(() => { return { post }; });
+          if (!post) throw new Error();
+          return getPostComments(post._id)
+            .then(() => { 
+              store.commit('setDataReady', true);
+              return { post }; 
+            });
+        })
+        .catch(e => {
+          error({ statusCode: 404, message: 'Basename nicht gefunden' });
         });
     }
   },
@@ -97,25 +115,21 @@ export default {
   },
   mounted: function() {
 
-    let expansionItems = document.querySelectorAll('.storywrapper .v-expansion-panel__header');
-    expansionItems.forEach(item => {
-      item.addEventListener('click', e => {
-        // workaround for vuetify bug: repaint v-tabs within a now open v-expansion-panel
-        setTimeout(() => { // wait for content lazyload to finish
-          let embeddedTabs = item.parentNode.querySelectorAll('.v-tabs');
-          embeddedTabs.forEach(tab => {
-            if ('__vue__' in tab) {
-              tab.__vue__.setWidths();
-              tab.__vue__.updateTabsView();
-            }
-          });
-          // position opened v-expansion-panel to top of screen
-          this.$vuetify.goTo(
-            this.getParentByClass(e.target, 'v-expansion-panel'), 
-            {duration:200, offset:-10}
-          );
-        }, 200);
+    this.$nextTick(() => {
+
+      let expansionItems = document.querySelectorAll('.storywrapper .v-expansion-panel__header');
+      expansionItems.forEach(item => {
+        item.addEventListener('click', e => {
+          setTimeout(() => {
+            // position opened v-expansion-panel to top of screen
+            this.$vuetify.goTo(
+              this.getParentByClass(e.target, 'v-expansion-panel'), 
+              {duration:200, offset:-10}
+            );
+          }, 200);
+        });
       });
+
     });
   }
   
@@ -131,32 +145,7 @@ export default {
 .contentwrapper {
   background-color: rgba(33, 33, 33, 0.95);
   margin-bottom: 0 !important;
-}
-.hero {
-  min-height: 100vh;
-  overflow-x: hidden;
-  position: relative;
-  .btnPreferences {
-    background-color: #222;
-    border-radius: 3px;
-    color: #eaeaea;
-    height: 48px;
-    line-height: 48px;
-    opacity: 0.9;
-    padding: 0;
-    position: fixed;
-    right: -25px;
-    text-align: center;
-    top: 20%;
-    transition: right 0.5s ease-in-out;
-    width: 48px;
-    z-index: 1;
-    &:hover,
-    &:focus {
-      outline: none;
-      right: -2px;
-    }
-  }
+  padding-bottom: 16px;
 }
 .storyfooter .v-toolbar__content {
   padding: 0 8px;

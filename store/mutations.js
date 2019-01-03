@@ -15,7 +15,7 @@ const mutations = {
   setCategory(state, payload) { // category slug {string}
     if (payload !== state.category) {
       state.category = payload;
-      state.breadcrumbs[1].text = state.categories[payload].category;
+      state.breadcrumbs[1].text = payload ? state.categories[payload].category : '';
       state.breadcrumbs[1].slug = payload;
     }
   },
@@ -37,6 +37,9 @@ const mutations = {
   },
   setCurrentBackgroundImage(state, payload) { // path/name of loaded background image {string}
     state.bgImage = payload;
+  },
+  setDataReady(state, payload) { // TRUE = post/comment data is now available for sub-components
+    state.dataReady = payload;
   },
   setImgLoading(state, payload) { // TRUE=new background image is currently loading {boolean}
     state.isImgLoading = payload;
