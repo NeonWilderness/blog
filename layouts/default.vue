@@ -2,7 +2,6 @@
   <v-app>
     <div id="wrapper" class="overflow-hidden" 
       :class="{faded: $store.state.isImgLoading}" 
-      :style="{backgroundImage: 'url('+ $store.state.bgImage +')'}"
     >
       <h1 class="sitetitle">In a neon wilderness <span>he was restless</span></h1>
       <h3 class="reborn hidden-sm-and-down">Redesigned.<br>Redefined.<br>Reborn.</h3>
@@ -30,7 +29,6 @@
 
 <script>
 import { escape } from 'escape-goat';
-//import backgrounds from '../static/json/allBackgrounds.json';
 
 const prefDefaults = {
   bgImage: 0,
@@ -78,10 +76,10 @@ export default {
     }
   },
   mounted: function() {
+    /*
     this.$axios.get('/json/allBackgrounds.json').then(res => {
       this.$store.commit('setBackgroundImages', res.data);
-      //this.$store.commit('setBackgroundImages', require('../static/json/allBackgrounds.json'));
-
+    */
       let preferences = localStorage.getItem(this.$store.getters.getPreferencesKey);
       this.$store.dispatch(
         'setPreferences',
@@ -99,7 +97,7 @@ export default {
             );
         }
       });
-    });
+    //});
 
   }
 };
@@ -127,12 +125,6 @@ html {
 }
 
 #wrapper {
-  background-attachment: fixed;
-  background-color: #333;
-  background-position: 50%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
   opacity: 1;
   position: relative;
   text-align: center;
@@ -155,6 +147,7 @@ html {
     padding: 0.5em;
     width: 100%;
     word-spacing: 0;
+    z-index: 1;
     span {
       display: inline-block;
       font-size: 0.6em;
@@ -173,6 +166,7 @@ html {
     padding: 0.4em;
     color: #df0025;
     transform: rotate(-45deg);
+    z-index: 2;
   }
   .goTopBtn-fade-enter-active, .goTopBtn-fade-leave-active {
     transition: opacity 1s;

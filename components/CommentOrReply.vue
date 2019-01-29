@@ -103,6 +103,7 @@
 
 <script>
 import CommentHelp from "~/components/CommentHelp.vue";
+import { format } from 'date-fns';
 import md5 from 'md5';
 
 export default {
@@ -181,10 +182,9 @@ export default {
         e.currentTarget.disabled = true;
         this.saveCredentials();
 
-        let now = new Date().toLocaleString('de-DE');
         let comment = {
           postid: (this.parent ? this.parent.postid : this.postid),
-          postdate: now.substr(0,10).split('.').reverse().join('-') + now.substr(11,6),
+          postdate: format(new Date(), 'YYYY-MM-DD HH:mm'),
           author: this.name,
           authorurl: this.url,
           email: this.hash,
@@ -194,10 +194,7 @@ export default {
           parentid: (this.parent ? (this.parent.parentid ? this.parent.parentid : this.parent._id) : '')
         };
 
-        this.$store.dispatch('saveComment', {
-            comment,
-            cockpit: this.$cockpit
-          })
+        this.$store.dispatch('saveComment', comment)
           .then(() => {
             let msg = (
               this.$store.getters.wasLastCommentAutoApproved ? 

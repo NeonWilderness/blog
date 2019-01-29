@@ -1,15 +1,14 @@
-import Axios from 'axios';
 import Vue from 'vue';
 import CockpitApi from '~/cockpit/cockpitClient';
 
-const cockpitInstance = new CockpitApi({
-  host: process.env.apiUrl || process.env.APIURL,
-  token: process.env.apiKey || process.env.APIKEY,
-  axios: Axios
-});
+export default function ({ app }, inject) {
 
-Vue.use(cockpitInstance);
+  const cockpitInstance = new CockpitApi({
+    host: process.env.apiUrl,
+    token: process.env.apiKey,
+    axios: app.$axios
+  });
 
-export default function (ctx, inject) {
   inject('cockpit', cockpitInstance);
+
 }

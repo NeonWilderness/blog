@@ -8,15 +8,14 @@ const Store = () => {
   return new Vuex.Store({
     state: {
       bgImage: '/img/px1.png',
-      bgImages: [],
+      bgImages: require('../static/json/allBackgrounds.json'),
       bgIndex: -1,
       breadcrumbs: [
-        { text: 'Home', icon: 'fa-home', slug: '' },
-        { text: '', icon: 'fa-tags', slug: ''}
+        { text: 'Home', icon: 'fa-home', slug: '', disabled: false },
+        { text: '', icon: 'fa-tags', slug: '', disabled: true }
       ],
       category: '',
       categories: [],
-      cockpitApi: null,
       credentials: {
         email: '',
         name: '',
@@ -24,7 +23,6 @@ const Store = () => {
       },
       comments: [],
       credentialsKey: 'credentials@NeonWilderness',
-      dataReady: false,
       firstStoryDate: '2006-10-24 03:16',
       isDrawerVisible: false,
       isImgLoading: true,

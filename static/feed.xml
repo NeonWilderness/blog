@@ -4,7 +4,7 @@
         <title>In A Neon Wilderness</title>
         <link>http://neonwilderness.blogroll.me</link>
         <description>Blogging about urban hymns and bitter-sweet symphonies</description>
-        <lastBuildDate>Sun, 23 Dec 2018 16:18:56 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 27 Jan 2019 13:49:12 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>@nuxtjs/feed</generator>
         <image>
@@ -12,8 +12,32 @@
             <url>http://neonwilderness.blogroll.me/img/nw.png</url>
             <link>http://neonwilderness.blogroll.me</link>
         </image>
-        <copyright>(C) 2006-2018 NeonWilderness</copyright>
+        <copyright>(C) 2006-2019 NeonWilderness</copyright>
         <atom:link href="http://neonwilderness.blogroll.me/feed.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Alien-Tool derzeit inaktiv]]></title>
+            <link>http://neonwilderness.blogroll.me/alien-tool-derzeit-inaktiv</link>
+            <guid>http://neonwilderness.blogroll.me/alien-tool-derzeit-inaktiv</guid>
+            <pubDate>Mon, 07 Jan 2019 17:46:00 GMT</pubDate>
+            <description><![CDATA[
+  
+
+Das von mir erstellte Alien-Tool, welches es ermöglicht, externe Blogs (z.B. Wordpress-basiert) in Twoday einzubinden, ist derzeit deaktiv, d.h. dass die im Wordpress-Blog durchgef&uuml;hrten Aktualisierungen (z.B. ein neuer Beitrag) nicht mehr automatisch in die Twoday-Blogroll eingespielt…]]></description>
+            <content:encoded><![CDATA[<p>
+  <img src="//neonwilderness.blogroll.me/cockpit/storage/uploads/images/yqldead.jpg" alt="Alien-Tool inaktiv" width="100%" />
+</p>
+<p class="dropcaps">Das von mir erstellte Alien-Tool, welches es ermöglicht, externe Blogs (z.B. Wordpress-basiert) in Twoday einzubinden, ist <strong>derzeit deaktiv</strong>, d.h. dass die im Wordpress-Blog durchgef&uuml;hrten Aktualisierungen (z.B. ein neuer Beitrag) nicht mehr automatisch in die Twoday-Blogroll eingespielt werden.</p>
+<p><strong>Yahoo</strong> hat sich nämlich überraschend spontan entschieden, die durch das Alien-Tool verwendete <a target="_blank" href="https://developer.yahoo.com/yql/">Yahoo YQL Komponente</a> zum 03.01.2019 ersatzlos abzuschalten. Diese Software-Komponente wurde im Tool genutzt, um die Feed-Daten (RSS) des externen Blogs beim Aufruf der Twoday-Seite zu lesen, was normalerweise wg. <a target="_blank" href="https://de.wikipedia.org/wiki/Same-Origin-Policy">Cross-Domain-Restriktionen</a> nicht geht.</p>
+<p>Ich werde in den nächsten Tagen eine alternative Lösung erarbeiten und testen sowie dann als Layoutaktualisierung zur Verfügung stellen.</p>
+<h4>Was können Alien-Tool-Nutzer bis zur neuen Lösung tun?</h4>
+<ol>
+<li>Wenn Sie ein paar Tage auf die Blogroll-Aktualisierung verzichten können, brauchen Sie nichts unternehmen. Ihr externer Blog wird immer noch wie gewohnt angezeigt.</li>
+<li style="margin-top:1rem">Falls Sie die Blogroll selbst aktuell halten wollen (z.B. um neue Beiträge anzumoderieren) können Sie auf Ihr altes Layout zurückschalten und wie früher den Beitrag (oder einen Extrakt davon) von Hand eingeben und speichern. Sie können danach wahlweise wieder das Alien-Layout aktivieren oder auch beim Alt-Layout bleiben.</li>
+</ol>]]></content:encoded>
+            <category><![CDATA[Twoday]]></category>
+            <comments>http://neonwilderness.blogroll.me/alien-tool-derzeit-inaktiv#comments</comments>
+            <slash:comments>4</slash:comments>
+        </item>
         <item>
             <title><![CDATA[Das dreckige Dutzend - 12 Jahre NeonWilderness]]></title>
             <link>http://neonwilderness.blogroll.me/dirtydozen</link>
@@ -29,9 +53,10 @@ Vor gar nicht so langer Zeit habe ich an dieser Stelle das Zehnjährige gefeiert
 <p class="dropcaps">Vor gar nicht so langer Zeit habe ich an dieser Stelle <a href="/das-musste-ja-mal-so-kommen-10-jahre-neonwilderness-1022593341">das Zehnjährige</a> gefeiert und zack &mdash; sind schon wieder 2 Jahre vorbeigezogen. Gefeiert wird jedoch diesmal an neuem Ort, in einem brandneuen, eigengehosteten, selbst programmierten Blog, dessen Funktionen, Texte und Daten nur mehr meiner Verantwortung unterliegen. Das vereinfacht die Dinge, weil ich mich jetzt direkt bei mir selbst beschweren kann, wenn irgendetwas nicht funktioniert. ;)</p>
 <p>Twodays Zeit ist vorüber - zumindest für mich. Den neuen Betreibern wünsche ich, dass sie ihre Ziele, die sie mit dem Erwerb der Plattform verfolgen, auch tatsächlich verwirklichen können &mdash; allein, ich habe meine veritablen Zweifel, denn der Erneuerungaufwand ist immens, die Kapazitäten begrenzt und die Chancen gering.</p>
 <p>Nach vielen Jahren des technischen Niedergangs, einer jahrelangen schmerzvollen (und weiter anhaltenden) Google-Diaspora, der fortwährenden Kommunikations- und Ideenlosigkeit sowie einer Vielzahl von Ereignissen zwischen vorsichtiger Hoffnung und brachialer Enttäuschung habe ich mit dieser Plattform schweren Herzens abgeschlossen. Der Kredit ist mehr als aufgebraucht und unser Beziehungskonto lange im Minus. Das ist einerseits schade &mdash; andererseits aber eröffnet dieser Schnitt Raum für Neues, für moderne, fast unbegrenzte Möglichkeiten auf einer eigenen Website, die auf keinerlei Fremdleistung mehr angewiesen ist und soviel mehr Möglichkeiten bietet.</p>
-<p>Vielen Dank <v-icon color="error">fa-heart</v-icon> an die knapp 6000 Kommentator:en:innen der letzten 12 Jahre. Ich hoffe, es werden noch einige Jubiläen zu feiern sein und will versuchen, weiter (und hoffentlich etwas öfter) Beiträge zu schreiben, die Euer Interesse finden und Euch im besten aller Fälle ein warmes Lächeln ins Gesicht zaubern. Stay tuned!</p>]]></content:encoded>
+<div>Vielen Dank <v-icon color="error">fa-heart</v-icon> an die knapp 6000 Kommentator:en:innen der letzten 12 Jahre. Ich hoffe, es werden noch einige Jubiläen zu feiern sein und will versuchen, weiter (und hoffentlich etwas öfter) Beiträge zu schreiben, die Euer Interesse finden und Euch im besten aller Fälle ein warmes Lächeln ins Gesicht zaubern. Stay tuned!</div>]]></content:encoded>
             <category><![CDATA[Wort des Tages]]></category>
             <comments>http://neonwilderness.blogroll.me/dirtydozen#comments</comments>
+            <slash:comments>0</slash:comments>
         </item>
         <item>
             <title><![CDATA[Cheers]]></title>
@@ -826,38 +851,6 @@ Meine Präservations- und Sicherungsarbeiten rundum Twoday enthüllen manchmal i
             <category><![CDATA[Today I Learned]]></category>
             <comments>http://neonwilderness.blogroll.me/tag-23-kraeuterwissen-fail-1022650753#comments</comments>
             <slash:comments>4</slash:comments>
-        </item>
-        <item>
-            <title><![CDATA[Tag 24 - Bad Blog Performance]]></title>
-            <link>http://neonwilderness.blogroll.me/tag-24-story-performance-1022650701</link>
-            <guid>http://neonwilderness.blogroll.me/tag-24-story-performance-1022650701</guid>
-            <pubDate>Mon, 07 May 2018 16:45:00 GMT</pubDate>
-            <description><![CDATA[Aus unserer bewegenden Serie
-  
-    fa-heartLetzte Tage bei Twoday
-    fa-heart
-  
-
-
-  Heute&emsp;Desaströse Beitragsperformance
-Naja, komm, Schwamm drüber! Das müssen Sie sich wirklich nicht angucken. Also wenn mir das jemand gesagt hätte, dass ich im Februar 2008 schon mein Blog-Performance…]]></description>
-            <content:encoded><![CDATA[<p class="text-xs-center">Aus unserer bewegenden Serie
-  <v-chip color="info" text-color="white" small="">
-    <v-icon small="">fa-heart</v-icon>Letzte Tage bei Twoday
-    <v-icon small="">fa-heart</v-icon>
-  </v-chip>
-</p>
-<h5 class="text-xs-center subheading font-weight-light my-2" style="padding:1em;background:#27ae60;color:#fff">
-  <v-chip color="warning" text-color="white" small="">Heute</v-chip>&emsp;<strong>Desaströse Beitragsperformance</strong></h5>
-<p class="dropcaps mt-3">Naja, komm, Schwamm drüber! Das müssen Sie sich wirklich nicht angucken. Also wenn mir das jemand gesagt hätte, dass ich im Februar 2008 schon mein Blog-Performance-Alltime-High mit schlappen 11 Beiträgen in einem Monat erreiche und es danach nie mehr überbiete... Tss... also doll ist das wirklich nicht.</p>
-<p>Ich kann nur entschuldigend anführen, dass ich eben sehr viel bei Frau Araxe kommentiert habe, weil sie doch eine sehr intensive Betreuung braucht wegen ihres schlimmen Musikgeschmacks und ihrer problematischen Neigungen (zum Beispiel Leute verschwinden zu lassen oder aus ihnen seltsame Kunstwerke zu basteln). Das hat mich schon eine Menge Zeit gekostet, aber rückblickend bin ich auch froh, dass meine selbstlose Hilfe es bewerkstelligt hat, dass sie sich nicht vollkommen sozial ausgeklinkt hat und sich jetzt mit Azubis verbal auseinandersetzen kann anstatt sie portionsweise in kleine Küchengläser zu verstauen.</p>
-<p>Man kann eben nicht alles haben, sage ich mir! Ich denke aber, dass, wenn Frau Araxe mal aus dem Gröbsten raus ist, also musikmäßig, und auch im Umgang mit normalen Menschen, dann werde ich sicher noch etwas zulegen können bei meiner Blog-Performance. Naja, für Twoday kommt's zu spät, aber herrje, ich sag ja, Schwamm drüber.</p>
-<p class="mb-0">
-    <img src="//neonwilderness.blogroll.me/cockpit/storage/uploads/images/blogbeitraege-twoday.jpg" alt="Blogbeiträge je Monat im Zeitraum 10/2006 bis 05/2018" width="100%" style="border:1px solid #eee">
-</p>]]></content:encoded>
-            <category><![CDATA[Twoday]]></category>
-            <comments>http://neonwilderness.blogroll.me/tag-24-story-performance-1022650701#comments</comments>
-            <slash:comments>12</slash:comments>
         </item>
     </channel>
 </rss>

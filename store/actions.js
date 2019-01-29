@@ -1,8 +1,13 @@
-import CockpitApi from '~/cockpit/cockpitClient';
 import ellipsize from 'ellipsize';
 import innertext from 'innertext';
 import { getCutoffDate, sortDescByCounterType } from './util';
 
+/**
+ * Removes unwanted HTML tags to enable plain text abstract
+ * @param {string} html HTML string to be processed
+ * @param {array} tags Array of tags (string) to be removed
+ * @returns {string} polished HTML string
+ */
 const removeUnwantedTags = (html, tags) => {
   let startsAt, endsAt;
   for (let tag of tags) {
@@ -17,23 +22,47 @@ const removeUnwantedTags = (html, tags) => {
   return html;
 };
 
+/**
+ * 
+ * @param {string} html HTML string to generate an abstract from
+ * @param {number} abstractLength Desired character length of abstract
+ * @returns {string} Abstract of a given html story
+ */
 const deriveAbstract = (html, abstractLength) => {
   let cleanup = removeUnwantedTags(html, ['style', 'v-chip', 'v-icon']);
   return ellipsize(innertext(cleanup), abstractLength);
 };
 
+/**
+ * Store Actions, receive
+ * - 1st: context = { state, rootState, commit, dispatch, getters, rootGetters }
+ * - 2nd: payload if any 
+ */
 const actions = {
 
   establishCounterData({ commit, state }) {
-    return state.cockpitApi.readPosts({
-      dump: false,
-      fields: { 'basename': 1, 'category': 1, 'counter': 1, 'date': 1, 'title': 1 }
-    }).then(posts => {
+
+    /**
+     * Returns post counter data depending on call mode
+     * server side: return pre-compiled JSON
+     * client side: return current database data
+     */
+    const getCounterData = (cockpit) => {
+      if (process.server)
+        return Promise.resolve(require('../static/json/allPosts.json'));
+      else
+        return cockpit.readPosts({
+          dump: false,
+          fields: { 'basename': 1, 'category': 1, 'counter': 1, 'date': 1, 'title': 1 }
+        });
+    };
+    
+    return getCounterData(this.$cockpit).then(posts => {
 
       commit('setPosts', posts);
       commit('setMaxPage');
 
-      for (let period of state.selectPeriods) { // D90 | Y3 | F
+      for (let period of state.selectPeriods) { // period.value: D90 | Y3 | F
         let selectedPosts = [];
         let cutoffDate = getCutoffDate(period.value);
         let index = 0;
@@ -55,17 +84,17 @@ const actions = {
     });
   },
 
-  filterForCategory({ commit, dispatch }, cockpit) {
+  filterForCategory({ commit, dispatch }) {
     commit('setPage', 1);
     commit('setMaxPage');
-    return dispatch('readPostsSlice', cockpit);
+    return dispatch('readPostsSlice');
   },
 
-  // payload = { type: 'reads'|'hearts'|'comments', id: 'postid', cockpit }
-  incPostCounter({ getters }, { type, id, cockpit }) {
+  // payload = { type: 'reads'|'hearts'|'comments', id: 'postid' }
+  incPostCounter({ getters }, { type, id }) {
     let counter = getters.getCounterByPostId(id);
     counter[type]++;
-    return cockpit.saveCollection('posts', {
+    return this.$cockpit.saveCollection('posts', {
       data: {
         _id: id,
         counter
@@ -91,12 +120,25 @@ const actions = {
   },
 
   loadMostRecentComments({ commit, state, getters }) {
-    return state.cockpitApi.readComments({
-      dump: false,
-      fields: { 'postid': 1, 'postdate': 1, 'author': 1, 'authorurl': 1, 'email': 1, 'content': 1, 'parentid': 1 },
-      limit: state.maxMostRecentComments,
-      skip: 0
-    }).then(comments => {
+
+    /**
+     * Returns most recent blog comments depending on call mode
+     * server side: return pre-compiled JSON
+     * client side: return current database data
+     */
+    const getRecentComments = (cockpit) => {
+      if (process.server)
+        return Promise.resolve(require('../static/json/recentComments.json'));
+      else
+        return cockpit.readComments({
+          dump: false,
+          fields: { 'postid': 1, 'postdate': 1, 'author': 1, 'authorurl': 1, 'email': 1, 'content': 1, 'parentid': 1 },
+          limit: state.maxMostRecentComments,
+          skip: 0
+        });
+    };
+
+    return getRecentComments(this.$cockpit).then(comments => {
 
       commit('setMostRecentComments', comments.map(comment => {
         comment.content = ellipsize(innertext(comment.content), state.maxCommentAbstractLength);
@@ -113,32 +155,10 @@ const actions = {
     });
   },
 
-  nuxtServerInit({ commit }, { app, env }) {
-    const cockpitInstance = new CockpitApi({
-      host: env.apiUrl || env.APIURL,
-      token: env.apiKey || env.APIKEY,
-      axios: app.$axios
-    });
-    commit('establishCockpitInstance', cockpitInstance);
-  },
-
-  readPostComments({ state }, { cockpit, postid }) { // payload = { cockpit, postid }
+  readPostBasename({ state }, params) {
 
     return new Promise((resolve, reject) => {
-      cockpit.readComments({
-        dump: false,
-        filter: { postid }
-      }).then(comments => {
-        resolve({ comments });
-      }).catch(err => { reject(err); });
-    });
-
-  },
-
-  readPostBasename({ state }, { cockpit, params }) { // payload = { cockpit, params }
-
-    return new Promise((resolve, reject) => {
-      cockpit.readPosts({
+      this.$cockpit.readPosts({
         dump: false,
         filter: { basename: params.slug }
       }).then(([post]) => {
@@ -146,10 +166,10 @@ const actions = {
         post.videoload = (post.content.indexOf('html5video') >= 0);
         post.content = post.content.replace(
           /src="\/cockpit\/storage\/uploads?/g,
-          `src="${state.cockpitApi.host}/storage/uploads`
+          `src="${this.$cockpit.host}/storage/uploads`
         );
         if (post.image !== null && typeof post.image === 'object') {
-          post.image.path = `${state.cockpitApi.host}/storage/uploads${post.image.path}`;
+          post.image.path = `${this.$cockpit.host}/storage/uploads${post.image.path}`;
         } else {
           let img = post.content.match(/<img.*?src="(.*?)"/);
           if (img) post.image = { path: img[1] };
@@ -160,33 +180,38 @@ const actions = {
 
   },
 
-  readPostsSlice({ state }, payload) { // payload = cockpit instance
+  readPostsSlice({ state }) {
 
     let options = {
       dump: false,
       limit: state.postsPerPage,
       skip: (state.page - 1) * state.postsPerPage
     };
+
     if (state.category.length) 
       options.filter = { 'category': state.categories[state.category].category };
+
     return new Promise((resolve, reject) => {
-      payload.readPosts(options).then(posts => {
+      this.$cockpit.readPosts(options).then(posts => {
+
         let refinedPosts = posts.map(post => {
           post.abstract = deriveAbstract(post.content, state.maxStoryAbstractLength);
           if (post.image !== null && typeof post.image === 'object') {
-            post.image.path = `${state.cockpitApi.host}/storage/uploads${post.image.path}`;
+            post.image.path = `${this.$cockpit.host}/storage/uploads${post.image.path}`;
           } else {
             let img = post.content.match(/<img.*?src="(.*?)"/);
             if (img) post.image = {
               path: img[1].replace(
                 /^\/cockpit\/storage\/uploads?/,
-                `${state.cockpitApi.host}/storage/uploads`
+                `${this.$cockpit.host}/storage/uploads`
               )
             }
           }
           return post;
         });
+
         resolve({ posts: refinedPosts });
+
       }).catch(err => { reject(err); });
     });
 
@@ -198,12 +223,12 @@ const actions = {
     commit('setMaxPage');
   },
 
-  saveComment({ commit, dispatch }, { comment, cockpit }) {
-    return cockpit.saveCollection('comments', { data: comment })
+  saveComment({ commit, dispatch }, comment) {
+    return this.$cockpit.saveCollection('comments', { data: comment })
       .then(entry => {
         entry.data.selected = false;
         commit('addNewComment', entry.data);
-        return dispatch('incPostCounter', { type: 'comments', id: comment.postid, cockpit })
+        return dispatch('incPostCounter', { type: 'comments', id: comment.postid })
       })
       .catch(err => console.log(`Sicherung Kommentar endete mit Fehler: ${err}.`));
   },

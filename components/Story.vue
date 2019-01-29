@@ -33,17 +33,16 @@
         <v-icon>fa-calendar-o</v-icon>
         <v-subheader 
           class="grey--text pl-2" 
-          :class="`pr-${$vuetify.breakpoint.smAndUp ? 4 : 3}`" 
+          :class="`pr-${isBiggerDevice ? 4 : 3}`" 
           :title="post.date"
         >
-          <span v-if="$vuetify.breakpoint.smAndUp">{{post.date}}</span>
-          <span v-else>{{post.date.substr(0, 10)}}</span>
+          <span>{{isBiggerDevice ? post.date : post.date.substr(0, 10)}}</span>
         </v-subheader>
         <v-spacer v-if="!isSingleStoryView"></v-spacer>
         <v-icon>fa-eye</v-icon>
         <v-subheader 
           class="grey--text pl-2 pr-3" 
-          :class="`pr-${$vuetify.breakpoint.smAndUp ? 4 : 3}`" 
+          :class="`pr-${isBiggerDevice ? 4 : 3}`" 
           title="gelesen"
         >{{post.counter.reads}}
         </v-subheader>
@@ -60,7 +59,7 @@
         </v-subheader>
       </v-toolbar>
       <v-card-text v-if="isSingleStoryView">
-        <Content :embed="post.content" type="Post" v-if="$store.state.dataReady" />
+        <Content :embed="post.content" type="Post" />
       </v-card-text>
       <v-card-text 
         class="storyabstract px-3" 
@@ -77,7 +76,7 @@
           color="grey lighten-4" 
           icon 
           nuxt 
-          :to="'/'+post.basename"
+          :to="`/${post.basename}/`"
         >
           <v-icon>fa-chevron-right</v-icon>
         </v-btn>
@@ -110,18 +109,18 @@
               <v-icon>fa-pencil</v-icon>
               <v-subheader 
                 class="grey--text pl-2"
-                v-if="$vuetify.breakpoint.smAndUp"
+                v-show="isBiggerDevice"
               >Kommentar verfassen</v-subheader>
             </v-btn>
           </v-flex>
           <v-flex
-            v-if="isSingleStoryView && commentsDisabled"
+            v-else-if="isSingleStoryView && commentsDisabled"
             xs4
             class="text-xs-center"
           >
             <v-chip disabled label outline small>
               <span v-if="!post.commentsallowed">Kommentarfunktion deaktiviert</span>
-              <span v-if="post.commentsclosed">Kommentare geschlossen</span>
+              <span v-else-if="post.commentsclosed">Kommentare geschlossen</span>
             </v-chip>
           </v-flex>
 
@@ -246,6 +245,9 @@ export default {
     image: function() {
       return this.post.image ? this.post.image.path : '/img/px1.png';
     },
+    isBiggerDevice: function() {
+      return this.$vuetify.breakpoint.smAndUp;
+    },
     isSingleStoryView: function() {
       return this.view === 'full';
     },
@@ -281,10 +283,10 @@ export default {
     },
     goAdjacent: function(basename) {
       if (this.isCommentListVisible) this.toggleComments();
-      this.$router.push(`/${basename}`);
+      this.$router.push(`/${basename}/`);
     },
     goToPost: function(hash) {
-      this.$router.push(`/${this.post.basename}${hash || ''}`);
+      this.$router.push(`/${this.post.basename}/${hash || ''}`);
     },
     heartStory: function() {
       this.updateStoryList('hearts').then(counterIncreased => {
@@ -335,8 +337,7 @@ export default {
         localStorage.setItem(storageKey, JSON.stringify(storiesType));
         return this.$store.dispatch('incPostCounter', {
           type,
-          id: this.post._id,
-          cockpit: this.$cockpit
+          id: this.post._id
         });
       }
     }
@@ -352,7 +353,7 @@ export default {
         loadScripts('/js/videoload2.js').then(() => {
           video2day.run({
             contentClass: 'vPostContent',
-            debug: true,
+            debug: false,
             lazyLoad: true,
             selector: '.vPostContent .html5video'
           });

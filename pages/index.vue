@@ -1,6 +1,9 @@
 <template>
   <div>
-    <section class="hero">
+    <section 
+      class="hero"
+      :style="{backgroundImage: 'url('+ $store.state.bgImage +')'}"
+    >
       <button class="btnPreferences" title="Einstellungen" @click="openPreferences">
         <i class="fa fa-cog fa-spin fa-lg fa-fw"></i>
       </button>
@@ -13,18 +16,24 @@
         v-scroll="onScroll"
       >
         <v-flex xs12 md8 lg7 offset-lg1 v-if="$store.state.category.length">
-          <v-breadcrumbs class="py-2" divider="/" style="position:relative">
-            <v-breadcrumbs-item
-              @click.prevent.stop="$store.dispatch('setCategory', item.slug)"
-              v-for="(item, index) in $store.getters.getBreadcrumbs(true)"
-              :disabled="index > 0"
-              href="/"
-              :key="item.text"
-              ripple
-            >
-              <v-icon>{{item.icon}}</v-icon>
-              {{ item.text }}
-            </v-breadcrumbs-item>        
+          <v-breadcrumbs 
+            class="py-2" 
+            :items="$store.getters.getBreadcrumbs(true)" 
+            style="position:relative"
+          >
+            <template slot="item" slot-scope="props">
+              <li>
+                <a
+                  class="v-breadcrumbs__item" 
+                  :class="{ 'v-breadcrumbs__item--disabled': props.item.disabled }"
+                  @click.prevent.stop="$store.dispatch('setCategory', props.item.slug)"
+                  href="/" 
+                >  
+                  <v-icon>{{props.item.icon}}</v-icon>
+                  {{ props.item.text }}
+                </a>
+              </li>
+            </template>
           </v-breadcrumbs>
         </v-flex>
         <v-flex xs12 md8 :class="'storywrapper ' + largeSpaceClass">
@@ -90,7 +99,7 @@ export default {
   watch: {
     currentCategory: function() {
       this.$store
-        .dispatch('filterForCategory', this.$cockpit)
+        .dispatch('filterForCategory')
         .then(({ posts }) => {
           this.posts = posts;
         });
@@ -112,7 +121,7 @@ export default {
     pageChange(newPage) {
       this.$store.commit('setPage', newPage);
       return this.$store
-        .dispatch('readPostsSlice', this.$cockpit)
+        .dispatch('readPostsSlice')
         .then(({ posts }) => {
           this.posts = posts;
         });
@@ -122,9 +131,10 @@ export default {
   asyncData: function({ app, query, store }) {
     if (query.topic) {
       store.commit('setCategory', query.topic);
-      return store.dispatch('filterForCategory', app.$cockpit);
-    } else
-      return store.dispatch('readPostsSlice', app.$cockpit);
+      return store.dispatch('filterForCategory');
+    } else {
+      return store.dispatch('readPostsSlice');
+    }
   }
 };
 </script>

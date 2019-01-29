@@ -1,26 +1,36 @@
 <template>
   <div>
-    <section class="hero"></section>
+    <section 
+      class="hero"
+      :style="{backgroundImage: 'url('+ $store.state.bgImage +')'}"
+    ></section>
     <section class="content">
       <v-layout 
         row 
         wrap 
         class="contentwrapper pt-2"
+        ref="contentwrapper"
         v-scroll="onScroll"
       >
         <v-flex xs12 md8 lg7 offset-lg1>
-          <v-breadcrumbs class="py-2" divider="/" style="position:relative">
-            <v-breadcrumbs-item
-              v-for="(item, index) in $store.getters.getBreadcrumbs(false)"
-              @click.stop="$store.dispatch('setCategory', item.slug)"
-              :disabled="index > 0"
-              href="/"
-              :key="item.text"
-              ripple
-            >
-              <v-icon>{{item.icon}}</v-icon>
-              {{ item.text }}
-            </v-breadcrumbs-item>        
+          <v-breadcrumbs 
+            class="py-2" 
+            :items="$store.getters.getBreadcrumbs(false)" 
+            style="position:relative"
+          >
+            <template slot="item" slot-scope="props">
+              <li>
+                <a
+                  class="v-breadcrumbs__item" 
+                  :class="{ 'v-breadcrumbs__item--disabled': props.item.disabled }"
+                  @click.stop="$store.dispatch('setCategory', props.item.slug)"
+                  href="/" 
+                >  
+                  <v-icon>{{props.item.icon}}</v-icon>
+                  {{ props.item.text }}
+                </a>
+              </li>
+            </template>
           </v-breadcrumbs>
         </v-flex>
         <v-flex xs12 md8 lg7 offset-lg1 class="storywrapper">
@@ -75,28 +85,20 @@ export default {
         })
         .then(comments => store.commit('setComments', comments));
 
-    store.commit('setDataReady', false);
     if (payload) {
-      return getPostComments(payload._id)
-        .then(() => {
-          store.commit('setDataReady', true);
-          return { post: payload };
-        });
+      store.commit('setComments', payload.comments);
+      return { post: payload.post };
     } else {
-      return store.dispatch('readPostBasename', {
-          cockpit: app.$cockpit,
-          params
-        })
+      return store.dispatch('readPostBasename', params)
         .then(({ post }) => {
-          if (!post) throw new Error();
+          if (!post) error({ statusCode: 404, message: `Basename "${params.slug}" nicht gefunden` });
           return getPostComments(post._id)
             .then(() => { 
-              store.commit('setDataReady', true);
               return { post }; 
             });
         })
         .catch(e => {
-          error({ statusCode: 404, message: 'Basename nicht gefunden' });
+          error({ statusCode: e.name, message: e.message });
         });
     }
   },
@@ -130,6 +132,8 @@ export default {
         });
       });
 
+      this.$vuetify.goTo(this.$refs.contentwrapper, {duration:200, offset:0});
+
     });
   }
   
@@ -139,7 +143,7 @@ export default {
 <style lang="less">
 .content {
   color: #fff;
-  margin-top: -5em;
+  margin-top: -5.4em;
   text-align: left;
 }
 .contentwrapper {

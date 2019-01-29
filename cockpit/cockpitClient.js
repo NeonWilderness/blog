@@ -11,6 +11,12 @@ class Cockpit {
     this.host = host;
     this.token = token;
     this.axios = axios;
+    // need to bind "this" to class methods
+    this.readCollection = this.readCollection.bind(this);
+    this.readPosts = this.readPosts.bind(this);
+    this.readCategories = this.readCategories.bind(this);
+    this.readComments = this.readComments.bind(this);
+    this.saveCollection = this.saveCollection.bind(this);
   }
 
   readCollection(collection, options) {

@@ -20,6 +20,7 @@
           <v-card 
             v-for="(comment, index) in comments" 
             :class="comment.parentid.length ? 'reply' : 'comment'"
+            elevation="0"
             :key="comment._id"
             :id="'comment-' + index"
           >
@@ -49,7 +50,7 @@
                   />
                 </v-card-title>
                 <v-card-text class="pt-0">
-                  <Content :embed="comment.content" type="Comment" v-if="$store.state.dataReady" />
+                  <Content :embed="comment.content" type="Comment" />
                 </v-card-text>
                 <v-card-actions class="mb-1">
                   <v-btn 
@@ -69,10 +70,10 @@
               :id="'commentform-' + index"
               :parent="comment"
               v-if="enabled"
-            />
+            ></CommentOrReply>
           </v-card>
         </v-flex>
-        <v-flex v-if="unapproved > 0" class="py-0">
+        <v-flex v-if="unapproved>0" class="py-0">
           <div class="secondary lighten-2 white--text text-xs-center py-3">
             <i class="fa fa-info-circle mr-3"></i>{{unapprovedText}}
           </div>
@@ -144,7 +145,7 @@ export default {
     runVideoload: function() {
       video2day.run({
         contentClass: 'vCommentContent',
-        debug: true,
+        debug: false,
         lazyLoad: true,
         selector: '.vCommentContent .html5video'
       });

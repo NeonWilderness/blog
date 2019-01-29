@@ -1,6 +1,6 @@
 <template>
   <v-flex xs12>
-    <v-card>
+    <v-card elevation="0">
       <v-layout row wrap>
         <v-flex xs12>
           <v-list subheader>

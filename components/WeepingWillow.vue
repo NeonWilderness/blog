@@ -14,7 +14,10 @@
                   <Avatar :comment="comment" />
                 </v-list-tile-avatar>
                 <v-list-tile-content>
-                  <a class="commentlink" :href="'/' + comment.basename + '#comments'">
+                  <a 
+                    class="commentlink" 
+                    @click.prevent="goToComments(comment.basename)"
+                  >
                     <div class="comment mb-2">{{comment.content}}</div>
                   </a>
                   <v-list-tile-sub-title class="caption d-flex">
@@ -51,6 +54,11 @@ import Avatar from '~/components/Avatar.vue';
 export default {
   components: {
     Avatar
+  },
+  methods: {
+    goToComments: function(basename) {
+      this.$router.push(`/${basename}/#comments`);
+    }
   }
 }
 </script>

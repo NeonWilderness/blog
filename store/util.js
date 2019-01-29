@@ -3,6 +3,8 @@
  * @param {string} timespan e.g. D90 = 90 days, Y3 = 3 Years, * = max  
  * @returns {string} 'YYYY-MM-DD hh:mm'
  */
+import { format } from 'date-fns';
+
 export const getCutoffDate = timespan => {
   let code = timespan[0].toUpperCase();
   if (code === 'F') return '1970-01-01 01:01';
@@ -14,7 +16,7 @@ export const getCutoffDate = timespan => {
     case 'Y': days = span * 365; break;
   }
   let date = new Date(Date.now() - days * 1000 * 60 * 60 * 24);
-  return `${date.toISOString().substr(0,10)} ${date.toLocaleTimeString().substr(0,5)}`;
+  return format(date, 'YYYY-MM-DD HH:mm');
 };
 
 /**

@@ -3,12 +3,6 @@ const mutations = {
   addNewComment(state, payload) { // comment {object}
     if (payload.approved) state.comments.push(payload);
   },
-  establishCockpitInstance(state, payload) {
-    state.cockpitApi = payload;
-  },
-  setBackgroundImages(state, payload) { // background image names assembled from static/img/bg during compile time
-    state.bgImages = payload;
-  },
   setBgIndex(state, payload) { // index of background image {number}
     state.bgIndex = payload;
   },
@@ -37,9 +31,6 @@ const mutations = {
   },
   setCurrentBackgroundImage(state, payload) { // path/name of loaded background image {string}
     state.bgImage = payload;
-  },
-  setDataReady(state, payload) { // TRUE = post/comment data is now available for sub-components
-    state.dataReady = payload;
   },
   setImgLoading(state, payload) { // TRUE=new background image is currently loading {boolean}
     state.isImgLoading = payload;

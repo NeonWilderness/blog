@@ -1,19 +1,7 @@
 if (process.server) require('dotenv-safe').load();
 
-const fs = require('fs');
-const path = require('path');
-
-const feed = require('./feed.config');
-const routes = require('./routes.config');
-
-/**
- * Create JSON file of all available background images in folder static/img/bg/thumbs
- */
-let backgrounds = fs.readdirSync(path.resolve(process.cwd(), 'static/img/bg/thumbs/')).sort();
-fs.writeFileSync(
-  path.resolve(process.cwd(), 'static/json/allBackgrounds.json'),
-  JSON.stringify(backgrounds)
-);
+import feed from './feed.config';
+import { plainRoutes, routesWithPayload } from './routes.config';
 
 /**
  * Define script config differences between dev/prod mode
@@ -96,8 +84,7 @@ module.exports = {
       gzip: true,
       hostname: baseUrl,
       path: '/sitemap.xml',
-      routes: () => routes()
-        .then(routesWithPayload => routesWithPayload.map(routeWithPayload => routeWithPayload.route))
+      routes: () => plainRoutes()
   },
   toast: {
     className: 'text--white',
@@ -107,14 +94,11 @@ module.exports = {
   },
   generate: {
     fallback: true,
-    interval: 2000,
-    routes: () => routes()
+    interval: 500,
+    routes: () => routesWithPayload()
       .then(all => all.slice(0,50))
   },
   build: {
-    vendor: [
-      '~/plugins/vuetify.js'
-    ],
     extractCSS: true,
     extend(config, { isDev, isClient }) {
       config.resolve.alias['vue'] = 'vue/dist/vue.esm.js'; // enable with-compiler Vue.js version

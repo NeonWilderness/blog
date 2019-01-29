@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuetify from 'vuetify';
 
 Vue.use(Vuetify, {
+  iconfont: 'fa4',
   theme: {
     primary: '#720d5d',
     secondary: '#e30425',

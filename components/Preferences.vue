@@ -18,17 +18,21 @@
     <v-divider></v-divider>
 
     <v-subheader class="cyan--text text--darken-1">Layout Blogbeiträge</v-subheader>
-    <div class="mx-3">
-      <v-radio-group v-model="$store.state.storyLayout" mandatory class="mt-0">
-        <v-radio
-          v-for="layout in storyLayoutOptions"
-          color="cyan darken-1"
-          :class="layout.icon"
-          :key="layout.val"
-          :label="layout.text"
-          :value="layout.val"
-        ></v-radio>
-      </v-radio-group>    
+    <div class="pb-4">
+      <v-chip 
+        @click="$store.commit('setStoryLayout', storyLayoutOptions[index].val)"
+        :color="chipColor(index)" 
+        dark 
+        :selected="isChipSelected(index)"
+        text-color="white"
+        v-for="(layout, index) in storyLayoutOptions"
+        :key="index"
+      >
+      <v-avatar>
+          <v-icon>{{layout.icon}}</v-icon>
+        </v-avatar>    
+        {{layout.text}}
+      </v-chip>
     </div>
     <v-flex xs12 class="mx-3">
       <v-slider v-model="$store.state.postsPerPage"
@@ -74,7 +78,7 @@
     </div>
     <div class="btnSave">
       <v-btn color="secondary" ripple small @click.stop="savePreferences">
-        <v-icon left>fa-save</v-icon>Einstellungen sichern&nbsp;
+        <v-icon left small>fa-save</v-icon>Einstellungen sichern&nbsp;
       </v-btn>
     </div>
 
@@ -86,13 +90,19 @@ export default {
   data: function() {
     return {
       storyLayoutOptions: [
-        { val: 'single', text: 'volle Breite', icon: 'icon icon-stop' },
-        { val: 'double', text: '2-spaltig', icon: 'icon icon-pause' },
-        { val: 'triple', text: 'Übersicht', icon: 'icon icon-th' }
+        { val: 'single', text: 'volle Breite', icon: 'fa-stop' },
+        { val: 'double', text: '2-spaltig', icon: 'fa-pause' },
+        { val: 'triple', text: 'Übersicht', icon: 'fa-th' }
       ]
     };
   },
   methods: {
+  	chipColor: function(index){
+    	return (this.isChipSelected(index) ? 'teal lighten-1' : 'cyan') 
+    },
+    isChipSelected: function(index){
+    	return this.storyLayoutOptions[index].val === this.$store.state.storyLayout;
+    },
     isImageSelected(image, index) {
       let bgIndex = this.$store.getters.getBgIndex;
       if (bgIndex < 0) { // no image has been clicked yet (image is a default or based on preferences)
@@ -158,6 +168,9 @@ export default {
 </style>
 <style lang="less">
 .v-radio {
+  .v-icon {
+    vertical-align: sub;
+  }
   &.icon label:before {
     font-family: 'FontAwesome';
     width: 2em;

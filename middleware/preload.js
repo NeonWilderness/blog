@@ -1,4 +1,5 @@
-export default function ({ store }) {
+export default function ({ error, store }) {
+
   if (store.state.posts.length > 0) 
     return Promise.resolve();
   else
@@ -11,6 +12,7 @@ export default function ({ store }) {
         ])
       )
       .catch(err => {
-        console.log(`middleware store preload ended with error: ${err}.`);
+        error({ statusCode: err.name, message: `middleware store preload ended with error: ${err.message}` });
       });
+
 }
