@@ -323,7 +323,11 @@ label {
 }
 .v-chip .v-icon, .v-btn .v-icon {
   display: inline-flex;
+  font-size: 14px;
   text-align: center;
   width: 2em;
+}
+.v-toolbar .v-icon {
+  font-size: 14px;
 }
 </style>
