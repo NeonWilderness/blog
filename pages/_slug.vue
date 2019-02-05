@@ -72,19 +72,10 @@ export default {
     }
   },
   middleware: ['preload'],
-  validate({ params, query, store }) {
+  validate({ params, store }) {
     return store.getters.isValidBasename(params.slug);
   },
-  asyncData: function({ app, error, params, payload, store }) {
-    // read comments of a specific post and save to store
-    const getPostComments = postid =>
-      app.$cockpit.readComments({
-          dump: false,
-          filter: { postid },
-          sort: { parentid: 1, postdate: 1 }
-        })
-        .then(comments => store.commit('setComments', comments));
-
+  asyncData: function({ error, params, payload, store }) {
     if (payload) {
       store.commit('setComments', payload.comments);
       return { post: payload.post };
@@ -92,7 +83,7 @@ export default {
       return store.dispatch('readPostBasename', params)
         .then(({ post }) => {
           if (!post) error({ statusCode: 404, message: `Basename "${params.slug}" nicht gefunden` });
-          return getPostComments(post._id)
+          return store.dispatch('readPostComments', post._id)
             .then(() => { 
               return { post }; 
             });
@@ -115,6 +106,16 @@ export default {
       this.$store.commit('setScrollPosition', offsetTop);
     }
   },
+  beforeMount: function() {
+    // manages page (hard) reload: reloads comments and actual counter state
+    if (process.isStatic && typeof this.$root.$options.context.from === 'undefined') {
+      this.$store.dispatch('readPostComments', this.post._id)
+        .then( () => this.$store.dispatch('incPostCounter', { type: 'comments', id: this.post._id}))
+        .then( counter => {
+          this.post.counter = counter;
+        });
+    }
+  },
   mounted: function() {
 
     this.$nextTick(() => {
@@ -132,7 +133,8 @@ export default {
         });
       });
 
-      this.$vuetify.goTo(this.$refs.contentwrapper, {duration:200, offset:0});
+      if (location.hash !== '#comments')
+        this.$vuetify.goTo(this.$refs.contentwrapper, {duration:200, offset:0});
 
     });
   }

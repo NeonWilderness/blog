@@ -48,7 +48,7 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.jpg' },
       { 
         rel: 'stylesheet', 
-        href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Courgette:400|Oswald:400|Material+Icons'
+        href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Courgette:400|Oswald:400'
       }
     ],
     script: (process.env.npm_lifecycle_event !== 'dev' ? prodScripts : devScripts)
@@ -71,7 +71,8 @@ module.exports = {
     '@nuxtjs/feed',
     '@nuxtjs/font-awesome',
     '@nuxtjs/sitemap',
-    '@nuxtjs/toast'
+    '@nuxtjs/toast',
+    'nuxt-svg-loader'
   ],
   axios: {
     baseURL: baseUrl
@@ -96,7 +97,7 @@ module.exports = {
     fallback: true,
     interval: 500,
     routes: () => routesWithPayload()
-      .then(all => all.slice(0,50))
+      //.then(all => all.slice(0,50))
   },
   build: {
     extractCSS: true,

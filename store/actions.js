@@ -90,17 +90,31 @@ const actions = {
     return dispatch('readPostsSlice');
   },
 
-  // payload = { type: 'reads'|'hearts'|'comments', id: 'postid' }
-  incPostCounter({ getters }, { type, id }) {
-    let counter = getters.getCounterByPostId(id);
-    counter[type]++;
-    return this.$cockpit.saveCollection('posts', {
-      data: {
-        _id: id,
-        counter
-      },
-      dump: false
-    });
+  // payload = { type: 'reads'|'hearts'|'comments', id: 'postid', counter: {reads, hearts, comments} }
+  incPostCounter({ state }, { type, id }) {
+
+    return this.$cockpit.readCollection('posts', {
+      dump: false,
+      fields: { 'counter': 1 },
+      filter: { _id: id }
+    })
+      .then(([post]) => {
+
+        if (type === 'comments') 
+          post.counter.comments = state.commentsTotal;
+        else  
+          post.counter[type]++;
+
+        return this.$cockpit.saveCollection('posts', {
+          data: {
+            _id: id,
+            counter: post.counter
+          },
+          dump: false
+        }).then(() => post.counter);
+
+      });
+
   },
 
   loadCategories({ commit, state }) {
@@ -133,6 +147,7 @@ const actions = {
         return cockpit.readComments({
           dump: false,
           fields: { 'postid': 1, 'postdate': 1, 'author': 1, 'authorurl': 1, 'email': 1, 'content': 1, 'parentid': 1 },
+          filter: { reviewed: true, approved: true },
           limit: state.maxMostRecentComments,
           skip: 0
         });
@@ -178,6 +193,15 @@ const actions = {
       }).catch(err => { reject(err); });
     });
 
+  },
+
+  readPostComments({commit}, postid) {
+    return this.$cockpit.readComments({
+      dump: false,
+      filter: { postid },
+      sort: { parentid: 1, postdate: 1 }
+    })
+    .then(comments => commit('setComments', comments));
   },
 
   readPostsSlice({ state }) {
@@ -226,10 +250,10 @@ const actions = {
   saveComment({ commit, dispatch }, comment) {
     return this.$cockpit.saveCollection('comments', { data: comment })
       .then(entry => {
-        entry.data.selected = false;
-        commit('addNewComment', entry.data);
-        return dispatch('incPostCounter', { type: 'comments', id: comment.postid })
+        commit('setCommentAutoApproved', entry.data.approved);
+        return dispatch('readPostComments', comment.postid);
       })
+      .then(() => dispatch('incPostCounter', {type: 'comments', id: comment.postid}))
       .catch(err => console.log(`Sicherung Kommentar endete mit Fehler: ${err}.`));
   },
 

@@ -27,12 +27,6 @@ const getters = {
         return 0;
       });
   },
-  getCounterByPostId: state => (id) => { // {string} id = post id
-    for (let post of state.posts) {
-      if (post._id === id) return post.counter;
-    }
-    throw new Error(`PostId: ${id} not found in posts.`);
-  },
   getCredentialsKey: state => {
     return state.credentialsKey;
   },
@@ -132,9 +126,7 @@ const getters = {
     return state.comments.some(comment => comment.videoload);
   },
   wasLastCommentAutoApproved: state => {
-    if (state.comments.length === 0) return false;
-    let lastComment = state.comments[state.comments.length - 1];
-    return lastComment.approved;
+    return state.commentAutoApproved;
   }
 
 };

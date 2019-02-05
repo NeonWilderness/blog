@@ -187,7 +187,7 @@ export default {
           postdate: format(new Date(), 'YYYY-MM-DD HH:mm'),
           author: this.name,
           authorurl: this.url,
-          email: this.hash,
+          email: (this.email ? this.hash : ''),
           reviewed: false,
           approved: false,
           content: this.content,
@@ -195,13 +195,14 @@ export default {
         };
 
         this.$store.dispatch('saveComment', comment)
-          .then(() => {
+          .then((counter) => {
             let msg = (
               this.$store.getters.wasLastCommentAutoApproved ? 
               'Er wurde sofort freigeschaltet' : 
               'Sobald er freigeschaltet ist, wird er hier angezeigt'
             );
             this.content = '';
+            this.$emit('updatedCounter', counter);
             return this.$toast.success(`Vielen Dank für deinen Kommentar! ${msg}.`, {icon: 'fa-check'});
           });
 

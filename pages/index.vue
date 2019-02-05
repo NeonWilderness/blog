@@ -128,7 +128,7 @@ export default {
     }
   },
   middleware: ['preload'],  
-  asyncData: function({ app, query, store }) {
+  asyncData: function({ query, store }) {
     if (query.topic) {
       store.commit('setCategory', query.topic);
       return store.dispatch('filterForCategory');

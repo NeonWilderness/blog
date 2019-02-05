@@ -49,7 +49,6 @@ class Cockpit {
 
   readComments(options) {
     return this.readCollection('comments', _merge({
-      filter: { reviewed: true, approved: true },
       sort: { postdate: -1 } // descending by postdate (standard for latest comments view)
     }, options || {}));
   };

@@ -67,6 +67,7 @@
             </v-layout>
             <CommentOrReply
               @closeComment="comments[index].selected = false"
+              @updatedCounter="propagateCounter"
               :id="'commentform-' + index"
               :parent="comment"
               v-if="enabled"
@@ -141,6 +142,9 @@ export default {
         }, 200);
       }
       e.currentTarget.disabled = false;
+    },
+    propagateCounter: function(counter) {
+      this.$emit('updatedCounter', counter);
     },
     runVideoload: function() {
       video2day.run({

@@ -21,6 +21,7 @@
     <div class="pb-4">
       <v-chip 
         @click="$store.commit('setStoryLayout', storyLayoutOptions[index].val)"
+        class="layoutOption"
         :color="chipColor(index)" 
         dark 
         :selected="isChipSelected(index)"
@@ -28,7 +29,7 @@
         v-for="(layout, index) in storyLayoutOptions"
         :key="index"
       >
-      <v-avatar>
+      <v-avatar class="mr-0">
           <v-icon>{{layout.icon}}</v-icon>
         </v-avatar>    
         {{layout.text}}

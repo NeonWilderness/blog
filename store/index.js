@@ -21,6 +21,8 @@ const Store = () => {
         name: '',
         url: ''
       },
+      commentAutoApproved: false,
+      commentsTotal: 0,
       comments: [],
       credentialsKey: 'credentials@NeonWilderness',
       firstStoryDate: '2006-10-24 03:16',

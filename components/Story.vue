@@ -44,10 +44,10 @@
           class="grey--text pl-2 pr-3" 
           :class="`pr-${isBiggerDevice ? 4 : 3}`" 
           title="gelesen"
-        >{{post.counter.reads}}
+        >{{counter.reads}}
         </v-subheader>
         <v-icon>fa-heart-o</v-icon>
-        <v-subheader class="grey--text pl-2 pr-0" title="gut gefunden">{{post.counter.hearts}}</v-subheader>
+        <v-subheader class="grey--text pl-2 pr-0" title="gut gefunden">{{counter.hearts}}</v-subheader>
         <v-spacer v-if="isSingleStoryView"></v-spacer>
         <v-subheader 
           class="px-0 categoryslug" 
@@ -170,6 +170,7 @@
       :visible="isAddCommentVisible"
       v-if="isSingleStoryView"
       @closeComment="isAddCommentVisible = false"
+      @updatedCounter="updateCounter"
     />
     <Comments 
       :enabled="!commentsDisabled"
@@ -178,6 +179,7 @@
       :visible="isCommentListVisible"
       v-if="isSingleStoryView"
       @closeComments="collapseComments"
+      @updatedCounter="updateCounter"
     />
   </v-flex>
 </template>
@@ -208,6 +210,7 @@ export default {
   },
   data: function() {
     return {
+      counter: this.post.counter,
       isAddCommentVisible: false,
       isCommentListVisible: process.browser
         ? location.hash === '#comments'
@@ -227,12 +230,8 @@ export default {
     commentsDisabled: function() {
       return (!this.post.commentsallowed || this.post.commentsclosed);
     },
-    numberOfCommentsInDB: function() {
-      let { comments } = this.$store.getters.getCounterByPostId(this.post._id);
-      return comments;
-    },
     commentString: function() {
-      let n = this.numberOfCommentsInDB;
+      let n = this.counter.comments;
       let s = (this.$vuetify.breakpoint.xs ? '' : ` Kommentar${n === 1 ? '' : 'e'}`);
       return `${n}${s}`;
     },
@@ -255,7 +254,7 @@ export default {
       return this.$store.getters.getIndexOfBasename(this.post.basename);
     },
     unapprovedComments: function() {
-      return (this.numberOfCommentsInDB - this.comments.length);
+      return (this.$store.state.commentsTotal - this.comments.length);
     }
   },
   methods: {
@@ -324,6 +323,9 @@ export default {
         this.goToPost('#comments');
       }
     },
+    updateCounter: function(counter) {
+      this.counter = Object.assign(this.counter, counter);
+    },
     updateStoryList: function(type) {
       // {string} type = reads|hearts
       let storageKey = this.$store.getters.getStoryStateKey(type);
@@ -332,12 +334,14 @@ export default {
       if (storiesType.indexOf(this.post._id) >= 0)
         return Promise.resolve(false);
       else {
-        this.post.counter[type]++;
         storiesType.push(this.post._id);
         localStorage.setItem(storageKey, JSON.stringify(storiesType));
-        return this.$store.dispatch('incPostCounter', {
+        this.$store.dispatch('incPostCounter', {
           type,
           id: this.post._id
+        }).then(counter => {
+          this.updateCounter(counter);
+          return Promise.resolve(true);
         });
       }
     }

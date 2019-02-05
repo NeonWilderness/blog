@@ -16,12 +16,19 @@ const mutations = {
   setCategories(state, payload) { // array of categories {array} of { category, count, slug, _id }
     state.categories = payload;
   },
-  setComments(state, payload) { // array of comments
-    state.comments = payload.map(comment => { 
-      comment.selected = false;
-      comment.videoload = (comment.content.indexOf('html5video') >= 0);
-      return comment;
-    });
+  setCommentAutoApproved(state, payload) { // boolean
+    state.commentAutoApproved = payload;
+  },
+  setComments(state, payload) { // array of comments, approved or unapproved
+    state.commentsTotal = payload.length;
+    state.comments = payload.reduce((approvedComments, comment) => { 
+      if (comment.approved) {
+        comment.selected = false;
+        comment.videoload = (comment.content.indexOf('html5video') >= 0);
+        approvedComments.push(comment);
+      }
+      return approvedComments;
+    }, []);
   },
   setCounterData(state, {type, period, posts}) { // object { type, period, posts }
     state.most[type][period] = posts;

@@ -76,28 +76,23 @@ export default {
     }
   },
   mounted: function() {
-    /*
-    this.$axios.get('/json/allBackgrounds.json').then(res => {
-      this.$store.commit('setBackgroundImages', res.data);
-    */
-      let preferences = localStorage.getItem(this.$store.getters.getPreferencesKey);
-      this.$store.dispatch(
-        'setPreferences',
-        preferences
-          ? this.validatePreferences(JSON.parse(preferences))
-          : prefDefaults
-      )
-      .then( () => {
-        if (this.$store.getters.rememberGravatar) {
-          let credentials = localStorage.getItem(this.$store.getters.getCredentialsKey);
-          if (credentials) 
-            this.$store.commit(
-              'setCredentials', 
-              this.validateCredentials(JSON.parse(credentials))
-            );
-        }
-      });
-    //});
+    let preferences = localStorage.getItem(this.$store.getters.getPreferencesKey);
+    this.$store.dispatch(
+      'setPreferences',
+      preferences
+        ? this.validatePreferences(JSON.parse(preferences))
+        : prefDefaults
+    )
+    .then( () => {
+      if (this.$store.getters.rememberGravatar) {
+        let credentials = localStorage.getItem(this.$store.getters.getCredentialsKey);
+        if (credentials) 
+          this.$store.commit(
+            'setCredentials', 
+            this.validateCredentials(JSON.parse(credentials))
+          );
+      }
+    });
 
   }
 };
@@ -185,7 +180,9 @@ label {
     margin-bottom: 0;
 }
 .adjust-fa .fa {
-  transform: translateY(-5%);
+  //transform: translateY(-5%);
+  font-size: 20px!important;
+  line-height: 24px;
 }
 .application--wrap {
   background-color: #212121;
@@ -287,6 +284,9 @@ label {
 .radius {
   border-radius: 2px;
 }
+.round {
+  border-radius: 8px;
+}
 .th {
     border: solid 4px #fff;
     box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
@@ -321,13 +321,17 @@ label {
     height: 1.3rem;
     margin: 0 .2rem;
 }
-.v-chip .v-icon, .v-btn .v-icon {
-  display: inline-flex;
-  font-size: 14px;
-  text-align: center;
-  width: 2em;
+.v-chip, .v-btn {
+  .v-icon {
+    display: inline-flex;
+    font-size: 14px;
+    text-align: center;
+    width: 1.5em;
+  }
 }
-.v-toolbar .v-icon {
-  font-size: 14px;
+.v-expansion-panel__header, .v-toolbar {
+  .v-icon {
+    font-size: 14px;
+  }
 }
 </style>
