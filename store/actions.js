@@ -42,22 +42,11 @@ const actions = {
 
   establishCounterData({ commit, state }) {
 
-    /**
-     * Returns post counter data depending on call mode
-     * server side: return pre-compiled JSON
-     * client side: return current database data
-     */
-    const getCounterData = (cockpit) => {
-      if (process.server)
-        return Promise.resolve(require('../static/json/allPosts.json'));
-      else
-        return cockpit.readPosts({
-          dump: false,
-          fields: { 'basename': 1, 'category': 1, 'counter': 1, 'date': 1, 'title': 1 }
-        });
-    };
-    
-    return getCounterData(this.$cockpit).then(posts => {
+    return this.$cockpit.readPosts({
+      dump: false,
+      fields: { 'basename': 1, 'category': 1, 'counter': 1, 'date': 1, 'title': 1 }
+    })
+    .then(posts => {
 
       commit('setPosts', posts);
       commit('setMaxPage');
@@ -95,7 +84,7 @@ const actions = {
 
     return this.$cockpit.readCollection('posts', {
       dump: false,
-      fields: { 'counter': 1 },
+      fields: { counter: 1 },
       filter: { _id: id }
     })
       .then(([post]) => {
@@ -135,25 +124,14 @@ const actions = {
 
   loadMostRecentComments({ commit, state, getters }) {
 
-    /**
-     * Returns most recent blog comments depending on call mode
-     * server side: return pre-compiled JSON
-     * client side: return current database data
-     */
-    const getRecentComments = (cockpit) => {
-      if (process.server)
-        return Promise.resolve(require('../static/json/recentComments.json'));
-      else
-        return cockpit.readComments({
-          dump: false,
-          fields: { 'postid': 1, 'postdate': 1, 'author': 1, 'authorurl': 1, 'email': 1, 'content': 1, 'parentid': 1 },
-          filter: { reviewed: true, approved: true },
-          limit: state.maxMostRecentComments,
-          skip: 0
-        });
-    };
-
-    return getRecentComments(this.$cockpit).then(comments => {
+    return this.$cockpit.readComments({
+      dump: false,
+      fields: { postid: 1, postdate: 1, author: 1, authorurl: 1, email: 1, content: 1, parentid: 1 },
+      filter: { reviewed: true, approved: true },
+      limit: state.maxMostRecentComments,
+      skip: 0
+    })
+    .then(comments => {
 
       commit('setMostRecentComments', comments.map(comment => {
         comment.content = ellipsize(innertext(comment.content), state.maxCommentAbstractLength);
@@ -213,7 +191,7 @@ const actions = {
     };
 
     if (state.category.length) 
-      options.filter = { 'category': state.categories[state.category].category };
+      options.filter = { category: state.categories[state.category].category };
 
     return new Promise((resolve, reject) => {
       this.$cockpit.readPosts(options).then(posts => {
@@ -276,8 +254,25 @@ const actions = {
   setPreferences({ commit, dispatch }, payload) { // reload saved preferences {object} (see Preferences component)
     commit('setStoryLayout', payload.storyLayout);
     commit('setPostsPerPage', payload.postsPerPage);
+    commit('setRememberGravatar', payload.rememberGravatar);
     commit('setMaxPage');
     return dispatch('setCurrentBackgroundImage', payload.bgImage);
+  },
+
+  updatePostsCounter({}, posts) { // array of posts on current page
+    let postids = posts.map(post => post._id);
+    return this.$cockpit.readPosts({
+      fields: { counter: 1 },
+      filter: { _id: { '$in': postids } }
+    })
+    .then(entries => {
+      entries.forEach((entry, index) => {
+        let post = posts[index];
+        post.counter.reads = entry.counter.reads;
+        post.counter.hearts = entry.counter.hearts;
+        post.counter.comments = entry.counter.comments;
+      });
+    });
   }
 
 };

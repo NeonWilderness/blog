@@ -1,4 +1,4 @@
-require('dotenv-safe').load();
+if (process.server) require('dotenv-safe').load();
 const cheerio = require('cheerio');
 const cockpit = require('./cockpit/cockpit');
 const ellipsize = require('ellipsize');

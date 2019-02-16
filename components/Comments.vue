@@ -7,7 +7,7 @@
         dark 
         height="40"
       >
-        Kommentare &mdash; 
+        <span class="hidden-sm-and-down">Kommentare &mdash; </span>
         <span class="ml-1">{{title}}</span>
         <v-spacer/>
         <v-btn icon @click.prevent="$emit('closeComments')">
@@ -130,7 +130,7 @@ export default {
     openReplyForm: function(index, e) {
       e.currentTarget.disabled = true;
       if (e.ctrlKey && e.shiftKey)
-        window.open(`${process.env.BASEURL}/cockpit/collections/entry/comments/${this.comments[index]._id}`, '_blank');
+        window.open(`${process.env.APIURL}/collections/entry/comments/${this.comments[index]._id}`, '_blank');
       else {  
         this.comments.forEach((comment, idx) => {
           comment.selected = (idx == index);

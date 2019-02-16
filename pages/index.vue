@@ -64,7 +64,7 @@
         </v-flex>
       </v-layout>
     </section>
-    <Preferences />
+    <Preferences @adaptPostsPerPage="pageChange($store.state.page)" />
   </div>
 </template>
 
@@ -93,7 +93,7 @@ export default {
       return this.$store.state.category;
     },
     largeSpaceClass: function() {
-      return (this.$store.getters.getStoryLayout === 'triple' ? 'lg9' : 'lg7 offset-lg1');
+      return (this.$store.state.storyLayout === 'triple' ? 'lg9' : 'lg7 offset-lg1');
     }
   },
   watch: {
@@ -134,6 +134,13 @@ export default {
       return store.dispatch('filterForCategory');
     } else {
       return store.dispatch('readPostsSlice');
+    }
+  },
+  mounted: function() {
+    // update outdated SSR counter data and recent comments for static version only
+    if (process.static && typeof this.$root.$options.context.from === 'undefined') {
+      this.$store.dispatch('updatePostsCounter', this.posts);
+      this.$store.dispatch('loadMostRecentComments');
     }
   }
 };

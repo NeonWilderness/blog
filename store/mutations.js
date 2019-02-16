@@ -1,8 +1,5 @@
 const mutations = {
 
-  addNewComment(state, payload) { // comment {object}
-    if (payload.approved) state.comments.push(payload);
-  },
   setBgIndex(state, payload) { // index of background image {number}
     state.bgIndex = payload;
   },
@@ -76,6 +73,9 @@ const mutations = {
   },
   setPostsPerPage(state, payload) { // number of posts per blog page {number}
     state.postsPerPage = payload;
+  },
+  setRememberGravatar(state, payload) { // {boolean}
+    state.rememberGravatar = payload;
   },
   setStoryLayout(state, payload) { // layout of posts on the blog page {string}
     state.storyLayout = payload;

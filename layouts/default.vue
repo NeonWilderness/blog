@@ -76,7 +76,7 @@ export default {
     }
   },
   mounted: function() {
-    let preferences = localStorage.getItem(this.$store.getters.getPreferencesKey);
+    let preferences = localStorage.getItem(this.$store.state.preferencesKey);
     this.$store.dispatch(
       'setPreferences',
       preferences
@@ -84,8 +84,8 @@ export default {
         : prefDefaults
     )
     .then( () => {
-      if (this.$store.getters.rememberGravatar) {
-        let credentials = localStorage.getItem(this.$store.getters.getCredentialsKey);
+      if (this.$store.state.rememberGravatar) {
+        let credentials = localStorage.getItem(this.$store.state.credentialsKey);
         if (credentials) 
           this.$store.commit(
             'setCredentials', 

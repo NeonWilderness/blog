@@ -131,13 +131,28 @@ export default {
         v => !!v || 'Der Kommentartext darf nicht leer sein!',
         v => ((v || '').indexOf('<script>') < 0) || 'script-Befehle sind nicht erlaubt!'
       ],
-      email: this.$store.state.credentials.email,
+      email: '',
       hash: '',
-      name: this.$store.state.credentials.name,
+      name: '',
       showHelp: false,
-      url: this.$store.state.credentials.url,
+      url: '',
       valid: true
     };
+  },
+  watch: {
+    postid: {
+      immediate: true,
+      handler() {
+        this.fillCredentials();
+      }
+    },
+    parent: {
+      immediate: true,
+      deep: true,
+      handler() {
+        this.fillCredentials();
+      }
+    }
   },
   computed: {
     getLabel: function() {
@@ -164,12 +179,18 @@ export default {
         .catch(err => console.log(`No gravatar data for: ${this.email}.`));
       }
     },
+    fillCredentials: function() {
+      if (this.$store.state.rememberGravatar) {
+        this.email = this.$store.state.credentials.email;
+        this.name = this.$store.state.credentials.name;
+        this.url = this.$store.state.credentials.url;
+      }
+    },
     saveCredentials: function() {
-      if (process.browser && 
-        this.$store.getters.getRememberGravatar && 
+      if (this.$store.state.rememberGravatar && 
         this.$store.getters.isCredentialChange(this.email, this.name, this.url)
       ) {
-        localStorage.setItem(this.$store.getters.getCredentialsKey, JSON.stringify({
+        localStorage.setItem(this.$store.state.credentialsKey, JSON.stringify({
           email: this.email,
           name: this.name,
           url: this.url
@@ -195,15 +216,16 @@ export default {
         };
 
         this.$store.dispatch('saveComment', comment)
-          .then((counter) => {
+          .then(counter => {
             let msg = (
-              this.$store.getters.wasLastCommentAutoApproved ? 
+              this.$store.state.commentAutoApproved ? 
               'Er wurde sofort freigeschaltet' : 
               'Sobald er freigeschaltet ist, wird er hier angezeigt'
             );
             this.content = '';
             this.$emit('updatedCounter', counter);
-            return this.$toast.success(`Vielen Dank für deinen Kommentar! ${msg}.`, {icon: 'fa-check'});
+            this.$toast.success(`Vielen Dank für deinen Kommentar! ${msg}.`, {icon: 'fa-check'});
+            this.$store.dispatch('loadMostRecentComments');
           });
 
         e.currentTarget.disabled = false;

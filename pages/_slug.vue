@@ -106,17 +106,18 @@ export default {
       this.$store.commit('setScrollPosition', offsetTop);
     }
   },
-  beforeMount: function() {
+  mounted: function() {
+
     // manages page (hard) reload: reloads comments and actual counter state
-    if (process.isStatic && typeof this.$root.$options.context.from === 'undefined') {
+    if (process.static && typeof this.$root.$options.context.from === 'undefined') {
       this.$store.dispatch('readPostComments', this.post._id)
-        .then( () => this.$store.dispatch('incPostCounter', { type: 'comments', id: this.post._id}))
-        .then( counter => {
-          this.post.counter = counter;
+        .then(() => this.$store.dispatch('incPostCounter', { type: 'comments', id: this.post._id}))
+        .then(counter => {
+          this.post.counter.reads = counter.reads;
+          this.post.counter.hearts = counter.hearts;
+          this.post.counter.comments = counter.comments;
         });
     }
-  },
-  mounted: function() {
 
     this.$nextTick(() => {
 

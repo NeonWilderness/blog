@@ -11,9 +11,6 @@ const getters = {
     }
     throw new Error(`Comment PostId: ${id} not found in posts.`);
   },
-  getBgIndex: state => {
-    return state.bgIndex;
-  },
   getBreadcrumbs: state => (homePage) => {
     if (homePage && !state.category.length) return;
     return state.breadcrumbs.slice(0, 1 + Number(!!state.category));
@@ -26,20 +23,6 @@ const getters = {
         if (b.category < a.category) return +1;
         return 0;
       });
-  },
-  getCredentialsKey: state => {
-    return state.credentialsKey;
-  },
-  getCurrentBackgroundImage: state => {
-    return state.bgImage;
-  },
-  getCurrentPage: state => {
-    return state.page;
-  },
-  getCurrentPosts: state => {
-    let startAt = (state.page - 1) * state.postsPerPage;
-    let endAt = startAt + state.postsPerPage;
-    return state.posts.slice(startAt, endAt);
   },
   getIndexOfBasename: state => (basename) => { // {string} basename = post basename
     for (let i = 0, len = state.posts.length; i < len; i++) {
@@ -59,15 +42,6 @@ const getters = {
   getPostYounger: (state) => (postIndex) => { // {number} postIndex = index of post.basename
     return (postIndex < 1 ? '' : state.posts[postIndex - 1].basename);
   },
-  getPostsPerPage: state => {
-    return state.postsPerPage;
-  },
-  getPreferencesKey: state => {
-    return state.preferencesKey;
-  },
-  getRememberGravatar: state => {
-    return state.rememberGravatar;
-  },
   getSortedComments: state => {
     return state.comments
     .filter(commentOrReply => !commentOrReply.parentid.length)
@@ -81,12 +55,6 @@ const getters = {
   },
   getStoryStateKey: state => (type) => { // {string} type = reads|hearts
     return `story${type}@NeonWilderness`;
-  },
-  getStoriesReadKey: state => {
-    return state.storiesreadKey;
-  },
-  getStoryLayout: state => {
-    return state.storyLayout;
   },
   getTdCommentatorAlias: state => (author) => { // {string} author
     return (
@@ -110,9 +78,6 @@ const getters = {
   isGoToTopButtonVisible: state => {
     return (state.scrollPosition > 500);
   },
-  isSingleStoryLayout: state => {
-    return (state.storyLayout === 'single');
-  },
   isValidBasename: state => (basename) => { // {string} basename = a post's basename
     for (let post of state.posts) {
       if (post.basename === basename) return true;
@@ -124,9 +89,6 @@ const getters = {
   },
   isVideoloadUsedInComments: state => {
     return state.comments.some(comment => comment.videoload);
-  },
-  wasLastCommentAutoApproved: state => {
-    return state.commentAutoApproved;
   }
 
 };

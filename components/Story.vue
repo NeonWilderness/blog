@@ -217,6 +217,15 @@ export default {
         : false
     };
   },
+  watch: {
+    post: {
+      immediate: true,
+      deep: true,
+      handler(newPost) {
+        this.counter = newPost.counter;
+      }
+    }
+  },
   computed: {
     basenameOlderPost: function() {
       return this.$store.getters.getPostOlder(this.postIndex);
@@ -261,7 +270,7 @@ export default {
     addComment: function(e) {
       e.currentTarget.disabled = true;
       if (e.ctrlKey && e.shiftKey)
-        window.open(`${process.env.BASEURL}/cockpit/collections/entry/posts/${this.post._id}`, '_blank');
+        window.open(`${process.env.APIURL}/collections/entry/posts/${this.post._id}`, '_blank');
       else {  
         this.isAddCommentVisible = true;
         setTimeout(() => {
@@ -324,26 +333,29 @@ export default {
       }
     },
     updateCounter: function(counter) {
-      this.counter = Object.assign(this.counter, counter);
+      this.counter.reads = counter.reads;
+      this.counter.hearts = counter.hearts;
+      this.counter.comments = counter.comments;
     },
-    updateStoryList: function(type) {
-      // {string} type = reads|hearts
-      let storageKey = this.$store.getters.getStoryStateKey(type);
-      let storiesType = localStorage.getItem(storageKey);
-      storiesType = storiesType ? JSON.parse(storiesType) : [];
-      if (storiesType.indexOf(this.post._id) >= 0)
-        return Promise.resolve(false);
-      else {
-        storiesType.push(this.post._id);
-        localStorage.setItem(storageKey, JSON.stringify(storiesType));
-        this.$store.dispatch('incPostCounter', {
-          type,
-          id: this.post._id
-        }).then(counter => {
-          this.updateCounter(counter);
-          return Promise.resolve(true);
-        });
-      }
+    updateStoryList: function(type) { // {string} type = reads|hearts
+      return new Promise(resolve => {
+        let storageKey = this.$store.getters.getStoryStateKey(type);
+        let storiesType = localStorage.getItem(storageKey);
+        storiesType = storiesType ? JSON.parse(storiesType) : [];
+        if (storiesType.indexOf(this.post._id) >= 0)
+          resolve(false);
+        else {
+          storiesType.push(this.post._id);
+          localStorage.setItem(storageKey, JSON.stringify(storiesType));
+          this.$store.dispatch('incPostCounter', {
+            type,
+            id: this.post._id
+          }).then(counter => {
+            this.updateCounter(counter);
+            resolve(true);
+          });
+        }
+      });
     }
   },
   mounted: function() {
@@ -352,6 +364,8 @@ export default {
     if (this.isSingleStoryView) {
       // update the story's readcounter
       this.updateStoryList('reads');
+      // (re)load most recent comments for sidebar
+      this.$store.dispatch('loadMostRecentComments');
       // and check for potential videoload instances in the post
       if (this.post.videoload)
         loadScripts('/js/videoload2.js').then(() => {

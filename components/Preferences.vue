@@ -37,6 +37,7 @@
     </div>
     <v-flex xs12 class="mx-3">
       <v-slider v-model="$store.state.postsPerPage"
+        @input="adaptPage"
         always-dirty 
         color="cyan darken-1"
         label="Beiträge je Seite" 
@@ -98,14 +99,19 @@ export default {
     };
   },
   methods: {
-  	chipColor: function(index){
+    adaptPage: function(perPage) {
+      this.$store.commit('setPostsPerPage', perPage);
+      this.$store.commit('setMaxPage');
+      this.$emit('adaptPostsPerPage');
+    },
+  	chipColor: function(index) {
     	return (this.isChipSelected(index) ? 'teal lighten-1' : 'cyan') 
     },
-    isChipSelected: function(index){
+    isChipSelected: function(index) {
     	return this.storyLayoutOptions[index].val === this.$store.state.storyLayout;
     },
     isImageSelected(image, index) {
-      let bgIndex = this.$store.getters.getBgIndex;
+      let bgIndex = this.$store.state.bgIndex;
       if (bgIndex < 0) { // no image has been clicked yet (image is a default or based on preferences)
         return index === 0;
       } else { // an image was selected
@@ -114,14 +120,14 @@ export default {
     },
     savePreferences(e) {
       e.currentTarget.disabled = true;
-      localStorage.setItem(this.$store.getters.getPreferencesKey, JSON.stringify({
-        bgImage: (this.$store.getters.getBgIndex === 0 ? 0 : this.$store.getters.getCurrentBackgroundImage),
-        postsPerPage: this.$store.getters.getPostsPerPage,
-        storyLayout: this.$store.getters.getStoryLayout,
-        rememberGravatar: this.$store.getters.getRememberGravatar
+      localStorage.setItem(this.$store.state.preferencesKey, JSON.stringify({
+        bgImage: (this.$store.state.bgIndex === 0 ? 0 : this.$store.state.bgImage),
+        postsPerPage: this.$store.state.postsPerPage,
+        storyLayout: this.$store.state.storyLayout,
+        rememberGravatar: this.$store.state.rememberGravatar
       }));
-      if (!this.$store.getters.getRememberGravatar) {
-        localStorage.removeItem(this.$store.getters.getCredentialsKey);
+      if (!this.$store.state.rememberGravatar) {
+        localStorage.removeItem(this.$store.state.credentialsKey);
         this.$store.commit('setCredentials', { email: '', name: '', url: '' });
       }
       this.toggleDrawer();

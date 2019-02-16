@@ -1,7 +1,16 @@
 if (process.server) require('dotenv-safe').load();
 
 import feed from './feed.config';
+import fs from 'fs';
+import path from 'path';
 import { plainRoutes, routesWithPayload } from './routes.config';
+
+const backgrounds = fs.readdirSync(path.resolve(process.cwd(), 'static/img/bg/thumbs/')).sort();
+fs.writeFileSync(
+  path.resolve(process.cwd(), 'static/json/allBackgrounds.json'),
+  JSON.stringify(backgrounds)
+);
+console.log('allBackgrounds.json created.\n');
 
 /**
  * Define script config differences between dev/prod mode
@@ -95,7 +104,7 @@ module.exports = {
   },
   generate: {
     fallback: true,
-    interval: 500,
+    interval: 1000,
     routes: () => routesWithPayload()
       //.then(all => all.slice(0,50))
   },

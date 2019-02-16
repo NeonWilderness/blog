@@ -10,7 +10,7 @@ export const getCutoffDate = timespan => {
   if (code === 'F') return '1970-01-01 01:01';
 
   let span = Number(timespan.substr(1)), days;
-  switch (timespan[0].toUpperCase()) {
+  switch (code) {
     case 'D': days = span; break;
     case 'M': days = span * 30; break;
     case 'Y': days = span * 365; break;

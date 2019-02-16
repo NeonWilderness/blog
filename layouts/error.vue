@@ -3,7 +3,7 @@
     <v-flex xs12 sm6 offset-sm3>
       <v-card color="white">
         <v-img
-          src="//neonwilderness.blogroll.me/cockpit/storage/uploads/images/404.jpg"
+          :src="`${process.env.APIURL}/storage/uploads/images/404.jpg`"
           aspect-ratio="1.66667"
         ></v-img>
 
