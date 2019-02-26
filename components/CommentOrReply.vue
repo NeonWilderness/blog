@@ -184,6 +184,7 @@ export default {
         this.email = this.$store.state.credentials.email;
         this.name = this.$store.state.credentials.name;
         this.url = this.$store.state.credentials.url;
+        this.getAvatarJson();
       }
     },
     saveCredentials: function() {
@@ -202,6 +203,10 @@ export default {
 
         e.currentTarget.disabled = true;
         this.saveCredentials();
+
+        if (this.email && !this.hash) {
+          this.hash = md5(this.email);
+        }
 
         let comment = {
           postid: (this.parent ? this.parent.postid : this.postid),

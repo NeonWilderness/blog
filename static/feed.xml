@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:slash="http://purl.org/rss/1.0/modules/slash/">
     <channel>
         <title>In A Neon Wilderness</title>
-        <link>http://neonwilderness.blogroll.me</link>
+        <link>https://neonwilderness.blogroll.me</link>
         <description>Blogging about urban hymns and bitter-sweet symphonies</description>
-        <lastBuildDate>Wed, 13 Feb 2019 22:22:48 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 17 Feb 2019 14:32:30 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>@nuxtjs/feed</generator>
         <image>
             <title>In A Neon Wilderness</title>
-            <url>http://neonwilderness.blogroll.me/img/nw.png</url>
-            <link>http://neonwilderness.blogroll.me</link>
+            <url>https://neonwilderness.blogroll.me/img/nw.png</url>
+            <link>https://neonwilderness.blogroll.me</link>
         </image>
         <copyright>(C) 2006-2019 NeonWilderness</copyright>
-        <atom:link href="http://neonwilderness.blogroll.me/feed.xml" rel="self" type="application/rss+xml"/>
+        <atom:link href="https://neonwilderness.blogroll.me/feed.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[Alien-Tool derzeit inaktiv]]></title>
-            <link>http://neonwilderness.blogroll.me/alien-tool-derzeit-inaktiv</link>
-            <guid>http://neonwilderness.blogroll.me/alien-tool-derzeit-inaktiv</guid>
+            <link>https://neonwilderness.blogroll.me/alien-tool-derzeit-inaktiv</link>
+            <guid>https://neonwilderness.blogroll.me/alien-tool-derzeit-inaktiv</guid>
             <pubDate>Mon, 07 Jan 2019 17:46:00 GMT</pubDate>
             <description><![CDATA[
   
@@ -35,13 +35,13 @@ Das von mir erstellte Alien-Tool, welches es ermöglicht, externe Blogs (z.B. Wo
 <li style="margin-top:1rem">Falls Sie die Blogroll selbst aktuell halten wollen (z.B. um neue Beiträge anzumoderieren) können Sie auf Ihr altes Layout zurückschalten und wie früher den Beitrag (oder einen Extrakt davon) von Hand eingeben und speichern. Sie können danach wahlweise wieder das Alien-Layout aktivieren oder auch beim Alt-Layout bleiben.</li>
 </ol>]]></content:encoded>
             <category><![CDATA[Twoday]]></category>
-            <comments>http://neonwilderness.blogroll.me/alien-tool-derzeit-inaktiv#comments</comments>
+            <comments>https://neonwilderness.blogroll.me/alien-tool-derzeit-inaktiv#comments</comments>
             <slash:comments>4</slash:comments>
         </item>
         <item>
             <title><![CDATA[Das dreckige Dutzend - 12 Jahre NeonWilderness]]></title>
-            <link>http://neonwilderness.blogroll.me/dirtydozen</link>
-            <guid>http://neonwilderness.blogroll.me/dirtydozen</guid>
+            <link>https://neonwilderness.blogroll.me/dirtydozen</link>
+            <guid>https://neonwilderness.blogroll.me/dirtydozen</guid>
             <pubDate>Wed, 24 Oct 2018 17:14:00 GMT</pubDate>
             <description><![CDATA[
   
@@ -55,13 +55,13 @@ Vor gar nicht so langer Zeit habe ich an dieser Stelle das Zehnjährige gefeiert
 <p>Nach vielen Jahren des technischen Niedergangs, einer jahrelangen schmerzvollen (und weiter anhaltenden) Google-Diaspora, der fortwährenden Kommunikations- und Ideenlosigkeit sowie einer Vielzahl von Ereignissen zwischen vorsichtiger Hoffnung und brachialer Enttäuschung habe ich mit dieser Plattform schweren Herzens abgeschlossen. Der Kredit ist mehr als aufgebraucht und unser Beziehungskonto lange im Minus. Das ist einerseits schade &mdash; andererseits aber eröffnet dieser Schnitt Raum für Neues, für moderne, fast unbegrenzte Möglichkeiten auf einer eigenen Website, die auf keinerlei Fremdleistung mehr angewiesen ist und soviel mehr Möglichkeiten bietet.</p>
 <div>Vielen Dank <v-icon color="error">fa-heart</v-icon> an die knapp 6000 Kommentator:en:innen der letzten 12 Jahre. Ich hoffe, es werden noch einige Jubiläen zu feiern sein und will versuchen, weiter (und hoffentlich etwas öfter) Beiträge zu schreiben, die Euer Interesse finden und Euch im besten aller Fälle ein warmes Lächeln ins Gesicht zaubern. Stay tuned!</div>]]></content:encoded>
             <category><![CDATA[Wort des Tages]]></category>
-            <comments>http://neonwilderness.blogroll.me/dirtydozen#comments</comments>
-            <slash:comments>2</slash:comments>
+            <comments>https://neonwilderness.blogroll.me/dirtydozen#comments</comments>
+            <slash:comments>0</slash:comments>
         </item>
         <item>
             <title><![CDATA[Cheers]]></title>
-            <link>http://neonwilderness.blogroll.me/cheers-1022653683</link>
-            <guid>http://neonwilderness.blogroll.me/cheers-1022653683</guid>
+            <link>https://neonwilderness.blogroll.me/cheers-1022653683</link>
+            <guid>https://neonwilderness.blogroll.me/cheers-1022653683</guid>
             <pubDate>Sat, 30 Jun 2018 18:57:00 GMT</pubDate>
             <description><![CDATA[
   
@@ -72,13 +72,13 @@ Vor gar nicht so langer Zeit habe ich an dieser Stelle das Zehnjährige gefeiert
   <p style="position:absolute; top:0; left:0; width:100%; height:40px; line-height:40px;background-color: #000; color:#ffbb33; text-align:center; font-weight:bold;">Cheers, Twoday!</p>
 </div>]]></content:encoded>
             <category><![CDATA[Twoday]]></category>
-            <comments>http://neonwilderness.blogroll.me/cheers-1022653683#comments</comments>
+            <comments>https://neonwilderness.blogroll.me/cheers-1022653683#comments</comments>
             <slash:comments>9</slash:comments>
         </item>
         <item>
             <title><![CDATA[The very last and very final reminder]]></title>
-            <link>http://neonwilderness.blogroll.me/the-very-last-and-very-final-reminder-1022653507</link>
-            <guid>http://neonwilderness.blogroll.me/the-very-last-and-very-final-reminder-1022653507</guid>
+            <link>https://neonwilderness.blogroll.me/the-very-last-and-very-final-reminder-1022653507</link>
+            <guid>https://neonwilderness.blogroll.me/the-very-last-and-very-final-reminder-1022653507</guid>
             <pubDate>Tue, 26 Jun 2018 13:59:00 GMT</pubDate>
             <description><![CDATA[
   
@@ -99,13 +99,13 @@ Vor gar nicht so langer Zeit habe ich an dieser Stelle das Zehnjährige gefeiert
   <p>Falls Sie Unterstützung z.B. nur für den Export benötigen oder gar die Gesamtaufgabe der Blogübertragung lieber als Dienstleistung delegieren möchten, sprechen Sie mich an oder senden ein Mail an <strong>neonwilderness@ymail.com</strong>. Nach dem 30.06. ist (wahrscheinlich) kein Export mehr möglich &mdash; Sie müssen jetzt handeln (or probably kiss your blog "Goodbye")!</p>
 </v-alert>]]></content:encoded>
             <category><![CDATA[Twoday]]></category>
-            <comments>http://neonwilderness.blogroll.me/the-very-last-and-very-final-reminder-1022653507#comments</comments>
+            <comments>https://neonwilderness.blogroll.me/the-very-last-and-very-final-reminder-1022653507#comments</comments>
             <slash:comments>9</slash:comments>
         </item>
         <item>
             <title><![CDATA[Alien inside Twoday]]></title>
-            <link>http://neonwilderness.blogroll.me/alien-inside-twoday-1022653371</link>
-            <guid>http://neonwilderness.blogroll.me/alien-inside-twoday-1022653371</guid>
+            <link>https://neonwilderness.blogroll.me/alien-inside-twoday-1022653371</link>
+            <guid>https://neonwilderness.blogroll.me/alien-inside-twoday-1022653371</guid>
             <pubDate>Thu, 21 Jun 2018 18:50:00 GMT</pubDate>
             <description><![CDATA[
   
@@ -297,13 +297,13 @@ Im Grunde ist das Tool, das ich hiermit vorstelle, eine professionalisierte Weit
   <a target="_blank" href="https://github.com/NeonWilderness/tdalien">Github</a>
 </p>]]></content:encoded>
             <category><![CDATA[Twoday]]></category>
-            <comments>http://neonwilderness.blogroll.me/alien-inside-twoday-1022653371#comments</comments>
+            <comments>https://neonwilderness.blogroll.me/alien-inside-twoday-1022653371#comments</comments>
             <slash:comments>14</slash:comments>
         </item>
         <item>
             <title><![CDATA[Bloglust vs. Twoday-Existenz]]></title>
-            <link>http://neonwilderness.blogroll.me/bloglust-vs-twoday-existenz-1022652927</link>
-            <guid>http://neonwilderness.blogroll.me/bloglust-vs-twoday-existenz-1022652927</guid>
+            <link>https://neonwilderness.blogroll.me/bloglust-vs-twoday-existenz-1022652927</link>
+            <guid>https://neonwilderness.blogroll.me/bloglust-vs-twoday-existenz-1022652927</guid>
             <pubDate>Sat, 09 Jun 2018 15:54:00 GMT</pubDate>
             <description><![CDATA[
   
@@ -317,13 +317,13 @@ Zwei…]]></description>
 <p>Zwei Blogplätze sind weniger wert als einer, weil keiner der Orte die volle Aufmerksamkeit bekommt, die ihm zusteht, weder vom Inhaber, noch von den Besuchern. Hält dieser Zustand über einen längeren Zeitraum an, erodiert der Sinn und Zweck des Bloggens &mdash; die Bloglust stirbt.</p>
 <p>Um dem zu entkommen, bleibt wohl nur die harte Entscheidung, das Alte selbst gehen zu lassen, es abzuschließen und sich ganz dem Neuen zu widmen. Und also das Vakuum der Klarheit durch eigene Unzweideutigkeit und Entschiedenheit auszufüllen.</p>]]></content:encoded>
             <category><![CDATA[Gemalte Lebenserfahrung]]></category>
-            <comments>http://neonwilderness.blogroll.me/bloglust-vs-twoday-existenz-1022652927#comments</comments>
+            <comments>https://neonwilderness.blogroll.me/bloglust-vs-twoday-existenz-1022652927#comments</comments>
             <slash:comments>11</slash:comments>
         </item>
         <item>
             <title><![CDATA[Statistik der puren Panik]]></title>
-            <link>http://neonwilderness.blogroll.me/statistik-der-puren-panik-1022652806</link>
-            <guid>http://neonwilderness.blogroll.me/statistik-der-puren-panik-1022652806</guid>
+            <link>https://neonwilderness.blogroll.me/statistik-der-puren-panik-1022652806</link>
+            <guid>https://neonwilderness.blogroll.me/statistik-der-puren-panik-1022652806</guid>
             <pubDate>Thu, 07 Jun 2018 15:05:00 GMT</pubDate>
             <description><![CDATA[
   
@@ -334,13 +334,13 @@ Ohne Worte. Zugriffszahlen vor und nach dem "Abschalttermin".]]></description>
 </p>
 <p class="text-xs-center">Ohne Worte. Zugriffszahlen vor und nach dem "Abschalttermin".</p>]]></content:encoded>
             <category><![CDATA[Twoday]]></category>
-            <comments>http://neonwilderness.blogroll.me/statistik-der-puren-panik-1022652806#comments</comments>
+            <comments>https://neonwilderness.blogroll.me/statistik-der-puren-panik-1022652806#comments</comments>
             <slash:comments>19</slash:comments>
         </item>
         <item>
             <title><![CDATA[Dilettantenstadl]]></title>
-            <link>http://neonwilderness.blogroll.me/tag-x-dilettantenstadl-1022652794</link>
-            <guid>http://neonwilderness.blogroll.me/tag-x-dilettantenstadl-1022652794</guid>
+            <link>https://neonwilderness.blogroll.me/tag-x-dilettantenstadl-1022652794</link>
+            <guid>https://neonwilderness.blogroll.me/tag-x-dilettantenstadl-1022652794</guid>
             <pubDate>Thu, 07 Jun 2018 12:08:00 GMT</pubDate>
             <description><![CDATA[
   
@@ -373,24 +373,24 @@ Ist denn die Frage erlaubt, welches Stück hier wohl aufgeführt wird? Womöglic
   unterirdische Schauspiel öffentlichen Dilettierens ist wirklich mit Abstand das absolut traurigste und peinlichste der letzten Dekade.</p>
 <p>Ich entbiete allen schuldhaft Beteiligten an diesem Desaster meinen Glückwunsch zum Preis für das Lebenswerk in der professionellen Darstellung des kläglichen Versagens.</p>]]></content:encoded>
             <category><![CDATA[Twoday]]></category>
-            <comments>http://neonwilderness.blogroll.me/tag-x-dilettantenstadl-1022652794#comments</comments>
+            <comments>https://neonwilderness.blogroll.me/tag-x-dilettantenstadl-1022652794#comments</comments>
             <slash:comments>8</slash:comments>
         </item>
         <item>
             <title><![CDATA[Tag Minus1 - Frischer Wind]]></title>
-            <link>http://neonwilderness.blogroll.me/tag-1-frischer-wind-1022652439</link>
-            <guid>http://neonwilderness.blogroll.me/tag-1-frischer-wind-1022652439</guid>
+            <link>https://neonwilderness.blogroll.me/tag-1-frischer-wind-1022652439</link>
+            <guid>https://neonwilderness.blogroll.me/tag-1-frischer-wind-1022652439</guid>
             <pubDate>Fri, 01 Jun 2018 16:59:00 GMT</pubDate>
             <description><![CDATA[Mal'n bißchen frischen Wind und Höhenluft hier reinbringen für die letzten Stunden/Tage. Wie soll man auch wissen, was exakt die VI-Leute unter 31.05.2018 verstehen/werden. Besser, man bleibt da nüchtern und reißt nicht gleich seinen halben Blog ab wie Frau Araxe. ;)]]></description>
             <content:encoded><![CDATA[<p class="dropcaps mb-0">Mal'n bißchen frischen Wind und Höhenluft hier reinbringen für die letzten Stunden/Tage. Wie soll man auch wissen, was exakt die VI-Leute unter 31.05.2018 verstehen/werden. Besser, man bleibt da nüchtern und reißt nicht gleich seinen halben Blog ab wie Frau Araxe. ;)</p>]]></content:encoded>
             <category><![CDATA[Twoday]]></category>
-            <comments>http://neonwilderness.blogroll.me/tag-1-frischer-wind-1022652439#comments</comments>
+            <comments>https://neonwilderness.blogroll.me/tag-1-frischer-wind-1022652439#comments</comments>
             <slash:comments>13</slash:comments>
         </item>
         <item>
             <title><![CDATA[Tag 0 - The fat lady has sung]]></title>
-            <link>http://neonwilderness.blogroll.me/tag-0-the-fat-lady-has-sung-1022652142</link>
-            <guid>http://neonwilderness.blogroll.me/tag-0-the-fat-lady-has-sung-1022652142</guid>
+            <link>https://neonwilderness.blogroll.me/tag-0-the-fat-lady-has-sung-1022652142</link>
+            <guid>https://neonwilderness.blogroll.me/tag-0-the-fat-lady-has-sung-1022652142</guid>
             <pubDate>Thu, 31 May 2018 11:47:00 GMT</pubDate>
             <description><![CDATA[and now...
 
@@ -417,13 +417,13 @@ and watch The End...
   <div style="font-size:.85em;color:#fdfdfd;margin-top:2em">Neon!</div>
 </v-alert>]]></content:encoded>
             <category><![CDATA[Twoday]]></category>
-            <comments>http://neonwilderness.blogroll.me/tag-0-the-fat-lady-has-sung-1022652142#comments</comments>
+            <comments>https://neonwilderness.blogroll.me/tag-0-the-fat-lady-has-sung-1022652142#comments</comments>
             <slash:comments>25</slash:comments>
         </item>
         <item>
             <title><![CDATA[Tag 1 - Like tears in the rain]]></title>
-            <link>http://neonwilderness.blogroll.me/tag-1-like-tears-in-the-rain-1022651954</link>
-            <guid>http://neonwilderness.blogroll.me/tag-1-like-tears-in-the-rain-1022651954</guid>
+            <link>https://neonwilderness.blogroll.me/tag-1-like-tears-in-the-rain-1022651954</link>
+            <guid>https://neonwilderness.blogroll.me/tag-1-like-tears-in-the-rain-1022651954</guid>
             <pubDate>Wed, 30 May 2018 12:13:00 GMT</pubDate>
             <description><![CDATA[
 
@@ -445,12 +445,12 @@ and watch The End...
 </div>
 <p class="text-xs-center mb-0">Bis dahin. Neon!</p>]]></content:encoded>
             <category><![CDATA[Twoday]]></category>
-            <comments>http://neonwilderness.blogroll.me/tag-1-like-tears-in-the-rain-1022651954#comments</comments>
+            <comments>https://neonwilderness.blogroll.me/tag-1-like-tears-in-the-rain-1022651954#comments</comments>
         </item>
         <item>
             <title><![CDATA[Tag 4 - Last and final reminder]]></title>
-            <link>http://neonwilderness.blogroll.me/tag-4-last-and-final-reminder-1022651804</link>
-            <guid>http://neonwilderness.blogroll.me/tag-4-last-and-final-reminder-1022651804</guid>
+            <link>https://neonwilderness.blogroll.me/tag-4-last-and-final-reminder-1022651804</link>
+            <guid>https://neonwilderness.blogroll.me/tag-4-last-and-final-reminder-1022651804</guid>
             <pubDate>Sun, 27 May 2018 16:07:00 GMT</pubDate>
             <description><![CDATA[
   
@@ -475,13 +475,13 @@ and watch The End...
     ist kein Export mehr möglich &mdash; Sie müssen jetzt handeln (or kiss your blog "Goodbye")!</p>
 </v-alert>]]></content:encoded>
             <category><![CDATA[Twoday]]></category>
-            <comments>http://neonwilderness.blogroll.me/tag-4-last-and-final-reminder-1022651804#comments</comments>
+            <comments>https://neonwilderness.blogroll.me/tag-4-last-and-final-reminder-1022651804#comments</comments>
             <slash:comments>6</slash:comments>
         </item>
         <item>
             <title><![CDATA[Tag 7 - Seven days of falling]]></title>
-            <link>http://neonwilderness.blogroll.me/tag-7-seven-days-of-falling-1022651647</link>
-            <guid>http://neonwilderness.blogroll.me/tag-7-seven-days-of-falling-1022651647</guid>
+            <link>https://neonwilderness.blogroll.me/tag-7-seven-days-of-falling-1022651647</link>
+            <guid>https://neonwilderness.blogroll.me/tag-7-seven-days-of-falling-1022651647</guid>
             <pubDate>Thu, 24 May 2018 16:45:00 GMT</pubDate>
             <description><![CDATA[
   
@@ -507,13 +507,13 @@ Verrückt, wie manche mit Technik und Plattformen umgehen. Mit knapp 12 Jahren B
 </p>
 <div class="html5video youtube" id="NXcmL0pxXCE" />]]></content:encoded>
             <category><![CDATA[Twoday]]></category>
-            <comments>http://neonwilderness.blogroll.me/tag-7-seven-days-of-falling-1022651647#comments</comments>
+            <comments>https://neonwilderness.blogroll.me/tag-7-seven-days-of-falling-1022651647#comments</comments>
             <slash:comments>2</slash:comments>
         </item>
         <item>
             <title><![CDATA[Tag 13 - Schließungsankündigung]]></title>
-            <link>http://neonwilderness.blogroll.me/tag-13-schliessungsankuendigung-1022651362</link>
-            <guid>http://neonwilderness.blogroll.me/tag-13-schliessungsankuendigung-1022651362</guid>
+            <link>https://neonwilderness.blogroll.me/tag-13-schliessungsankuendigung-1022651362</link>
+            <guid>https://neonwilderness.blogroll.me/tag-13-schliessungsankuendigung-1022651362</guid>
             <pubDate>Fri, 18 May 2018 18:16:00 GMT</pubDate>
             <description><![CDATA[
   
@@ -527,13 +527,13 @@ Wie bereits an anderer Stelle definiert, ist das DSGVO ein "awful clusterfuck of
 <p>Um das Risiko bzgl. Abmahntrollen weiter zu minimieren, werde ich <v-chip color="grey" text-color="white" small>NeonWilderness</v-chip> per 25.05.2018, 00:00:01 Uhr, für alle öffentlichen Besucher sperren. Für Twoday-Blogger:innen, die mit ihrem Twoday-Account eingeloggt sind und einen eigenen Blog haben, ist der Zugang wie gewohnt möglich. Ohne erfolgreiches Twoday-Login geht dann jedoch nichts mehr.</p>
 <p>Wer evtl. auch an dem selbstgeschriebenen Closed-Shop-Script interessiert ist: bitte Kommentar hinterlassen!</p>]]></content:encoded>
             <category><![CDATA[Twoday]]></category>
-            <comments>http://neonwilderness.blogroll.me/tag-13-schliessungsankuendigung-1022651362#comments</comments>
+            <comments>https://neonwilderness.blogroll.me/tag-13-schliessungsankuendigung-1022651362#comments</comments>
             <slash:comments>24</slash:comments>
         </item>
         <item>
             <title><![CDATA[Tag 15 - Blognamenkurzromane]]></title>
-            <link>http://neonwilderness.blogroll.me/tag-15-blognamenroman-1022651253</link>
-            <guid>http://neonwilderness.blogroll.me/tag-15-blognamenroman-1022651253</guid>
+            <link>https://neonwilderness.blogroll.me/tag-15-blognamenroman-1022651253</link>
+            <guid>https://neonwilderness.blogroll.me/tag-15-blognamenroman-1022651253</guid>
             <pubDate>Wed, 16 May 2018 21:19:00 GMT</pubDate>
             <description><![CDATA[
   
@@ -623,13 +623,13 @@ Heute musste ich wieder an Eugene denken und was sie wohl aus den letzten Twoday
     Blogs auf einer Seite stehen. Viel Spaß beim Kurzromanschreiben. ;)</p>
 </v-alert>]]></content:encoded>
             <category><![CDATA[Twoday]]></category>
-            <comments>http://neonwilderness.blogroll.me/tag-15-blognamenroman-1022651253#comments</comments>
+            <comments>https://neonwilderness.blogroll.me/tag-15-blognamenroman-1022651253#comments</comments>
             <slash:comments>4</slash:comments>
         </item>
         <item>
             <title><![CDATA[Tag 16 - Blogzukunft / Standortbestimmung]]></title>
-            <link>http://neonwilderness.blogroll.me/tag-16-blogzukunft-standortbestimmung-1022651186</link>
-            <guid>http://neonwilderness.blogroll.me/tag-16-blogzukunft-standortbestimmung-1022651186</guid>
+            <link>https://neonwilderness.blogroll.me/tag-16-blogzukunft-standortbestimmung-1022651186</link>
+            <guid>https://neonwilderness.blogroll.me/tag-16-blogzukunft-standortbestimmung-1022651186</guid>
             <pubDate>Tue, 15 May 2018 14:10:00 GMT</pubDate>
             <description><![CDATA[
   
@@ -648,13 +648,13 @@ Zeit für eine Standortbestimmung zur individuellen Blogzukunft und deren Planun
 </v-alert>
 <div class="html5video strawpoll" id="15702655" />]]></content:encoded>
             <category><![CDATA[Twoday]]></category>
-            <comments>http://neonwilderness.blogroll.me/tag-16-blogzukunft-standortbestimmung-1022651186#comments</comments>
+            <comments>https://neonwilderness.blogroll.me/tag-16-blogzukunft-standortbestimmung-1022651186#comments</comments>
             <slash:comments>21</slash:comments>
         </item>
         <item>
             <title><![CDATA[Tag 17 - Die längsten und kürzesten Blognamen]]></title>
-            <link>http://neonwilderness.blogroll.me/tag-17-twoday-long-short-1022651130</link>
-            <guid>http://neonwilderness.blogroll.me/tag-17-twoday-long-short-1022651130</guid>
+            <link>https://neonwilderness.blogroll.me/tag-17-twoday-long-short-1022651130</link>
+            <guid>https://neonwilderness.blogroll.me/tag-17-twoday-long-short-1022651130</guid>
             <pubDate>Mon, 14 May 2018 18:50:00 GMT</pubDate>
             <description><![CDATA[
   
@@ -700,13 +700,13 @@ Bei der Wahl eines Blognamens gibt es eigentlich nur drei Lager: 1.
 	</div>
 </vue-component>]]></content:encoded>
             <category><![CDATA[Twoday]]></category>
-            <comments>http://neonwilderness.blogroll.me/tag-17-twoday-long-short-1022651130#comments</comments>
+            <comments>https://neonwilderness.blogroll.me/tag-17-twoday-long-short-1022651130#comments</comments>
             <slash:comments>2</slash:comments>
         </item>
         <item>
             <title><![CDATA[Tag 18 - Die ältesten, aktiven Blogs]]></title>
-            <link>http://neonwilderness.blogroll.me/tag-18-twoday-blog-rank-1022651073</link>
-            <guid>http://neonwilderness.blogroll.me/tag-18-twoday-blog-rank-1022651073</guid>
+            <link>https://neonwilderness.blogroll.me/tag-18-twoday-blog-rank-1022651073</link>
+            <guid>https://neonwilderness.blogroll.me/tag-18-twoday-blog-rank-1022651073</guid>
             <pubDate>Sun, 13 May 2018 16:44:00 GMT</pubDate>
             <description><![CDATA[
   
@@ -782,12 +782,12 @@ Als Kriterium für einen noch aktiven Blog…]]></description>
 </div>
 </vue-component>]]></content:encoded>
             <category><![CDATA[Twoday]]></category>
-            <comments>http://neonwilderness.blogroll.me/tag-18-twoday-blog-rank-1022651073#comments</comments>
+            <comments>https://neonwilderness.blogroll.me/tag-18-twoday-blog-rank-1022651073#comments</comments>
         </item>
         <item>
             <title><![CDATA[Tag 20 - Boomerang rocks!]]></title>
-            <link>http://neonwilderness.blogroll.me/tag-20-boomerang-rocks-1022650944</link>
-            <guid>http://neonwilderness.blogroll.me/tag-20-boomerang-rocks-1022650944</guid>
+            <link>https://neonwilderness.blogroll.me/tag-20-boomerang-rocks-1022650944</link>
+            <guid>https://neonwilderness.blogroll.me/tag-20-boomerang-rocks-1022650944</guid>
             <pubDate>Fri, 11 May 2018 18:23:00 GMT</pubDate>
             <description><![CDATA[Aus unserer bewegenden Serie
   
@@ -824,13 +824,13 @@ Meine Präservations- und Sicherungsarbeiten rundum Twoday enthüllen manchmal i
   <s>Leere</s> Lehre übertragen, so hätte Herr Boomerang noch persönlich im Paradies die Äpfel gepflückt. Muss ich deutlicher werden? Der Mann hat einfach alles gesehen, alles, und die ganze tragische Geschichte in allen Facetten miterlebt!!!!</p>
 <p>Und erst jetzt kann ich auch seinen Schmerz besser verstehen, dass dies hier bald nicht mehr sein wird. Aber ich hoffe, dass dieser Beitrag imstande ist, ihn etwas abzumildern. ;)</p>]]></content:encoded>
             <category><![CDATA[Twoday]]></category>
-            <comments>http://neonwilderness.blogroll.me/tag-20-boomerang-rocks-1022650944#comments</comments>
+            <comments>https://neonwilderness.blogroll.me/tag-20-boomerang-rocks-1022650944#comments</comments>
             <slash:comments>5</slash:comments>
         </item>
         <item>
             <title><![CDATA[Tag 23 - Kräuterwissen-Fail]]></title>
-            <link>http://neonwilderness.blogroll.me/tag-23-kraeuterwissen-fail-1022650753</link>
-            <guid>http://neonwilderness.blogroll.me/tag-23-kraeuterwissen-fail-1022650753</guid>
+            <link>https://neonwilderness.blogroll.me/tag-23-kraeuterwissen-fail-1022650753</link>
+            <guid>https://neonwilderness.blogroll.me/tag-23-kraeuterwissen-fail-1022650753</guid>
             <pubDate>Tue, 08 May 2018 17:19:00 GMT</pubDate>
             <description><![CDATA[
   
@@ -849,7 +849,7 @@ Meine Präservations- und Sicherungsarbeiten rundum Twoday enthüllen manchmal i
   <img alt="kraeuterfail2.jpg" src="//neonwilderness.blogroll.me/cockpit/storage/uploads/images/kraeuterfail2.jpg" width="100%" />
 </p>]]></content:encoded>
             <category><![CDATA[Today I Learned]]></category>
-            <comments>http://neonwilderness.blogroll.me/tag-23-kraeuterwissen-fail-1022650753#comments</comments>
+            <comments>https://neonwilderness.blogroll.me/tag-23-kraeuterwissen-fail-1022650753#comments</comments>
             <slash:comments>4</slash:comments>
         </item>
     </channel>
